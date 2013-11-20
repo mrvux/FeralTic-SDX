@@ -67,6 +67,11 @@
     <Compile Include="Rendering\DX11RenderContext.cs" />
     <Compile Include="Resources\Buffers\ConstantBuffer.cs" />
     <Compile Include="Resources\Buffers\IndexBuffer.cs" />
+    <Compile Include="Resources\Buffers\Indirect\BaseIndirectBuffer.cs" />
+    <Compile Include="Resources\Buffers\Indirect\DispatchIndirectBuffer.cs" />
+    <Compile Include="Resources\Buffers\Indirect\DrawIndirectArgs.cs" />
+    <Compile Include="Resources\Buffers\Indirect\IndexedIndirectBuffer.cs" />
+    <Compile Include="Resources\Buffers\Indirect\InstancedIndirectBuffer.cs" />
     <Compile Include="Resources\Buffers\RawBuffer.cs" />
     <Compile Include="Resources\Buffers\StructuredBuffer.cs" />
     <Compile Include="Resources\Buffers\VertexBuffer.cs" />
