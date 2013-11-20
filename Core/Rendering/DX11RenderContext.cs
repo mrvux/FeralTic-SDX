@@ -15,6 +15,9 @@ namespace FeralTic.DX11
         private static ShaderResourceView[] nullsrvs = new ShaderResourceView[128];
         private static UnorderedAccessView[] nulluavs = new UnorderedAccessView[8];
 
+        public DX11RenderTargetStack RenderTargetStack { get; protected set; }
+        public DX11RenderStateStack RenderStateStack { get; protected set; }
+
         protected DX11RenderContext()
         {
 
@@ -24,6 +27,9 @@ namespace FeralTic.DX11
         {
             this.Device = device;
             this.Context = device.Device.ImmediateContext.QueryInterface<DeviceContext2>();
+            this.RenderTargetStack = new DX11RenderTargetStack(this);
+            this.RenderStateStack = new DX11RenderStateStack(this);
+            this.RenderStateStack.PushDefault();
         }
 
         public void ClearShaderStages()

@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Devices\DX11Device.cs" />
+    <Compile Include="Devices\FeralTicDevice.cs" />
     <Compile Include="Devices\NullDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\DX11OcclusionQuery.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Rendering\DX11DefferedRenderContext.cs" />
     <Compile Include="Rendering\DX11RenderContext.cs" />
     <Compile Include="Rendering\DX11RenderStackElement.cs" />
+    <Compile Include="Rendering\DX11RenderStateStack.cs" />
     <Compile Include="Rendering\DX11RenderTargetStack.cs" />
     <Compile Include="Rendering\DX11ResourcePool.cs" />
     <Compile Include="Rendering\DX11ResourcePoolManager.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="States\DX11BlendStates_Logical.cs" />
     <Compile Include="States\DX11DepthStencilStates.cs" />
     <Compile Include="States\DX11RasterizerStates.cs" />
+    <Compile Include="States\DX11RenderState.cs" />
     <Compile Include="States\DX11RenderStates.cs" />
     <Compile Include="States\DX11SamplerStates.cs" />
     <Compile Include="Utils\DepthFormatsHelper.cs" />
