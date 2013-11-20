@@ -69,6 +69,7 @@
     <Compile Include="Queries\DX11StreamOutQuery.cs" />
     <Compile Include="Queries\DX11TimeStampQuery.cs" />
     <Compile Include="Queries\IDX11Query.cs" />
+    <Compile Include="Rendering\DX11DefaultTextures.cs" />
     <Compile Include="Rendering\DX11DefferedRenderContext.cs" />
     <Compile Include="Rendering\DX11RenderContext.cs" />
     <Compile Include="Rendering\DX11RenderStackElement.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="States\DX11RenderStates.cs" />
     <Compile Include="States\DX11SamplerStates.cs" />
     <Compile Include="Utils\DepthFormatsHelper.cs" />
+    <Compile Include="Utils\TextureUtils.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
