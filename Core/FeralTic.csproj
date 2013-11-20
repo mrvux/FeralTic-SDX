@@ -62,12 +62,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\DX11DefferedRenderContext.cs" />
     <Compile Include="Rendering\DX11RenderContext.cs" />
+    <Compile Include="Resources\Buffers\DX11DepthStencil.cs" />
+    <Compile Include="Resources\Buffers\DX11RenderTarget2D.cs" />
+    <Compile Include="Resources\Buffers\DX11Texture2D.cs" />
+    <Compile Include="Resources\IDX11Resource.cs" />
     <Compile Include="States\DX11BlendStates.cs" />
     <Compile Include="States\DX11BlendStates_Logical.cs" />
     <Compile Include="States\DX11DepthStencilStates.cs" />
     <Compile Include="States\DX11RasterizerStates.cs" />
     <Compile Include="States\DX11RenderStates.cs" />
     <Compile Include="States\DX11SamplerStates.cs" />
+    <Compile Include="Utils\DepthFormatsHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Textures\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
