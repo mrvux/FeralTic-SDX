@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SharpDX">
@@ -63,8 +65,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\DX11DefferedRenderContext.cs" />
     <Compile Include="Rendering\DX11RenderContext.cs" />
+    <Compile Include="Resources\Buffers\ConstantBuffer.cs" />
+    <Compile Include="Resources\Buffers\IndexBuffer.cs" />
+    <Compile Include="Resources\Buffers\RawBuffer.cs" />
+    <Compile Include="Resources\Buffers\StructuredBuffer.cs" />
+    <Compile Include="Resources\Buffers\VertexBuffer.cs" />
     <Compile Include="Resources\Textures\DX11DepthStencil.cs" />
     <Compile Include="Resources\Textures\DX11RenderTarget2D.cs" />
+    <Compile Include="Resources\Textures\DX11RenderTexture3D.cs" />
     <Compile Include="Resources\Textures\DX11RenderTextureArray.cs" />
     <Compile Include="Resources\Textures\DX11SliceRenderTarget.cs" />
     <Compile Include="Resources\Textures\DX11SwapChain.cs" />
@@ -80,9 +88,7 @@
     <Compile Include="States\DX11SamplerStates.cs" />
     <Compile Include="Utils\DepthFormatsHelper.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Buffers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
