@@ -17,7 +17,9 @@ namespace FeralTic.DX11.Resources
 
         public Texture2D Texture { get; private set; }
         public ShaderResourceView ShaderView { get; private set; }
+
         public RenderTargetView RenderView { get; protected set; }
+
         public UnorderedAccessView UnorderedView { get; protected set; }
 
         public int Width

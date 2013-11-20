@@ -39,12 +39,13 @@ namespace FeralTic.DX11.Resources
             get { return this.resourceDesc.Format; }
         }
 
-        public DX11DepthStencil(DX11Device device, int w, int h, SampleDescription sd)
-            : this(device, w, h, sd, eDepthFormat.d24s8)
+        public DX11DepthStencil(DX11Device device, int w, int h, eDepthFormat depthformat = eDepthFormat.d24s8)
+            : this(device, w, h, new SampleDescription(1, 0), depthformat)
         {
+
         }
 
-        public DX11DepthStencil(DX11Device device, int w, int h, SampleDescription sd, eDepthFormat depthformat)
+        public DX11DepthStencil(DX11Device device, int w, int h, SampleDescription sd, eDepthFormat depthformat = eDepthFormat.d24s8)
         {
             this.device = device;
             var depthBufferDesc = new Texture2DDescription
@@ -52,7 +53,7 @@ namespace FeralTic.DX11.Resources
                 ArraySize = 1,
                 BindFlags = BindFlags.DepthStencil | BindFlags.ShaderResource,
                 CpuAccessFlags = CpuAccessFlags.None,
-                Format = depthformat.GetGenericTextureFormat(),
+                Format = depthformat.GetTypeLessFormat(),
                 Height = h,
                 Width = w,
                 MipLevels = 1,
@@ -79,7 +80,7 @@ namespace FeralTic.DX11.Resources
             this.ShaderView = new ShaderResourceView(device.Device, this.Texture, srvd);
 
 
-            if (depthformat == eDepthFormat.d24s8)
+            if (depthformat.HasStencil())
             {
                 ShaderResourceViewDescription stencild = new ShaderResourceViewDescription()
                 {
@@ -137,6 +138,7 @@ namespace FeralTic.DX11.Resources
 
         public void Dispose()
         {
+            if (this.Stencil != null) { this.Stencil.Dispose(); }
             if (this.DepthView != null) { this.DepthView.Dispose(); }
             if (this.ReadOnlyView != null) { this.ReadOnlyView.Dispose(); }
             if (this.ShaderView != null) { this.ShaderView.Dispose(); }

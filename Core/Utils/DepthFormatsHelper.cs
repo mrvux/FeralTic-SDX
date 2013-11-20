@@ -21,7 +21,7 @@ namespace FeralTic.DX11
     /// </summary>
     public static class DepthFormatsExtensions
     {
-        public static Format GetGenericTextureFormat(this eDepthFormat depthformat)
+        public static Format GetTypeLessFormat(this eDepthFormat depthformat)
         {
             switch (depthformat)
             {
@@ -32,7 +32,7 @@ namespace FeralTic.DX11
                 case eDepthFormat.d16:
                     return Format.R16_Typeless;
                 case eDepthFormat.d32s8:
-                    return Format.R32_Float_X8X24_Typeless;
+                    return Format.R32G8X24_Typeless;
                 default:
                     return Format.R32_Typeless; //Defaults as R32
             }
