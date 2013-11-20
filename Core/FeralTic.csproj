@@ -63,6 +63,11 @@
     <Compile Include="Devices\DX11Device.cs" />
     <Compile Include="Devices\NullDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\DX11OcclusionQuery.cs" />
+    <Compile Include="Queries\DX11PipelineQuery.cs" />
+    <Compile Include="Queries\DX11StreamOutQuery.cs" />
+    <Compile Include="Queries\DX11TimeStampQuery.cs" />
+    <Compile Include="Queries\IDX11Query.cs" />
     <Compile Include="Rendering\DX11DefferedRenderContext.cs" />
     <Compile Include="Rendering\DX11RenderContext.cs" />
     <Compile Include="Resources\Buffers\ConstantBuffer.cs" />
