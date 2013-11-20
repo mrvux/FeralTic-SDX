@@ -72,7 +72,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DeviceTest.cs" />
+    <Compile Include="Device\DeviceTest.cs" />
+    <Compile Include="Rendering\RenderContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\FeralTic.csproj">
