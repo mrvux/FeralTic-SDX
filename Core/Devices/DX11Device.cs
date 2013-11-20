@@ -30,6 +30,7 @@ namespace FeralTic.DX11
         public event DeviceDelegate DeviceReset;
         public event DeviceDelegate DeviceDisposing;
         public event DeviceDelegate DeviceDisposed;
+
         private DeviceCreationFlags creationflags;
         private int adapterindex;
 
@@ -85,11 +86,19 @@ namespace FeralTic.DX11
             
             this.Adapter = dxgidevice.Adapter.QueryInterface<DXGIAdapter>();
             this.Factory = this.Adapter.GetParent<DXGIFactory>();
+
+            this.OnLoad();
         }
         #endregion
 
+        protected virtual void OnLoad() { }
+        protected virtual void OnDeviceRemoved() { }
+        protected virtual void OnDispose() { }
+
         internal void NotifyDeviceLost()
         {
+            this.OnDeviceRemoved();
+
             if (this.DeviceRemoved != null) { this.DeviceRemoved(this); }
 
             if (this.AutoReset)
@@ -101,6 +110,8 @@ namespace FeralTic.DX11
 
         public void Dispose()
         {
+            this.OnDispose();
+
             if (this.DeviceDisposing != null) { this.DeviceDisposing(this); }
 
             this.Device.Dispose();
