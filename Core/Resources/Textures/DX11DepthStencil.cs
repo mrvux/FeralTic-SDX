@@ -39,6 +39,9 @@ namespace FeralTic.DX11.Resources
             get { return this.resourceDesc.Format; }
         }
 
+        public eDepthFormat DepthFormat { get; private set; }
+
+
         public DX11DepthStencil(DX11Device device, int w, int h, eDepthFormat depthformat = eDepthFormat.d24s8)
             : this(device, w, h, new SampleDescription(1, 0), depthformat)
         {
@@ -64,6 +67,7 @@ namespace FeralTic.DX11.Resources
 
             this.Texture = new Texture2D(device.Device, depthBufferDesc);
             this.resourceDesc = this.Texture.Description;
+            this.DepthFormat = depthformat;
 
             ShaderResourceViewDescription srvd = new ShaderResourceViewDescription()
             {

@@ -70,6 +70,12 @@
     <Compile Include="Queries\IDX11Query.cs" />
     <Compile Include="Rendering\DX11DefferedRenderContext.cs" />
     <Compile Include="Rendering\DX11RenderContext.cs" />
+    <Compile Include="Rendering\DX11RenderStackElement.cs" />
+    <Compile Include="Rendering\DX11RenderTargetStack.cs" />
+    <Compile Include="Rendering\DX11ResourcePool.cs" />
+    <Compile Include="Rendering\DX11ResourcePoolManager.cs" />
+    <Compile Include="Rendering\DX11ResourcePools.cs" />
+    <Compile Include="Rendering\DX11ViewportStack.cs" />
     <Compile Include="Resources\Buffers\ConstantBuffer.cs" />
     <Compile Include="Resources\Buffers\IndexBuffer.cs" />
     <Compile Include="Resources\Buffers\Indirect\BaseIndirectBuffer.cs" />

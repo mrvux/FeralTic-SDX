@@ -7,7 +7,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic
 {
-    public interface IDX11Resource
+    public interface IDX11Resource : IDisposable
     {
     }
 
