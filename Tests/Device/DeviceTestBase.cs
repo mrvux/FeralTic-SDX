@@ -12,16 +12,19 @@ namespace FeralTic.Tests
     public class RenderDeviceTestBase
     {
         protected RenderDevice Device { get; set; }
+        protected DX11RenderContext RenderContext { get; set; }
 
         [TestInitialize()]
         public void Initialize()
         {
             this.Device = new RenderDevice();
+            this.RenderContext = new DX11RenderContext(this.Device);
         }
 
         [TestCleanup()]
         public void CleanUp()
         {
+            if (RenderContext != null) { RenderContext.Dispose(); }
             if (Device != null) { Device.Dispose(); }
         }
     }

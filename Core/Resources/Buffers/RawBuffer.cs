@@ -23,6 +23,11 @@ namespace FeralTic.DX11.Resources
 
         public int Size { get; protected set; }
 
+        public static implicit operator Buffer(DX11RawBuffer buffer)
+        {
+            return buffer.Buffer;
+        }
+
         protected DX11RawBuffer(DX11Device device, BufferDescription desc, IntPtr ptr, bool createUAV)
         {
             this.device = device;
@@ -31,20 +36,23 @@ namespace FeralTic.DX11.Resources
             this.Buffer = new SharpDX.Direct3D11.Buffer(device.Device, ptr, desc);
             this.Description = this.Buffer.Description;
 
-            ShaderResourceViewDescription srvd = new ShaderResourceViewDescription()
+            if (desc.BindFlags.HasFlag(BindFlags.ShaderResource))
             {
-                Format = SharpDX.DXGI.Format.R32_Typeless,
-                Dimension = ShaderResourceViewDimension.ExtendedBuffer,
-                
-                BufferEx = new ShaderResourceViewDescription.ExtendedBufferResource()
+                ShaderResourceViewDescription srvd = new ShaderResourceViewDescription()
                 {
-                    ElementCount = desc.SizeInBytes / 4,
-                    FirstElement = 0,
-                    Flags = ShaderResourceViewExtendedBufferFlags.Raw
-                }
-            };
+                    Format = SharpDX.DXGI.Format.R32_Typeless,
+                    Dimension = ShaderResourceViewDimension.ExtendedBuffer,
 
-            this.ShaderView = new ShaderResourceView(device.Device, this.Buffer,srvd);
+                    BufferEx = new ShaderResourceViewDescription.ExtendedBufferResource()
+                    {
+                        ElementCount = desc.SizeInBytes / 4,
+                        FirstElement = 0,
+                        Flags = ShaderResourceViewExtendedBufferFlags.Raw
+                    }
+                };
+
+                this.ShaderView = new ShaderResourceView(device.Device, this.Buffer, srvd);
+            }
 
             if (createUAV)
             {
@@ -100,6 +108,26 @@ namespace FeralTic.DX11.Resources
             bd.BindFlags = BindFlags.None;
 
             return new DX11RawBuffer(buffer.device, bd, IntPtr.Zero, false);
+        }
+
+
+        public DataStream MapForWrite(DX11RenderContext context)
+        {
+            DataStream ds;
+            context.Context.MapSubresource(this.Buffer, 0, MapMode.WriteDiscard, MapFlags.None, out ds);
+            return ds;
+        }
+
+        public DataStream MapForRead(DX11RenderContext context)
+        {
+            DataStream ds;
+            context.Context.MapSubresource(this.Buffer, 0, MapMode.Read, MapFlags.None, out ds);
+            return ds;
+        }
+
+        public void Unmap(DX11RenderContext context)
+        {
+            context.Context.UnmapSubresource(this.Buffer, 0);
         }
 
         public void Dispose()
