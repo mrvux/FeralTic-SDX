@@ -20,6 +20,7 @@ namespace FeralTic.DX11.Resources
         public Buffer Buffer { get; protected set; }
         public ShaderResourceView ShaderView { get; protected set; }
         public UnorderedAccessView UnorderedView { get; protected set; }
+        
 
         public int ElementCount { get; protected set; }
         public int Stride { get; protected set; }
@@ -176,6 +177,18 @@ namespace FeralTic.DX11.Resources
                 Usage = ResourceUsage.Staging
             };
             return new DX11StructuredBuffer(device, elemenCount, stride, bd, null);
+        }
+
+        public DX11StructuredBuffer AsStaging()
+        {
+            BufferDescription bd = this.Buffer.Description;
+            bd.CpuAccessFlags = CpuAccessFlags.Read | CpuAccessFlags.Write;
+            bd.OptionFlags = ResourceOptionFlags.None;
+            bd.Usage = ResourceUsage.Staging;
+            bd.BindFlags = BindFlags.None;
+
+            DX11StructuredBuffer result = new DX11StructuredBuffer(this.device, this.ElementCount, this.Stride, bd, null);
+            return result;
         }
 
         public static DX11StructuredBuffer CreateStaging<T>(DX11Device device, int elemenCount) where T : struct
