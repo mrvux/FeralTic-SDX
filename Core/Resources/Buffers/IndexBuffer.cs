@@ -45,6 +45,8 @@ namespace FeralTic.DX11.Resources
             this.Buffer = new SharpDX.Direct3D11.Buffer(device.Device, ptr, desc);
         }
 
+
+        #region CreateImmutable
         public static DX11IndexBuffer CreateImmutable(DX11Device device, int indicescount, DataStream initial = null, bool largeformat = true)
         {
             int indexsize = largeformat ? 4 : 2;
@@ -78,6 +80,7 @@ namespace FeralTic.DX11.Resources
             return result;
         }
 
+
         public static DX11IndexBuffer CreateImmutable(DX11Device device, int[] initial)
         {
             BufferDescription bd = new BufferDescription()
@@ -94,6 +97,36 @@ namespace FeralTic.DX11.Resources
                 result = new DX11IndexBuffer(device, initial.Length, bd, new IntPtr(ptr), true);
             }
             return result;
+        }
+
+        public static DX11IndexBuffer CreateImmutable(DX11Device device, uint[] initial)
+        {
+            BufferDescription bd = new BufferDescription()
+            {
+                BindFlags = BindFlags.IndexBuffer,
+                CpuAccessFlags = CpuAccessFlags.None,
+                OptionFlags = ResourceOptionFlags.None,
+                SizeInBytes = initial.Length * 4,
+                Usage = ResourceUsage.Immutable
+            };
+            DX11IndexBuffer result;
+            fixed (uint* ptr = &initial[0])
+            {
+                result = new DX11IndexBuffer(device, initial.Length, bd, new IntPtr(ptr), true);
+            }
+            return result;
+        }
+        #endregion
+
+        public DX11StructuredBuffer CopyToStructuredBuffer(DX11RenderContext context)
+        {
+            if (this.format != SharpDX.DXGI.Format.R32_UInt)
+            {
+                throw new Exception("Only Large indices formats supported");
+            }
+            DX11StructuredBuffer sb = DX11StructuredBuffer.CreateWriteable<uint>(this.device, this.IndicesCount);
+            context.Context.CopyResource(this.Buffer, sb.Buffer);
+            return sb;
         }
 
         public void Bind(DX11RenderContext context)
