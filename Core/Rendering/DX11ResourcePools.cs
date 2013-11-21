@@ -115,7 +115,7 @@ namespace FeralTic.DX11
 
         }
 
-        public DX11ResourcePoolEntry<DX11VertexBuffer> Lock(int verticescount, int vertexsize, bool allowstreamout)
+        public DX11ResourcePoolEntry<DX11VertexBuffer> Lock(int verticescount, int vertexsize, bool allowstreamout, bool allowraw)
         {
             //We can lock any buffer of the right size
             int totalsize = vertexsize * verticescount;
@@ -132,8 +132,7 @@ namespace FeralTic.DX11
                 }
             }
 
-
-            DX11VertexBuffer res = DX11VertexBuffer.CreateStreamOut(this.device, verticescount, vertexsize);
+            DX11VertexBuffer res = DX11VertexBuffer.CreateWriteable(this.device, verticescount, vertexsize, allowstreamout, allowraw);
 
             DX11ResourcePoolEntry<DX11VertexBuffer> newentry = new DX11ResourcePoolEntry<DX11VertexBuffer>(res);
 

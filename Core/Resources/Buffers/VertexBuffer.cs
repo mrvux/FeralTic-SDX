@@ -24,8 +24,15 @@ namespace FeralTic.DX11.Resources
         public bool AllowStreamOutput
         {
             get { return this.desc.BindFlags.HasFlag(BindFlags.StreamOutput); }
-
         }
+
+
+        public bool AllowRaw
+        {
+            get { return this.desc.OptionFlags.HasFlag(ResourceOptionFlags.BufferAllowRawViews); }
+        }
+
+
         public int TotalSize
         {
             get { return this.VertexSize * this.VerticesCount; }
@@ -65,16 +72,25 @@ namespace FeralTic.DX11.Resources
             this.desc = this.Buffer.Description;
         }
 
-        public static DX11VertexBuffer CreateStreamOut(DX11Device device, int verticesCount, int vertexSize)
+        public static DX11VertexBuffer CreateWriteable(DX11Device device, int verticesCount, int vertexSize, bool streamout, bool raw)
         {
             BufferDescription bd = new BufferDescription()
             {
-                BindFlags = BindFlags.VertexBuffer | BindFlags.StreamOutput,
+                BindFlags = BindFlags.VertexBuffer,
                 CpuAccessFlags = CpuAccessFlags.None,
                 OptionFlags = ResourceOptionFlags.None,
                 SizeInBytes = vertexSize * verticesCount,
                 Usage = ResourceUsage.Default
             };
+
+            if (streamout) { bd.BindFlags |= BindFlags.StreamOutput; }
+
+            if (raw) 
+            { 
+                bd.BindFlags |= BindFlags.ShaderResource; 
+                bd.BindFlags |= BindFlags.UnorderedAccess;
+                bd.OptionFlags = ResourceOptionFlags.BufferAllowRawViews;
+            }
 
             return new DX11VertexBuffer(device, verticesCount, vertexSize, bd, null);
         }

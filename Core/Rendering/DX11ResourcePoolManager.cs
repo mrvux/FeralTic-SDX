@@ -64,9 +64,14 @@ namespace FeralTic.DX11
             return this.depthpool.Lock(w, h, format,sd);
         }
 
-        public DX11ResourcePoolEntry<DX11VertexBuffer> LockVertexBuffer(int verticescount,int vertexsize,bool allowstreamout)
+        public DX11ResourcePoolEntry<DX11VertexBuffer> LockVertexBuffer(int verticescount,int vertexsize,bool allowstreamout, bool allowraw)
         {
-            return this.vbopool.Lock(verticescount, vertexsize, allowstreamout);
+            return this.vbopool.Lock(verticescount, vertexsize, allowstreamout,allowraw);
+        }
+
+        public DX11ResourcePoolEntry<DX11VertexBuffer> LockVertexBuffer<T>(int verticescount, bool allowstreamout, bool allowraw) where T : struct
+        {
+            return this.vbopool.Lock(verticescount, Marshal.SizeOf(typeof(T)) , allowstreamout,allowraw);
         }
 
         public void Unlock(DX11RenderTarget2D target)
