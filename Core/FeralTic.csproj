@@ -63,6 +63,7 @@
     <Compile Include="Devices\DX11Device.cs" />
     <Compile Include="Devices\RenderDevice.cs" />
     <Compile Include="Devices\NullDevice.cs" />
+    <Compile Include="Primitives\PrimitiveDescriptorBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\DX11OcclusionQuery.cs" />
     <Compile Include="Queries\DX11PipelineQuery.cs" />
