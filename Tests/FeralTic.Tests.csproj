@@ -76,6 +76,7 @@
     <Compile Include="Device\DeviceTest.cs" />
     <Compile Include="Rendering\RenderContext.cs" />
     <Compile Include="Rendering\ResourcePoolTest.cs" />
+    <Compile Include="Resources\StructuredBufferTests.cs" />
     <Compile Include="Resources\RenderTarget2DTest.cs" />
     <Compile Include="Resources\DepthStencilTest.cs" />
   </ItemGroup>
