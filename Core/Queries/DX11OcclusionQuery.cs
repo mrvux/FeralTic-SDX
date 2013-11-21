@@ -8,7 +8,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11.Queries
 {
-    public class DX11OcclusionQuery : IDX11Query
+    public class DX11OcclusionQuery : IDX11Query, IDisposable
     {
         private DX11Device device;
 
@@ -57,5 +57,9 @@ namespace FeralTic.DX11.Queries
 
         }
 
+        public void Dispose()
+        {
+            this.query.Dispose();
+        }
     }
 }

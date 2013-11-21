@@ -116,6 +116,7 @@
     <Compile Include="States\DX11SamplerStates.cs" />
     <Compile Include="Utils\DepthFormatsHelper.cs" />
     <Compile Include="Utils\FormatMappers.cs" />
+    <Compile Include="Utils\MergeUtils.cs" />
     <Compile Include="Utils\TextureUtils.cs" />
   </ItemGroup>
   <ItemGroup />

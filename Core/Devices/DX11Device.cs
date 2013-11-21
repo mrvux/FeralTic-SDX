@@ -34,6 +34,11 @@ namespace FeralTic.DX11
         private DeviceCreationFlags creationflags;
         private int adapterindex;
 
+        public bool IsFeatureLevel11_1
+        {
+            get { return this.Device.FeatureLevel >= FeatureLevel.Level_11_1; }
+        }
+
         public bool IsFeatureLevel11
         {
             get { return this.Device.FeatureLevel >= FeatureLevel.Level_11_0; }

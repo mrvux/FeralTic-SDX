@@ -56,5 +56,11 @@ namespace FeralTic.DX11.Queries
             }
         }
 
+
+        public void Dispose()
+        {
+            this.query.Dispose();
+        }
+
     }
 }
