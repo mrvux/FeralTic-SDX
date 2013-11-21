@@ -103,6 +103,7 @@
     <Compile Include="Shaders\DX11EffectInstance.cs" />
     <Compile Include="Shaders\DX11EffectInstance_Semantic.cs" />
     <Compile Include="Shaders\DX11EffectInstance_VarName.cs" />
+    <Compile Include="Shaders\DX11Shader.cs" />
     <Compile Include="Shaders\FolderIncludeHandler.cs" />
     <Compile Include="States\DX11BlendStates.cs" />
     <Compile Include="States\DX11BlendStates_Logical.cs" />
