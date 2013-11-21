@@ -71,9 +71,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Device\DeviceTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Device\DeviceTest.cs" />
     <Compile Include="Rendering\RenderContext.cs" />
+    <Compile Include="Rendering\ResourcePoolTest.cs" />
     <Compile Include="Resources\DepthStencilTest.cs" />
   </ItemGroup>
   <ItemGroup>

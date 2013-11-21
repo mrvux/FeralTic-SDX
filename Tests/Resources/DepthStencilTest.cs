@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FeralTic.Tests.Resources
+namespace FeralTic.Tests
 {
     [TestClass]
     public class DepthStencilTests
