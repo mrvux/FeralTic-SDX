@@ -17,6 +17,8 @@ namespace FeralTic.DX11
 
     public class DX11Effect : IDisposable
     {
+        private static FolderIncludeHandler folderhandler = new FolderIncludeHandler();
+
         public CompilationResult CompilationResult { get; private set; }
 
         public ShaderBytecode ByteCode
@@ -36,13 +38,15 @@ namespace FeralTic.DX11
 
         public Effect DefaultEffect { get; private set; }
 
-        private static FolderIncludeHandler folderhandler = new FolderIncludeHandler();
+        public static implicit operator Effect(DX11Effect effect)
+        {
+            return effect.DefaultEffect;
+        }
 
         private DX11Effect()
         {
             //To prevent instancing
         }
-
 
         #region Compile
         private static DX11Effect Compile(string content, bool isfile, Include include, ShaderMacro[] defines)
