@@ -9,22 +9,8 @@ using System.Text;
 namespace FeralTic.Tests
 {
     [TestClass]
-    public class DepthStencilTests
+    public class DepthStencilTests : RenderDeviceTestBase
     {
-        protected DX11Device Device { get; set; }
-
-        [TestInitialize()]
-        public void Initialize()
-        {
-            this.Device = new DX11Device();
-        }
-
-        [TestCleanup()]
-        public void CleanUp()
-        {
-            if (Device != null) { Device.Dispose(); }
-        }
-
         [TestMethod()]
         public void CreateD16()
         {

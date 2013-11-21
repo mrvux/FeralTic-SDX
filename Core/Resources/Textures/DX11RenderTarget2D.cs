@@ -61,7 +61,7 @@ namespace FeralTic.DX11.Resources
                 Usage = ResourceUsage.Default,
             };
 
-            if (sd.Count == 1)
+            if (sd.Count == 1 && allowUAV)
             {
                 texBufferDesc.BindFlags |= BindFlags.UnorderedAccess;
             }
@@ -83,7 +83,7 @@ namespace FeralTic.DX11.Resources
             this.RenderView = new RenderTargetView(device.Device, this.Texture);
             this.ShaderView = new ShaderResourceView(device.Device, this.Texture);
 
-            if (sd.Count == 1)
+            if (sd.Count == 1 && allowUAV)
             {
                 this.UnorderedView = new UnorderedAccessView(device.Device, this.Texture);
             }

@@ -13,5 +13,12 @@ namespace FeralTic.Tests
             DX11Device device = new DX11Device();
             device.Dispose();
         }
+
+        [TestMethod]
+        public void CreateRenderDevice()
+        {
+            RenderDevice device = new RenderDevice();
+            device.Dispose();
+        }       
     }
 }
