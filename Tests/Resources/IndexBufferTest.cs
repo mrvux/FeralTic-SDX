@@ -64,9 +64,6 @@ namespace FeralTic.Tests
             {
                 Assert.AreEqual(ud[i], data[i], "Data Mismatch");
             }
-
-           
-
         }
     }
 }

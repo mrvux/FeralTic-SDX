@@ -15,6 +15,8 @@ namespace FeralTic.DX11.Queries
 
         public bool hasrun = false;
 
+        private readonly int WAIT_MAX = 1024;
+
         public QueryDataPipelineStatistics Statistics { get; protected set; }
 
         public DX11PipelineQuery(DX11Device device)
@@ -43,11 +45,15 @@ namespace FeralTic.DX11.Queries
         {
             if (this.hasrun == false) { return; }
 
-            while (!context.Context.IsDataAvailable(this.query)) { }
-
-            this.Statistics = context.Context.GetData<QueryDataPipelineStatistics>(this.query);
+            for (int i = 0; i < WAIT_MAX; i++)
+            {
+                if (context.Context.IsDataAvailable(this.query))
+                {
+                    this.Statistics = context.Context.GetData<QueryDataPipelineStatistics>(this.query);
+                    return;
+                }
+            }
         }
-
     }
 
 }

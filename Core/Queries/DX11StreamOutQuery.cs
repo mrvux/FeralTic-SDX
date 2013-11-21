@@ -16,6 +16,7 @@ namespace FeralTic.DX11.Queries
 
         public bool hasrun = false;
 
+        private readonly int WAIT_MAX = 1024;
 
         public StreamOutputStatistics Statistics { get; protected set; }
 
@@ -45,9 +46,14 @@ namespace FeralTic.DX11.Queries
         {
             if (this.hasrun == false) { return; }
 
-            while (!context.Context.IsDataAvailable(this.query)) { }
-
-            this.Statistics = context.Context.GetData<StreamOutputStatistics>(this.query);
+            for (int i = 0; i < WAIT_MAX; i++ )
+            {
+                if (context.Context.IsDataAvailable(this.query))
+                {
+                    this.Statistics = context.Context.GetData<StreamOutputStatistics>(this.query);
+                    return;
+                }
+            }
         }
 
     }

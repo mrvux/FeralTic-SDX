@@ -16,6 +16,8 @@ namespace FeralTic.DX11.Queries
 
         public bool hasrun = false;
 
+        private readonly int WAIT_MAX = 1024;
+
         public long Statistics { get; protected set; }
 
         public DX11OcclusionQuery(DX11Device device)
@@ -44,9 +46,15 @@ namespace FeralTic.DX11.Queries
         {
             if (this.hasrun == false) { return; }
 
-            while (!context.Context.IsDataAvailable(this.query)) { }
+            for (int i = 0; i < WAIT_MAX; i++)
+            {
+                if (context.Context.IsDataAvailable(this.query))
+                {
+                    this.Statistics = context.Context.GetData<long>(this.query);
+                    return;
+                }
+            }
 
-            this.Statistics = context.Context.GetData<long>(this.query);
         }
 
     }

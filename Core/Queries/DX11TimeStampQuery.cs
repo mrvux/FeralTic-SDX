@@ -20,6 +20,8 @@ namespace FeralTic.DX11.Queries
 
         private DX11Device device;
 
+        private readonly int WAIT_MAX = 1024;
+
         public DX11TimeStampQuery(DX11Device device)
         {
             this.device = device;
@@ -57,23 +59,28 @@ namespace FeralTic.DX11.Queries
 
             DeviceContext ctx = context.Context;
 
-            while (!ctx.IsDataAvailable(this.tstart)) { }
-            while (!ctx.IsDataAvailable(this.tend)) { }
-            while (!ctx.IsDataAvailable(this.tsdis)) { }
-
-            Int64 startTime = ctx.GetData<Int64>(this.tstart);
-            Int64 endTime = ctx.GetData<Int64>(this.tend);
-            QueryDataTimestampDisjoint data = ctx.GetData<QueryDataTimestampDisjoint>(this.tsdis);
-
-            float time = 0.0f;
-            if (data.Disjoint == false)
+            for (int i = 0; i < WAIT_MAX; i++)
             {
-                Int64 delta = endTime - startTime;
-                float frequency = (float)data.Frequency;
-                time = ((float)delta / frequency) * 1000.0f;
+                if (context.Context.IsDataAvailable(this.tstart)
+                    && context.Context.IsDataAvailable(this.tend)
+                    && context.Context.IsDataAvailable(this.tsdis))
+                {
+                    Int64 startTime = ctx.GetData<Int64>(this.tstart);
+                    Int64 endTime = ctx.GetData<Int64>(this.tend);
+                    QueryDataTimestampDisjoint data = ctx.GetData<QueryDataTimestampDisjoint>(this.tsdis);
 
-                this.Elapsed = time;
-            }   
+                    float time = 0.0f;
+                    if (data.Disjoint == false)
+                    {
+                        Int64 delta = endTime - startTime;
+                        float frequency = (float)data.Frequency;
+                        time = ((float)delta / frequency) * 1000.0f;
+
+                        this.Elapsed = time;
+                    }   
+                    return;
+                }
+            }
         }
     }
 }
