@@ -16,12 +16,16 @@ namespace FeralTic.DX11
 
         public DX11SamplerStates SamplerStates { get; private set; }
 
+        public DefaultTextures DefaultTextures { get; private set; }
+
         protected override void OnLoad()
         {
             this.BlendStates = new DX11BlendStates(this);
             this.DepthStencilStates = new DX11DepthStencilStates(this);
             this.RasterizerStates = new DX11RasterizerStates(this);
             this.SamplerStates = new DX11SamplerStates(this);
+
+            this.DefaultTextures = new DefaultTextures(this);
         }
 
         protected override void OnDispose()
@@ -30,6 +34,8 @@ namespace FeralTic.DX11
             this.RasterizerStates.Dispose();
             this.DepthStencilStates.Dispose();
             this.SamplerStates.Dispose();
+
+            this.DefaultTextures.Dispose();
         }
 
     }

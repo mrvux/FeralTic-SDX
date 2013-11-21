@@ -13,6 +13,9 @@ namespace FeralTic.DX11
 
         public T Element { get; private set; }
 
+
+
+
         public DX11ResourcePoolEntry(T element)
         {
             this.Element = element;
@@ -29,9 +32,9 @@ namespace FeralTic.DX11
             this.islocked = false;
         }
 
-        public static explicit operator T (DX11ResourcePoolEntry<T> elem)
+        public static implicit operator T(DX11ResourcePoolEntry<T> entry)
         {
-            return elem.Element;
+            return entry.Element;
         }
     }
 
@@ -40,6 +43,7 @@ namespace FeralTic.DX11
     {
         protected List<DX11ResourcePoolEntry<T>> pool = new List<DX11ResourcePoolEntry<T>>();
         protected DX11Device device;
+
 
         public DX11ResourcePool(DX11Device device)
         {

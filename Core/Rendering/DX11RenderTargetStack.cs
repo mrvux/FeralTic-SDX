@@ -65,7 +65,6 @@ namespace FeralTic.DX11
 
         public void PushViewport(Viewport vp)
         {
-            //context.CurrentDeviceContext.Rasterizer.SetViewports(new Viewport(0, 0, 50, 50, 0, 1));
             this.viewportstack.Push(vp);
         }
 
