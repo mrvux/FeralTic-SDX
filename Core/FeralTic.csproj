@@ -99,6 +99,7 @@
     <Compile Include="Resources\Textures\DX11Texture1DArray.cs" />
     <Compile Include="Resources\Textures\DX11Texture2D.cs" />
     <Compile Include="Resources\IDX11Resource.cs" />
+    <Compile Include="Shaders\FolderIncludeHandler.cs" />
     <Compile Include="States\DX11BlendStates.cs" />
     <Compile Include="States\DX11BlendStates_Logical.cs" />
     <Compile Include="States\DX11DepthStencilStates.cs" />
