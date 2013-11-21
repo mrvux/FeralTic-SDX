@@ -13,9 +13,6 @@ namespace FeralTic.DX11
 
         public T Element { get; private set; }
 
-
-
-
         public DX11ResourcePoolEntry(T element)
         {
             this.Element = element;

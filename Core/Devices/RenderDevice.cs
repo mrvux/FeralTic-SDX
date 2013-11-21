@@ -18,6 +18,8 @@ namespace FeralTic.DX11
 
         public DefaultTextures DefaultTextures { get; private set; }
 
+        public DX11ResourcePoolManager ResourcePool { get; private set; }
+
         protected override void OnLoad()
         {
             this.BlendStates = new DX11BlendStates(this);
@@ -26,6 +28,8 @@ namespace FeralTic.DX11
             this.SamplerStates = new DX11SamplerStates(this);
 
             this.DefaultTextures = new DefaultTextures(this);
+
+            this.ResourcePool = new DX11ResourcePoolManager(this);
         }
 
         protected override void OnDispose()
@@ -36,6 +40,8 @@ namespace FeralTic.DX11
             this.SamplerStates.Dispose();
 
             this.DefaultTextures.Dispose();
+
+            this.ResourcePool.Dispose();
         }
 
     }
