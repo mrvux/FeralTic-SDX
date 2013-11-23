@@ -16,7 +16,7 @@ namespace FeralTic.DX11.Resources
         public ShaderResourceView ShaderView { get; protected set; }
         public Texture2D Texture { get; protected set; }
 
-        public DX11SliceRenderTarget[] SliceViews { get; protected set; }
+        public DX11SliceRenderTarget[] Slices { get; protected set; }
 
         private Texture2DDescription resourceDesc;
 
@@ -62,19 +62,22 @@ namespace FeralTic.DX11.Resources
 
             if (buildslices)
             {
-                this.SliceViews = new DX11SliceRenderTarget[this.ElementCount];
+                this.Slices = new DX11SliceRenderTarget[this.ElementCount];
                 for (int i = 0; i < this.ElementCount; i++)
                 {
-                    this.SliceViews[i] = new DX11SliceRenderTarget(device, this, i);
+                    this.Slices[i] = new DX11SliceRenderTarget(device, this, i);
                 }
             }
         }
 
         public void Dispose()
         {
-            foreach (DX11SliceRenderTarget slice in this.SliceViews)
+            if (this.Slices != null)
             {
-                 if (slice != null) { slice.Dispose(); }
+                foreach (DX11SliceRenderTarget slice in this.Slices)
+                {
+                    if (slice != null) { slice.Dispose(); }
+                }
             }
 
             this.RenderView.Dispose();
