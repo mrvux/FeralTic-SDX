@@ -18,6 +18,11 @@ namespace FeralTic.DX11
         public DX11RenderTargetStack RenderTargetStack { get; protected set; }
         public DX11RenderStateStack RenderStateStack { get; protected set; }
 
+        public static implicit operator DeviceContext2(DX11RenderContext context)
+        {
+            return context.Context;
+        }
+
         protected DX11RenderContext()
         {
 

@@ -91,6 +91,7 @@
     <Compile Include="Resources\Buffers\RawBuffer.cs" />
     <Compile Include="Resources\Buffers\StructuredBuffer.cs" />
     <Compile Include="Resources\Buffers\VertexBuffer.cs" />
+    <Compile Include="Resources\Geometry\DX11Geometry.cs" />
     <Compile Include="Resources\Textures\DX11DepthStencil.cs" />
     <Compile Include="Resources\Textures\DX11RenderTarget2D.cs" />
     <Compile Include="Resources\Textures\DX11RenderTexture3D.cs" />

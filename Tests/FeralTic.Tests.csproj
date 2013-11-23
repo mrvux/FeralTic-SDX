@@ -80,6 +80,7 @@
     <Compile Include="Resources\RawBuffer.cs" />
     <Compile Include="Resources\IndexBufferTest.cs" />
     <Compile Include="Resources\IndirectBufferTest.cs" />
+    <Compile Include="Resources\Texture1DTests.cs" />
     <Compile Include="Resources\StructuredBufferTests.cs" />
     <Compile Include="Resources\RenderTarget2DTest.cs" />
     <Compile Include="Resources\DepthStencilTest.cs" />
