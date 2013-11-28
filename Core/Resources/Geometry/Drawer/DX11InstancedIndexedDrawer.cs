@@ -22,7 +22,7 @@ namespace FeralTic.DX11.Resources
         public int StartInstanceLocation { get; set; }
         public int BaseVertexLocation { get; set; }
 
-        public override void Draw(DX11RenderContext ctx)
+        public override void Draw(RenderContext ctx)
         {
             ctx.Context.DrawIndexedInstanced(this.geom.IndexBuffer.IndicesCount, this.InstanceCount, this.StartIndexLocation, this.BaseVertexLocation, this.StartInstanceLocation);
         }

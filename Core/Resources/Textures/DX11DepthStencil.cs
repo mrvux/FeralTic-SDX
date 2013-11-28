@@ -128,7 +128,7 @@ namespace FeralTic.DX11.Resources
 
         }
 
-        public void Clear(DX11RenderContext context, bool cleardepth = true, bool clearstencil = true, float depth = 1.0f, byte stencil = 0)
+        public void Clear(RenderContext context, bool cleardepth = true, bool clearstencil = true, float depth = 1.0f, byte stencil = 0)
         {
             if (cleardepth || clearstencil)
             {

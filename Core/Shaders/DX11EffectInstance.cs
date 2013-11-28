@@ -76,12 +76,12 @@ namespace FeralTic.DX11
             this.currenttechnique = this.effect.GetTechniqueByIndex(index);
         }
 
-        public void ApplyPass(DX11RenderContext context, int index = 0)
+        public void ApplyPass(RenderContext context, int index = 0)
         {
             this.currenttechnique.GetPassByIndex(index).Apply(context.Context);
         }
 
-        public void ApplyPass(DX11RenderContext context,EffectPass pass)
+        public void ApplyPass(RenderContext context,EffectPass pass)
         {
             pass.Apply(context.Context);
         }

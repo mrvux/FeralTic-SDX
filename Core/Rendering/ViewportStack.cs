@@ -26,7 +26,7 @@ namespace FeralTic.DX11
         public Rectangle Scissor { get; protected set; }
         public bool HasScissor { get; protected set;}
 
-        public void Apply(DX11RenderContext context)
+        public void Apply(RenderContext context)
         {
             context.Context.Rasterizer.SetViewport(this.Viewport);
 
@@ -44,7 +44,7 @@ namespace FeralTic.DX11
 
     public class ViewportStack
     {
-        private DX11RenderContext context;
+        private RenderContext context;
 
         private Stack<ViewPortData> stack;
 
@@ -53,7 +53,7 @@ namespace FeralTic.DX11
             get { return stack.Count; }
         }
 
-        public ViewportStack(DX11RenderContext context)
+        public ViewportStack(RenderContext context)
         {
             this.context = context;
             stack = new Stack<ViewPortData>();

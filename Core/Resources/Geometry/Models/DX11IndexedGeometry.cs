@@ -43,7 +43,7 @@ namespace FeralTic.DX11.Resources
             this.drawer.Assign(this);
         }
 
-        public override void Draw(DX11RenderContext ctx)
+        public override void Draw(RenderContext ctx)
         {
             this.drawer.Draw(ctx);
         }
@@ -72,7 +72,7 @@ namespace FeralTic.DX11.Resources
             return geom;
         }
 
-        public override void Bind(DX11RenderContext ctx, InputLayout layout)
+        public override void Bind(RenderContext ctx, InputLayout layout)
         {
             ctx.Context.InputAssembler.PrimitiveTopology = this.Topology;
             drawer.PrepareInputAssembler(ctx, layout);

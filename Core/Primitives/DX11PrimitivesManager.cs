@@ -134,13 +134,13 @@ namespace FeralTic.DX11.Geometry
                 
 
 
-        public void ApplyFullTriVS(DX11RenderContext context)
+        public void ApplyFullTriVS(RenderContext context)
         {
             this.FullScreenTriangle.Bind(context,null);
             this.vsonlypass.Apply(context.Context);
         }
 
-        public void ApplyFullTri(DX11RenderContext context)
+        public void ApplyFullTri(RenderContext context)
         {
             this.FullScreenTriangle.Bind(context,null);
             this.fullscreenpass.Apply(context.Context);

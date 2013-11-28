@@ -48,7 +48,7 @@ namespace FeralTic.DX11.Resources
             this.RenderView = new RenderTargetView(device.Device, this.Texture);
         }
 
-        public void Clear(DX11RenderContext context, Color4 color)
+        public void Clear(RenderContext context, Color4 color)
         {
             context.Context.ClearRenderTargetView(this.RenderView, color);
         }

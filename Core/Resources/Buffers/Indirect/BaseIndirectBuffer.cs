@@ -45,7 +45,7 @@ namespace FeralTic.DX11.Resources
             this.WriteBuffer = DX11StructuredBuffer.CreateWriteable(device, size / 4, 4);
         }
 
-        public void UpdateArgumentBuffer(DX11RenderContext context)
+        public void UpdateArgumentBuffer(RenderContext context)
         {
             context.Context.CopyResource(this.WriteBuffer.Buffer, this.ArgumentBuffer);
         }
@@ -58,7 +58,7 @@ namespace FeralTic.DX11.Resources
             if (this.staging != null) { this.staging.Dispose(); }
         }
 
-        public T RetrieveArgs(DX11RenderContext context)
+        public T RetrieveArgs(RenderContext context)
         {
 
             if (staging == null)

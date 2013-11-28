@@ -118,7 +118,7 @@ namespace FeralTic.DX11.Resources
         }
         #endregion
 
-        public DX11StructuredBuffer CopyToStructuredBuffer(DX11RenderContext context)
+        public DX11StructuredBuffer CopyToStructuredBuffer(RenderContext context)
         {
             if (this.format != SharpDX.DXGI.Format.R32_UInt)
             {
@@ -129,7 +129,7 @@ namespace FeralTic.DX11.Resources
             return sb;
         }
 
-        public void Bind(DX11RenderContext context)
+        public void Bind(RenderContext context)
         {
             context.Context.InputAssembler.SetIndexBuffer(this.Buffer, this.format, 0);
         }

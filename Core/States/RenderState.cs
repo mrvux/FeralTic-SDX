@@ -44,7 +44,7 @@ namespace FeralTic.DX11
         }
 
 
-        public void Apply(DX11RenderContext context)
+        public void Apply(RenderContext context)
         {
             context.Context.Rasterizer.State = this.Rasterizer;
             context.Context.OutputMerger.DepthStencilState = this.DepthStencil;

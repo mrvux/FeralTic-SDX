@@ -14,7 +14,7 @@ namespace FeralTic.DX11.Resources
             this.InstanceCount = 1;
         }
 
-        public override void Draw(DX11RenderContext ctx)
+        public override void Draw(RenderContext ctx)
         {
             ctx.Context.DrawInstanced(this.VertexCount, this.InstanceCount, 0, 0);
         }

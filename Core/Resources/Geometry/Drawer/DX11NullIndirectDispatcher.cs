@@ -15,12 +15,12 @@ namespace FeralTic.Resources.Geometry
         public DispatchIndirectBuffer IndirectArgs { get; set; }
 
 
-        public void PrepareInputAssembler(DX11RenderContext ctx, InputLayout layout)
+        public void PrepareInputAssembler(RenderContext ctx, InputLayout layout)
         {
 
         }
 
-        public void Draw(DX11RenderContext ctx)
+        public void Draw(RenderContext ctx)
         {
             //ctx.ComputeShader.
             ctx.Context.DispatchIndirect(this.IndirectArgs.ArgumentBuffer, 0);

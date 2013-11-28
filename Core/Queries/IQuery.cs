@@ -6,13 +6,13 @@ using System.Text;
 
 namespace FeralTic.DX11.Queries
 {
-    public delegate void DxQueryableDelegate(DX11RenderContext context);
+    public delegate void DxQueryableDelegate(RenderContext context);
 
     public interface IDxQuery
     {
-        void Start(DX11RenderContext context);
-        void Stop(DX11RenderContext context);
-        void GetData(DX11RenderContext context);
+        void Start(RenderContext context);
+        void Stop(RenderContext context);
+        void GetData(RenderContext context);
     }
 
     public interface IDxQueryable

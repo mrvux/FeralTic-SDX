@@ -19,7 +19,7 @@ namespace FeralTic.DX11.Resources
             this.geom = geometry;
         }
 
-        public void Update(DX11RenderContext context, int defaultinstancecount)
+        public void Update(RenderContext context, int defaultinstancecount)
         {
             if (this.indbuffer != null) { this.indbuffer.Dispose(); }
 
@@ -34,14 +34,14 @@ namespace FeralTic.DX11.Resources
 
         }
 
-        public void PrepareInputAssembler(DX11RenderContext ctx, InputLayout layout)
+        public void PrepareInputAssembler(RenderContext ctx, InputLayout layout)
         {
             ctx.Context.InputAssembler.InputLayout = layout;
             ctx.Context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(this.geom.VertexBuffer.Buffer, this.geom.VertexBuffer.VertexSize, 0));
             geom.IndexBuffer.Bind(ctx);
         }
 
-        public void Draw(DX11RenderContext ctx)
+        public void Draw(RenderContext ctx)
         {
             ctx.Context.DrawIndexedInstancedIndirect(this.indbuffer.ArgumentBuffer, 0);
         }

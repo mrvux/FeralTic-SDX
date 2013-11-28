@@ -7,7 +7,7 @@ namespace FeralTic.DX11
 {
     public class RenderStateStack
     {
-        private DX11RenderContext context;
+        private RenderContext context;
 
         private RenderState defaultstate;
 
@@ -18,7 +18,7 @@ namespace FeralTic.DX11
             get { return this.stack.Count; }
         }
 
-        public RenderStateStack(DX11RenderContext context)
+        public RenderStateStack(RenderContext context)
         {
             this.context = context;
             this.defaultstate = new RenderState(context.Device);

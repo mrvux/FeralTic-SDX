@@ -83,7 +83,7 @@ namespace FeralTic.DX11.Resources
             
         }
 
-        public unsafe void WriteData(DX11RenderContext context, IntPtr ptr, int len, int pixelsize)
+        public unsafe void WriteData(RenderContext context, IntPtr ptr, int len, int pixelsize)
         {
             DeviceContext ctx = context;
             DataStream ds;

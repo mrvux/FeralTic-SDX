@@ -23,7 +23,7 @@ namespace FeralTic.DX11.Resources
             this.geom = geometry;
         }
 
-        public void PrepareInputAssembler(DX11RenderContext ctx, InputLayout layout)
+        public void PrepareInputAssembler(RenderContext ctx, InputLayout layout)
         {
             ctx.Context.InputAssembler.InputLayout = null;
             ctx.Context.InputAssembler.SetIndexBuffer(null, SharpDX.DXGI.Format.Unknown, 0);
@@ -31,7 +31,7 @@ namespace FeralTic.DX11.Resources
             ctx.Context.InputAssembler.SetVertexBuffers(0, vb);
         }
 
-        public virtual void Draw(DX11RenderContext ctx)
+        public virtual void Draw(RenderContext ctx)
         {
             ctx.Context.Draw(this.VertexCount,0);
         }

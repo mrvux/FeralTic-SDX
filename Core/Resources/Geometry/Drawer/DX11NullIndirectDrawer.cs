@@ -13,7 +13,7 @@ namespace FeralTic.DX11.Resources
 
         public InstancedIndirectBuffer IndirectArgs { get { return this.indbuffer; } }
 
-        public void Update(DX11RenderContext context,int defaultvertexcount, int defaultinstancecount)
+        public void Update(RenderContext context,int defaultvertexcount, int defaultinstancecount)
         {
             if (this.indbuffer != null) { this.indbuffer.Dispose(); }
 
@@ -27,7 +27,7 @@ namespace FeralTic.DX11.Resources
 
         }
 
-        public override void Draw(DX11RenderContext ctx)
+        public override void Draw(RenderContext ctx)
         {
             ctx.Context.DrawInstancedIndirect(this.indbuffer.ArgumentBuffer, 0);
         }

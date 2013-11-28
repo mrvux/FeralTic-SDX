@@ -31,33 +31,33 @@ namespace FeralTic.DX11.Resources
         /// </summary>
         public InputElement[] InputLayout { get; set; }
 
-        public DataStream MapForWrite(DX11RenderContext context)
+        public DataStream MapForWrite(RenderContext context)
         {
             DataStream ds;
             context.Context.MapSubresource(this.Buffer, 0, MapMode.WriteDiscard, MapFlags.None, out ds);
             return ds;
         }
 
-        public DataStream MapForRead(DX11RenderContext context)
+        public DataStream MapForRead(RenderContext context)
         {
             DataStream ds;
             context.Context.MapSubresource(this.Buffer, 0, MapMode.Read, MapFlags.None, out ds);
             return ds;
         }
 
-        public void Unmap(DX11RenderContext context)
+        public void Unmap(RenderContext context)
         {
             context.Context.UnmapSubresource(this.Buffer, 0);
         }
 
-        public void WriteData<T>(DX11RenderContext context, T[] data) where T : struct
+        public void WriteData<T>(RenderContext context, T[] data) where T : struct
         {
             DataStream ds = this.MapForWrite(context);
             ds.WriteRange<T>(data);
             this.Unmap(context);
         }
 
-        public T[] ReadData<T>(DX11RenderContext context) where T : struct
+        public T[] ReadData<T>(RenderContext context) where T : struct
         {
             DataStream ds = this.MapForRead(context);
             T[] result = ds.ReadRange<T>(this.ElementCount);

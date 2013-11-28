@@ -31,18 +31,18 @@ namespace FeralTic.DX11.Queries
             this.query = new Query(device.Device, qd);
         }
 
-        public void Start(DX11RenderContext context)
+        public void Start(RenderContext context)
         {
             context.Context.Begin(query);
         }
 
-        public void Stop(DX11RenderContext context)
+        public void Stop(RenderContext context)
         {
             context.Context.End(query);
             this.hasrun = true;
         }
 
-        public void GetData(DX11RenderContext context)
+        public void GetData(RenderContext context)
         {
             if (this.hasrun == false) { return; }
 

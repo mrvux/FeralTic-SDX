@@ -8,7 +8,7 @@ namespace FeralTic.DX11.Resources
 {
     public interface IDX11GeometryDrawer
     {
-        void Draw(DX11RenderContext ctx);
+        void Draw(RenderContext ctx);
     }
 
     /// <summary>
@@ -28,6 +28,6 @@ namespace FeralTic.DX11.Resources
         /// </summary>
         /// <param name="ctx">Device Context</param>
         /// <param name="layout">Input Layout</param>
-        void PrepareInputAssembler(DX11RenderContext ctx, InputLayout layout);
+        void PrepareInputAssembler(RenderContext ctx, InputLayout layout);
     }
 }

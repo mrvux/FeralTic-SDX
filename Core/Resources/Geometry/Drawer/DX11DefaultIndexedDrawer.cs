@@ -16,14 +16,14 @@ namespace FeralTic.DX11.Resources
             this.geom = geometry;
         }
 
-        public void PrepareInputAssembler(DX11RenderContext ctx, InputLayout layout)
+        public void PrepareInputAssembler(RenderContext ctx, InputLayout layout)
         {
             ctx.Context.InputAssembler.InputLayout = layout;
             ctx.Context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(this.geom.VertexBuffer.Buffer, this.geom.VertexBuffer.VertexSize, 0));
             geom.IndexBuffer.Bind(ctx);
         }
 
-        public virtual void Draw(DX11RenderContext ctx)
+        public virtual void Draw(RenderContext ctx)
         {
             ctx.Context.DrawIndexed(this.geom.IndexBuffer.IndicesCount, 0, 0);
         }

@@ -53,9 +53,9 @@ namespace FeralTic.DX11.Resources
 
         public bool HasBoundingBox { get; set; }
 
-        public abstract void Draw(DX11RenderContext context);
+        public abstract void Draw(RenderContext context);
 
-        public abstract void Bind(DX11RenderContext context, InputLayout layout);
+        public abstract void Bind(RenderContext context, InputLayout layout);
 
         public abstract void Dispose();
 

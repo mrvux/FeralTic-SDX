@@ -158,7 +158,7 @@ namespace FeralTic.DX11.Resources
             return new DX11VertexBuffer(device, verticesCount, vertexSize, bd, initial);
         }
 
-        public void Bind(DX11RenderContext context, InputLayout layout, int slot = 0)
+        public void Bind(RenderContext context, InputLayout layout, int slot = 0)
         {
             context.Context.InputAssembler.InputLayout = layout;
             context.Context.InputAssembler.SetVertexBuffers(slot, new VertexBufferBinding(this.Buffer, this.VertexSize, 0));

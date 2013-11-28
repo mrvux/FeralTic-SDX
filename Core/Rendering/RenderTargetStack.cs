@@ -12,7 +12,7 @@ namespace FeralTic.DX11
 {
     public class RenderTargetStack
     {
-        private DX11RenderContext context;
+        private RenderContext context;
 
         private Stack<RenderTargetStackElement> stack;
 
@@ -21,7 +21,7 @@ namespace FeralTic.DX11
         public int StackCount { get { return this.stack.Count; } }
         public int ViewPortStackCount { get { return this.viewportstack.Count; } }
 
-        public RenderTargetStack(DX11RenderContext context)
+        public RenderTargetStack(RenderContext context)
         {
             this.context = context;
             this.viewportstack = new ViewportStack(context);

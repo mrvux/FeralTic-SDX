@@ -20,7 +20,7 @@ namespace FeralTic.DX11.Resources
         public int InstanceCount { get; set; }
         public int StartInstanceLocation { get; set; }
 
-        public override void Draw(DX11RenderContext ctx)
+        public override void Draw(RenderContext ctx)
         {
             ctx.Context.DrawInstanced(this.geom.VerticesCount, this.InstanceCount, 0, this.StartInstanceLocation);
         }

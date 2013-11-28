@@ -54,13 +54,13 @@ namespace FeralTic.DX11.Resources
         public int VerticesCount { get; set; }
         public int VertexSize { get; set; }
 
-        public override void Bind(DX11RenderContext context,InputLayout layout)
+        public override void Bind(RenderContext context,InputLayout layout)
         {
             context.Context.InputAssembler.PrimitiveTopology = this.Topology;
             this.drawer.PrepareInputAssembler(context, layout);
         }
 
-        public override void Draw(DX11RenderContext context)
+        public override void Draw(RenderContext context)
         {
             this.drawer.Draw(context);
         }

@@ -28,9 +28,9 @@ namespace FeralTic.DX11
         /// <returns>true if layout valid, false otherwise</returns>
         bool ValidateLayout(EffectPass pass,out InputLayout layout);
 
-        void Bind(DX11RenderContext ctx, InputLayout layout);
+        void Bind(RenderContext ctx, InputLayout layout);
 
-        void Draw(DX11RenderContext ctx);
+        void Draw(RenderContext ctx);
 
         BoundingBox BoundingBox { get; set; }
 

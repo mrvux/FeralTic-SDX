@@ -44,19 +44,19 @@ namespace FeralTic.DX11.Resources
             }
         }
 
-        public DataStream MapForWrite(DX11RenderContext context)
+        public DataStream MapForWrite(RenderContext context)
         {
             DataStream ds;
             context.Context.MapSubresource(this.Texture, 0, MapMode.WriteDiscard, MapFlags.None, out ds);
             return ds;
         }
 
-        public void Unmap(DX11RenderContext context)
+        public void Unmap(RenderContext context)
         {
             context.Context.UnmapSubresource(this.Texture, 0);
         }
 
-        public void WriteData<T>(DX11RenderContext context, T[] data) where T : struct
+        public void WriteData<T>(RenderContext context, T[] data) where T : struct
         {
             DataStream ds = this.MapForWrite(context);
             ds.WriteRange<T>(data);

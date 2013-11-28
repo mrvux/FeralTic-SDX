@@ -39,21 +39,21 @@ namespace FeralTic.DX11.Queries
             this.tsdis = new Query(device.Device, qdd);
         }
 
-        public void Start(DX11RenderContext context)
+        public void Start(RenderContext context)
         {
             context.Context.Begin(this.tsdis);
             context.Context.End(this.tstart);
             //this.hasend = false;
         }
 
-        public void Stop(DX11RenderContext context)
+        public void Stop(RenderContext context)
         {
             context.Context.End(this.tend);
             context.Context.End(this.tsdis);
             this.hasrun = true;
         }
 
-        public void GetData(DX11RenderContext context)
+        public void GetData(RenderContext context)
         {
             if (this.hasrun == false) { return; }
 

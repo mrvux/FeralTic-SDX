@@ -111,21 +111,21 @@ namespace FeralTic.DX11.Resources
         }
 
 
-        public DataStream MapForWrite(DX11RenderContext context)
+        public DataStream MapForWrite(RenderContext context)
         {
             DataStream ds;
             context.Context.MapSubresource(this.Buffer, 0, MapMode.WriteDiscard, MapFlags.None, out ds);
             return ds;
         }
 
-        public DataStream MapForRead(DX11RenderContext context)
+        public DataStream MapForRead(RenderContext context)
         {
             DataStream ds;
             context.Context.MapSubresource(this.Buffer, 0, MapMode.Read, MapFlags.None, out ds);
             return ds;
         }
 
-        public void Unmap(DX11RenderContext context)
+        public void Unmap(RenderContext context)
         {
             context.Context.UnmapSubresource(this.Buffer, 0);
         }

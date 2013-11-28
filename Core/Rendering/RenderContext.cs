@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11
 {
-    public class DX11RenderContext : IDisposable
+    public class RenderContext : IDisposable
     {
         public DxDevice Device { get; protected set; }
 
@@ -18,17 +18,17 @@ namespace FeralTic.DX11
         public RenderTargetStack RenderTargetStack { get; protected set; }
         public RenderStateStack RenderStateStack { get; protected set; }
 
-        public static implicit operator DeviceContext2(DX11RenderContext context)
+        public static implicit operator DeviceContext2(RenderContext context)
         {
             return context.Context;
         }
 
-        protected DX11RenderContext()
+        protected RenderContext()
         {
 
         }
 
-        public DX11RenderContext(DxDevice device)
+        public RenderContext(DxDevice device)
         {
             this.Device = device;
             this.Context = device.Device.ImmediateContext.QueryInterface<DeviceContext2>();

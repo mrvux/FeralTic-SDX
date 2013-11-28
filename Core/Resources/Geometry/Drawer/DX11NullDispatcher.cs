@@ -26,12 +26,12 @@ namespace FeralTic.DX11.Resources
             this.geom = geometry;
         }
 
-        public void PrepareInputAssembler(DX11RenderContext ctx, InputLayout layout)
+        public void PrepareInputAssembler(RenderContext ctx, InputLayout layout)
         {
 
         }
 
-        public void Draw(DX11RenderContext ctx)
+        public void Draw(RenderContext ctx)
         {
             //ctx.ComputeShader.
             ctx.Context.Dispatch(X, Y, Z);
