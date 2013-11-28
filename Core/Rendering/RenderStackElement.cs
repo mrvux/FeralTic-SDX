@@ -12,10 +12,10 @@ namespace FeralTic.DX11
 {
     public class RenderTargetStackElement
     {
-        private IDX11RenderTarget[] rendertargets;
+        private IDxRenderTarget[] rendertargets;
         private RenderTargetView[] rtvs;
 
-        private IDX11DepthStencil depth;
+        private IDxDepthStencil depth;
 
         private ViewportF vp;
         private Rectangle scissor;
@@ -23,7 +23,7 @@ namespace FeralTic.DX11
         private bool rodsv = false;
 
 
-        public RenderTargetStackElement(ViewportF vp, Rectangle scissor, IDX11DepthStencil dsv, bool rodsv = false, params IDX11RenderTarget[] rts)
+        public RenderTargetStackElement(ViewportF vp, Rectangle scissor, IDxDepthStencil dsv, bool rodsv = false, params IDxRenderTarget[] rts)
         {
             this.depth = dsv;
             this.rendertargets = rts;
@@ -37,7 +37,7 @@ namespace FeralTic.DX11
             for (int i = 0; i < rts.Length; i++) { rtvs[i] = rts[i].RenderView; }
         }
 
-        public RenderTargetStackElement(ViewportF vp, IDX11DepthStencil dsv, bool rodsv = false, params IDX11RenderTarget[] rts)
+        public RenderTargetStackElement(ViewportF vp, IDxDepthStencil dsv, bool rodsv = false, params IDxRenderTarget[] rts)
         {
             this.depth = dsv;
             this.rendertargets = rts;
@@ -50,7 +50,7 @@ namespace FeralTic.DX11
             for (int i = 0; i < rts.Length; i++) { rtvs[i] = rts[i].RenderView; }
         }
 
-        public RenderTargetStackElement(IDX11DepthStencil dsv, bool rodsv = false, params IDX11RenderTarget[] rts)
+        public RenderTargetStackElement(IDxDepthStencil dsv, bool rodsv = false, params IDxRenderTarget[] rts)
         {
             this.depth = dsv;
             this.rendertargets = rts;

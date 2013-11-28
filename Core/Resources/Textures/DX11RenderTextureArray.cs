@@ -8,7 +8,7 @@ using SharpDX.DXGI;
 
 namespace FeralTic.DX11.Resources
 {
-    public class DX11RenderTextureArray : IDX11Texture2D, IDX11RenderTarget
+    public class DX11RenderTextureArray : IDxTexture2D, IDxRenderTarget
     {
         private DxDevice device;
 

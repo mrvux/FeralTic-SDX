@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 
 namespace FeralTic.DX11.Resources
 {
-    public unsafe class DX11Texture2D : IDX11Texture2D , IDisposable
+    public unsafe class DX11Texture2D : IDxTexture2D , IDisposable
     {
         [DllImport("msvcrt.dll", SetLastError = false)]
         static extern IntPtr memcpy(IntPtr dest, IntPtr src, int count);

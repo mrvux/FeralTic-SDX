@@ -7,7 +7,7 @@ using SharpDX;
 
 namespace FeralTic.DX11
 {
-    public class RenderState : IDX11Resource
+    public class RenderState : IDxResource
     {
         private DxDevice device;
 

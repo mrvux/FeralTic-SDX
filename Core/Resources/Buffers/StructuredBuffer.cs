@@ -13,7 +13,7 @@ namespace FeralTic.DX11.Resources
 {
     public enum eDX11BufferMode { Default = 0, Append = 2, Counter = 4 }
 
-    public unsafe class DX11StructuredBuffer : IDX11ShaderResource,IDX11UnorderedResource, IDisposable
+    public unsafe class DX11StructuredBuffer : IDxShaderResource,IDxUnorderedResource, IDisposable
     {
         private DxDevice device;
 

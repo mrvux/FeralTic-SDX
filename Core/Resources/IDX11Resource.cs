@@ -7,21 +7,21 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic
 {
-    public interface IDX11Resource : IDisposable
+    public interface IDxResource : IDisposable
     {
     }
 
-    public interface IDX11ShaderResource : IDX11Resource
+    public interface IDxShaderResource : IDxResource
     {
         ShaderResourceView ShaderView { get; }
     }
 
-    public interface IDX11UnorderedResource : IDX11ShaderResource
+    public interface IDxUnorderedResource : IDxShaderResource
     {
         UnorderedAccessView UnorderedView { get; }
     }
 
-    public interface IDX11Texture3D : IDX11ShaderResource
+    public interface IDxTexture3D : IDxShaderResource
     {
         Texture3D Texture { get; }
         SharpDX.DXGI.Format Format { get; }
@@ -30,7 +30,7 @@ namespace FeralTic
         int Depth { get; }
     }
 
-    public interface IDX11Texture2D : IDX11ShaderResource
+    public interface IDxTexture2D : IDxShaderResource
     {
         Texture2D Texture { get; }
         SharpDX.DXGI.Format Format { get; }
@@ -38,7 +38,7 @@ namespace FeralTic
         int Height { get; }
     }
 
-    public interface IDX11Texture1D : IDX11ShaderResource
+    public interface IDxTexture1D : IDxShaderResource
     {
         Texture1D Texture { get; }
         SharpDX.DXGI.Format Format { get; }
@@ -46,7 +46,7 @@ namespace FeralTic
     }
 
 
-    public interface IDX11DepthStencil : IDX11ShaderResource
+    public interface IDxDepthStencil : IDxShaderResource
     {
         DepthStencilView DepthView { get; }
         DepthStencilView ReadOnlyView { get; }
@@ -54,7 +54,7 @@ namespace FeralTic
         int Height { get; }
     }
 
-    public interface IDX11RenderTarget : IDisposable
+    public interface IDxRenderTarget : IDisposable
     {
         RenderTargetView RenderView { get; }
         int Width { get; }

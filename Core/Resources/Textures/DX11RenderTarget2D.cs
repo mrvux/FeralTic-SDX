@@ -9,7 +9,7 @@ using SharpDX;
 
 namespace FeralTic.DX11.Resources
 {
-    public class DX11RenderTarget2D : IDX11Texture2D, IDX11RenderTarget, IDX11UnorderedResource
+    public class DX11RenderTarget2D : IDxTexture2D, IDxRenderTarget, IDxUnorderedResource
     {
         private DxDevice device;
 

@@ -13,7 +13,7 @@ namespace FeralTic.DX11.Resources
 {
     public enum eVertexBufferWriteMode { None, Raw, StreamOut }
 
-    public unsafe class DX11VertexBuffer : IDX11Resource, IDisposable
+    public unsafe class DX11VertexBuffer : IDxResource, IDisposable
     {
         private DxDevice device;
 

@@ -10,7 +10,7 @@ using SharpDX;
 
 namespace FeralTic.DX11.Resources
 {
-    public class DX11Texture1DArray : IDX11Texture1D, IDX11UnorderedResource
+    public class DX11Texture1DArray : IDxTexture1D, IDxUnorderedResource
     {
         private DxDevice device;
 

@@ -12,7 +12,7 @@ using SharpDX.Direct3D;
 
 namespace FeralTic.DX11.Resources
 {
-    public unsafe class DX11RawBuffer : IDX11ShaderResource,IDX11UnorderedResource, IDisposable
+    public unsafe class DX11RawBuffer : IDxShaderResource,IDxUnorderedResource, IDisposable
     {
         private DxDevice device;
 

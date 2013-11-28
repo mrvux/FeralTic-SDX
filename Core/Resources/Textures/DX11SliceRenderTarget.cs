@@ -7,9 +7,9 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11.Resources
 {
-    public class DX11SliceRenderTarget : IDX11RenderTarget, IDisposable
+    public class DX11SliceRenderTarget : IDxRenderTarget, IDisposable
     {
-        private IDX11Texture2D parent;
+        private IDxTexture2D parent;
         private DxDevice device;
 
         public RenderTargetView RenderView { get; protected set; }
@@ -17,7 +17,7 @@ namespace FeralTic.DX11.Resources
         public int Width { get { return this.parent.Width; } }
         public int Height { get { return this.parent.Height; } }
 
-        public DX11SliceRenderTarget(DxDevice device, IDX11Texture2D texture, int sliceindex)
+        public DX11SliceRenderTarget(DxDevice device, IDxTexture2D texture, int sliceindex)
         {
             this.device = device;
             this.parent = texture;

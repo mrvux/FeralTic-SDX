@@ -11,15 +11,15 @@ namespace FeralTic.DX11
     {
         private DxDevice device;
 
-        private IDX11Texture2D blacktex;
-        private IDX11Texture2D whitetex;
+        private IDxTexture2D blacktex;
+        private IDxTexture2D whitetex;
 
         public DefaultTextures(DxDevice device)
         {
             this.device = device;
         }
 
-        public IDX11Texture2D BlackTexture
+        public IDxTexture2D BlackTexture
         {
             get
             {
@@ -31,7 +31,7 @@ namespace FeralTic.DX11
             }
         }
 
-        public IDX11Texture2D WhiteTexture
+        public IDxTexture2D WhiteTexture
         {
             get
             {

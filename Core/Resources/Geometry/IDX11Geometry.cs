@@ -11,7 +11,7 @@ namespace FeralTic.DX11
     /// <summary>
     /// Base interface for any geometry
     /// </summary>
-    public interface IDX11Geometry : IDX11Resource, IDisposable
+    public interface IDX11Geometry : IDxResource, IDisposable
     {
         /// <summary>
         /// Default topology for our geometry

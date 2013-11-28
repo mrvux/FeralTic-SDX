@@ -11,7 +11,7 @@ namespace FeralTic.DX11.Resources
 {
     
 
-    public class DX11DepthStencil : IDX11Texture2D, IDX11DepthStencil
+    public class DX11DepthStencil : IDxTexture2D, IDxDepthStencil
     {
         private DxDevice device;
         

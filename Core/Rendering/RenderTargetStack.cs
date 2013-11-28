@@ -29,7 +29,7 @@ namespace FeralTic.DX11
             stack = new Stack<RenderTargetStackElement>();
         }
 
-        public void Push(ViewportF vp, IDX11DepthStencil dsv, bool rodsv = false, params IDX11RenderTarget[] rts)
+        public void Push(ViewportF vp, IDxDepthStencil dsv, bool rodsv = false, params IDxRenderTarget[] rts)
         {
             RenderTargetStackElement elem = new RenderTargetStackElement(vp, dsv, rodsv, rts);
             stack.Push(elem);
@@ -42,21 +42,21 @@ namespace FeralTic.DX11
             this.Apply();
         }
 
-        public void Push(ViewportF vp, Rectangle scissor, IDX11DepthStencil dsv, bool rodsv = false, params IDX11RenderTarget[] rts)
+        public void Push(ViewportF vp, Rectangle scissor, IDxDepthStencil dsv, bool rodsv = false, params IDxRenderTarget[] rts)
         {
             RenderTargetStackElement elem = new RenderTargetStackElement(vp,scissor, dsv, rodsv, rts);
             stack.Push(elem);
             this.Apply();
         }
 
-        public void Push(IDX11DepthStencil dsv, bool rodsv = false, params IDX11RenderTarget[] rts)
+        public void Push(IDxDepthStencil dsv, bool rodsv = false, params IDxRenderTarget[] rts)
         {
             RenderTargetStackElement elem = new RenderTargetStackElement(dsv, rodsv, rts);
             stack.Push(elem);
             this.Apply();
         }
 
-        public void Push(params IDX11RenderTarget[] rts)
+        public void Push(params IDxRenderTarget[] rts)
         {
             RenderTargetStackElement elem = new RenderTargetStackElement(null, false, rts);
             stack.Push(elem);

@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 
 namespace FeralTic.DX11.Resources
 {
-    public class DX11SwapChain : IDX11RenderTarget
+    public class DX11SwapChain : IDxRenderTarget
     {
         private DxDevice device;
         private IntPtr handle;
