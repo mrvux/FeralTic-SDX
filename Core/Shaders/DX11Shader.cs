@@ -60,7 +60,13 @@ namespace FeralTic.DX11
             return new ShaderBytecode(data);
         }
 
-        public static T GetShaderInstance<T>(DX11Device device, ShaderBytecode sb) where T: class
+        public static T GetShaderInstance<T>(DxDevice device, Assembly assembly, string path) where T : class
+        {
+            ShaderBytecode sb = LoadFromResource(assembly, path);
+            return GetShaderInstance<T>(device, sb);
+        }
+
+        public static T GetShaderInstance<T>(DxDevice device, ShaderBytecode sb) where T: class
         {
              if(typeof(T) == typeof(ComputeShader))
              {

@@ -10,7 +10,7 @@ namespace FeralTic.DX11.Resources
 {
     public class DX11RenderTextureArray : IDX11Texture2D, IDX11RenderTarget
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public RenderTargetView RenderView { get; protected set; }
         public ShaderResourceView ShaderView { get; protected set; }
@@ -37,7 +37,7 @@ namespace FeralTic.DX11.Resources
 
         public int ElementCount { get { return resourceDesc.ArraySize; } }
 
-        public DX11RenderTextureArray(DX11Device device, int w, int h, int elemcnt, Format format, bool buildslices = true)
+        public DX11RenderTextureArray(DxDevice device, int w, int h, int elemcnt, Format format, bool buildslices = true)
         {
             this.device = device;
 

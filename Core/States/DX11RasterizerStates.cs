@@ -8,14 +8,14 @@ namespace FeralTic.DX11
 {
     public class DX11RasterizerStates : DX11RenderStates<RasterizerState>
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public RasterizerState BackCullSolid { get; private set; }
         public RasterizerState FrontCullSolid { get; private set; }
         public RasterizerState NoCullSolid { get; private set; }
         public RasterizerState WireFrame { get; private set; }
 
-        public DX11RasterizerStates(DX11Device device)
+        public DX11RasterizerStates(DxDevice device)
         {
             this.device = device;
             this.Initialize();

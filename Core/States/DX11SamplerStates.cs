@@ -8,7 +8,7 @@ namespace FeralTic.DX11
 {
     public class DX11SamplerStates : DX11RenderStates<SamplerState>
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public SamplerState LinearWrap { get; private set; }
         public SamplerState LinearClamp { get; private set; }
@@ -17,7 +17,7 @@ namespace FeralTic.DX11
         public SamplerState LinearBorder { get; private set; }
         public SamplerState PointBorder { get; private set; }
 
-        public DX11SamplerStates(DX11Device device)
+        public DX11SamplerStates(DxDevice device)
         {
             this.device = device;
             this.Initialize();

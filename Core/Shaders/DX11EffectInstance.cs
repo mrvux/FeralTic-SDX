@@ -25,7 +25,7 @@ namespace FeralTic.DX11
         }
 
         private Effect effect;
-        private DX11Device device;
+        private DxDevice device;
 
         private EffectTechnique currenttechnique;
 
@@ -37,24 +37,24 @@ namespace FeralTic.DX11
         public Effect Effect { get { return this.effect; } }
 
         public EffectTechnique CurrentTechnique { get { return this.currenttechnique; } }
-        public DX11Device Device { get { return this.device; } }
+        public DxDevice Device { get { return this.device; } }
 
 
-        public DX11EffectInstance(DX11Device device, DX11Effect effect)
+        public DX11EffectInstance(DxDevice device, DX11Effect effect)
         {
             this.device = device;
             this.effect = new Effect(device.Device, effect.ByteCode);
             this.currenttechnique = this.effect.GetTechniqueByIndex(0);
         }
 
-        public DX11EffectInstance(DX11Device device, ShaderBytecode bytecode)
+        public DX11EffectInstance(DxDevice device, ShaderBytecode bytecode)
         {
             this.device = device;
             this.effect = new Effect(device.Device, bytecode);
             this.currenttechnique = this.effect.GetTechniqueByIndex(0);
         }
 
-        public DX11EffectInstance(DX11Device device, Effect effect)
+        public DX11EffectInstance(DxDevice device, Effect effect)
         {
             this.device = device;
             this.effect = effect;

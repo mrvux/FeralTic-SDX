@@ -8,7 +8,7 @@ namespace FeralTic.DX11
 {
     public class DX11DepthStencilStates : DX11RenderStates<DepthStencilState>
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public DepthStencilState Disabled { get; private set; }
         public DepthStencilState LessReadWrite { get; private set; }
@@ -24,7 +24,7 @@ namespace FeralTic.DX11
         public DepthStencilState StencilZero { get; private set; }
 
 
-        public DX11DepthStencilStates(DX11Device device)
+        public DX11DepthStencilStates(DxDevice device)
         {
             this.device = device;
             this.Initialize();

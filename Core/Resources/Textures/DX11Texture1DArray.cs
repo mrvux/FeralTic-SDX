@@ -12,7 +12,7 @@ namespace FeralTic.DX11.Resources
 {
     public class DX11Texture1DArray : IDX11Texture1D, IDX11UnorderedResource
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public Texture1D Texture { get; private set; }
 
@@ -36,7 +36,7 @@ namespace FeralTic.DX11.Resources
             get { return this.description.Format; }
         }
 
-        protected DX11Texture1DArray(DX11Device device, Texture1DDescription desc)
+        protected DX11Texture1DArray(DxDevice device, Texture1DDescription desc)
         {
             this.device = device;
             this.description = desc;
@@ -49,7 +49,7 @@ namespace FeralTic.DX11.Resources
             }
         }
 
-        public static DX11Texture1DArray CreateWriteable(DX11Device device, int width, int elementcount, SharpDX.DXGI.Format format)
+        public static DX11Texture1DArray CreateWriteable(DxDevice device, int width, int elementcount, SharpDX.DXGI.Format format)
         {
             Texture1DDescription desc = new Texture1DDescription()
             {

@@ -9,7 +9,7 @@ namespace FeralTic.DX11
 {
     public class DX11RenderState : IDX11Resource
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public RasterizerState Rasterizer { get; set; }
 
@@ -23,7 +23,7 @@ namespace FeralTic.DX11
 
         public int BlendSampleMask { get; set; }
 
-        public DX11RenderState(DX11Device device)
+        public DX11RenderState(DxDevice device)
         {
             this.device = device;
             this.BlendFactor = new Color4(0, 0, 0, 0);

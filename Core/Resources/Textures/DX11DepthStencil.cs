@@ -13,7 +13,7 @@ namespace FeralTic.DX11.Resources
 
     public class DX11DepthStencil : IDX11Texture2D, IDX11DepthStencil
     {
-        private DX11Device device;
+        private DxDevice device;
         
         private Texture2DDescription resourceDesc;
 
@@ -42,13 +42,13 @@ namespace FeralTic.DX11.Resources
         public eDepthFormat DepthFormat { get; private set; }
 
 
-        public DX11DepthStencil(DX11Device device, int w, int h, eDepthFormat depthformat = eDepthFormat.d24s8)
+        public DX11DepthStencil(DxDevice device, int w, int h, eDepthFormat depthformat = eDepthFormat.d24s8)
             : this(device, w, h, new SampleDescription(1, 0), depthformat)
         {
 
         }
 
-        public DX11DepthStencil(DX11Device device, int w, int h, SampleDescription sd, eDepthFormat depthformat = eDepthFormat.d24s8)
+        public DX11DepthStencil(DxDevice device, int w, int h, SampleDescription sd, eDepthFormat depthformat = eDepthFormat.d24s8)
         {
             this.device = device;
             var depthBufferDesc = new Texture2DDescription

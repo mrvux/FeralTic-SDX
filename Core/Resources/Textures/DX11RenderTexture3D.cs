@@ -11,7 +11,7 @@ namespace FeralTic.DX11.Resources
 {
     public class DX11RenderTexture3D : IDX11Texture3D, IDX11RenderTarget, IDX11UnorderedResource
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public ShaderResourceView ShaderView { get; protected set; }
         public UnorderedAccessView UnorderedView { get; protected set; }
@@ -25,7 +25,7 @@ namespace FeralTic.DX11.Resources
         public int Height { get { return resourceDesc.Height; } }
         public int Depth { get { return resourceDesc.Depth; } }
        
-        public DX11RenderTexture3D(DX11Device device, int w, int h, int d, Format format)
+        public DX11RenderTexture3D(DxDevice device, int w, int h, int d, Format format)
         {
             this.device = device;
             Texture3DDescription desc = new Texture3DDescription()

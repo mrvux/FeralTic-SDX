@@ -16,7 +16,7 @@ namespace FeralTic.DX11.Resources
 {
     public class DX11SwapChain : IDX11RenderTarget
     {
-        private DX11Device device;
+        private DxDevice device;
         private IntPtr handle;
         private SwapChain swapchain;
 
@@ -39,14 +39,14 @@ namespace FeralTic.DX11.Resources
             get { return this.TextureDesc.Height; }
         }
 
-        public DX11SwapChain(DX11Device device, IntPtr handle)
+        public DX11SwapChain(DxDevice device, IntPtr handle)
             : this(device, handle, Format.R8G8B8A8_UNorm, new SampleDescription(1,0))
         {
 
         }
         
 
-        public DX11SwapChain(DX11Device device, IntPtr handle, Format format, SampleDescription sampledesc)
+        public DX11SwapChain(DxDevice device, IntPtr handle, Format format, SampleDescription sampledesc)
         {
             this.device = device;
             this.handle = handle;
@@ -88,7 +88,6 @@ namespace FeralTic.DX11.Resources
             this.swapchain.ResizeBuffers(1,w, h, SharpDX.DXGI.Format.Unknown, SwapChainFlags.AllowModeSwitch);
 
             this.resource = Texture2D.FromSwapChain<Texture2D>(this.swapchain, 0);
-            this.resource.Dispose();
 
             this.TextureDesc = this.resource.Description;
             this.RenderView = new RenderTargetView(device.Device, this.resource);

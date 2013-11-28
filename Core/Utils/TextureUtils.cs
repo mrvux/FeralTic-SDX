@@ -11,7 +11,7 @@ namespace FeralTic.DX11
 {
     public class TextureUtils
     {
-        public static DX11Texture2D SolidColor(DX11Device device, Color4 color)
+        public static DX11Texture2D SolidColor(DxDevice device, Color4 color)
         {
             DataStream ds = new DataStream(4, true, true);
             ds.Write<int>(color.ToRgba());

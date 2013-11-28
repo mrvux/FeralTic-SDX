@@ -10,14 +10,14 @@ namespace FeralTic.DX11.Resources
     public class DX11SliceRenderTarget : IDX11RenderTarget, IDisposable
     {
         private IDX11Texture2D parent;
-        private DX11Device device;
+        private DxDevice device;
 
         public RenderTargetView RenderView { get; protected set; }
 
         public int Width { get { return this.parent.Width; } }
         public int Height { get { return this.parent.Height; } }
 
-        public DX11SliceRenderTarget(DX11Device device, IDX11Texture2D texture, int sliceindex)
+        public DX11SliceRenderTarget(DxDevice device, IDX11Texture2D texture, int sliceindex)
         {
             this.device = device;
             this.parent = texture;

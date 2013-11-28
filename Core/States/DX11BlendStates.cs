@@ -9,7 +9,7 @@ namespace FeralTic.DX11
 {
     public partial class DX11BlendStates : DX11RenderStates<BlendState>
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public BlendState Disabled { get; private set; }
         public BlendState Additive { get; private set; }
@@ -19,7 +19,7 @@ namespace FeralTic.DX11
 
 
 
-        public DX11BlendStates(DX11Device device)
+        public DX11BlendStates(DxDevice device)
         {
             this.device = device;
             this.Initialize();
