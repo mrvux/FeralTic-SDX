@@ -133,10 +133,10 @@
     <Compile Include="Rendering\DX11RenderStackElement.cs" />
     <Compile Include="Rendering\DX11RenderStateStack.cs" />
     <Compile Include="Rendering\DX11RenderTargetStack.cs" />
-    <Compile Include="Rendering\DX11ResourcePool.cs" />
-    <Compile Include="Rendering\DX11ResourcePoolManager.cs" />
-    <Compile Include="Rendering\DX11ResourcePools.cs" />
-    <Compile Include="Rendering\DX11ViewportStack.cs" />
+    <Compile Include="Rendering\ResourcePool.cs" />
+    <Compile Include="Rendering\ResourcePoolManager.cs" />
+    <Compile Include="Rendering\ResourcePools.cs" />
+    <Compile Include="Rendering\ViewportStack.cs" />
     <Compile Include="Resources\Buffers\ConstantBuffer.cs" />
     <Compile Include="Resources\Buffers\IndexBuffer.cs" />
     <Compile Include="Resources\Buffers\Indirect\BaseIndirectBuffer.cs" />

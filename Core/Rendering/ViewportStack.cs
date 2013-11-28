@@ -7,15 +7,15 @@ using SharpDX;
 
 namespace FeralTic.DX11
 {
-    public class DX11ViewPortData
+    public class ViewPortData
     {
-        public DX11ViewPortData(ViewportF vp)
+        public ViewPortData(ViewportF vp)
         {
             this.Viewport = vp;
             this.HasScissor = false;
         }
 
-        public DX11ViewPortData(ViewportF vp, Rectangle scissor)
+        public ViewPortData(ViewportF vp, Rectangle scissor)
         {
             this.Viewport = vp;
             this.HasScissor = true;
@@ -42,32 +42,32 @@ namespace FeralTic.DX11
 
     }
 
-    public class DX11ViewportStack
+    public class ViewportStack
     {
         private DX11RenderContext context;
 
-        private Stack<DX11ViewPortData> stack;
+        private Stack<ViewPortData> stack;
 
         public int Count
         {
             get { return stack.Count; }
         }
 
-        public DX11ViewportStack(DX11RenderContext context)
+        public ViewportStack(DX11RenderContext context)
         {
             this.context = context;
-            stack = new Stack<DX11ViewPortData>();
+            stack = new Stack<ViewPortData>();
         }
 
         public void Push(ViewportF vp)
         {
-            stack.Push(new DX11ViewPortData(vp));
+            stack.Push(new ViewPortData(vp));
             this.Apply();
         }
 
         public void Push(ViewportF vp, Rectangle scissor)
         {
-            stack.Push(new DX11ViewPortData(vp,scissor));
+            stack.Push(new ViewPortData(vp,scissor));
             this.Apply();
         }
 

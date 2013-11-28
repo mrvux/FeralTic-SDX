@@ -20,7 +20,7 @@ namespace FeralTic.DX11
 
         public DefaultTextures DefaultTextures { get; private set; }
 
-        public DX11ResourcePoolManager ResourcePool { get; private set; }
+        public ResourcePoolManager ResourcePool { get; private set; }
 
         public DX11PrimitivesManager Primitives { get; private set; }
 
@@ -41,7 +41,7 @@ namespace FeralTic.DX11
 
             this.DefaultTextures = new DefaultTextures(this);
 
-            this.ResourcePool = new DX11ResourcePoolManager(this);
+            this.ResourcePool = new ResourcePoolManager(this);
 
             this.Primitives = new DX11PrimitivesManager(this);
         }
