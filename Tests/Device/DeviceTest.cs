@@ -10,7 +10,7 @@ namespace FeralTic.Tests
         [TestMethod]
         public void CreateDevice()
         {
-            DX11Device device = new DX11Device();
+            DxDevice device = new DxDevice();
             device.Dispose();
         }
 

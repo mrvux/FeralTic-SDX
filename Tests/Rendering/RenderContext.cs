@@ -10,7 +10,7 @@ namespace FeralTic.Tests.Rendering
         [TestMethod]
         public void ImmediateTest()
         {
-            DX11Device device = new DX11Device();
+            DxDevice device = new DxDevice();
             DX11RenderContext immediate = new DX11RenderContext(device);
             immediate.Dispose();
             device.Dispose();
@@ -19,7 +19,7 @@ namespace FeralTic.Tests.Rendering
         [TestMethod]
         public void ImmediateAndDefferedTest()
         {
-            DX11Device device = new DX11Device();
+            DxDevice device = new DxDevice();
             DX11RenderContext immediate = new DX11RenderContext(device);
 
             DX11DefferedRenderContext deffered = new DX11DefferedRenderContext(device);

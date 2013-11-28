@@ -12,9 +12,9 @@ using WICFactory = SharpDX.WIC.ImagingFactory2;
 
 namespace FeralTic.DX11
 {
-    public delegate void DeviceDelegate(DX11Device sender);
+    public delegate void DeviceDelegate(DxDevice sender);
 
-    public class DX11Device : IDisposable
+    public class DxDevice : IDisposable
     {
         public Device2 Device { get; private set; }
 
@@ -44,12 +44,12 @@ namespace FeralTic.DX11
             get { return this.Device.FeatureLevel >= FeatureLevel.Level_11_0; }
         }
 
-        public static implicit operator Device2(DX11Device device)
+        public static implicit operator Device2(DxDevice device)
         {
             return device.Device;
         }
 
-        public DX11Device(DeviceCreationFlags flags = DeviceCreationFlags.None, int adapterindex = 0)
+        public DxDevice(DeviceCreationFlags flags = DeviceCreationFlags.BgraSupport, int adapterindex = 0)
         {
             this.WICFactory = new WICFactory();
             this.creationflags = flags;

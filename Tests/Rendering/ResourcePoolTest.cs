@@ -88,10 +88,10 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void TestSimilarVertexBuffers()
         {
-            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, false, false);
+            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.None);
             this.Device.ResourcePool.Unlock(sb1);
 
-            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer(20, 16, false,false);
+            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.None);
 
             Assert.AreEqual(sb1.Buffer.NativePointer, sb2.Buffer.NativePointer);
         }
@@ -99,10 +99,10 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void TestSimilarVertexBufferStride()
         {
-            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, false,false);
+            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.None);
             this.Device.ResourcePool.Unlock(sb1);
 
-            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer<Vector4>(20, false,false);
+            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer<Vector4>(20, eVertexBufferWriteMode.None);
 
             Assert.AreEqual(sb1.Buffer.NativePointer, sb2.Buffer.NativePointer);
         }
@@ -110,10 +110,10 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void TestTwoVertexBuffers()
         {
-            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, false, false);
+            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.None);
             this.Device.ResourcePool.Unlock(sb1);
 
-            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer(30, 16, false, false);
+            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer(30, 16, eVertexBufferWriteMode.None);
 
             Assert.AreNotEqual(sb1.Buffer.NativePointer, sb2.Buffer.NativePointer);
         }
@@ -121,12 +121,46 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void TestVertexBuffersBuffersWithFlags()
         {
-            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, false, false);
+            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.None);
             this.Device.ResourcePool.Unlock(sb1);
 
-            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer(20, 16, true, false);
+            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.Raw);
 
             Assert.AreNotEqual(sb1.Buffer.NativePointer, sb2.Buffer.NativePointer);
         }
+
+        [TestMethod()]
+        public void TestSimilarVertexBuffersRaw()
+        {
+            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.Raw);
+            this.Device.ResourcePool.Unlock(sb1);
+
+            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.Raw);
+
+            Assert.AreEqual(sb1.Buffer.NativePointer, sb2.Buffer.NativePointer);
+        }
+
+        [TestMethod()]
+        public void TestSimilarVertexBuffersStreamOut()
+        {
+            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.StreamOut);
+            this.Device.ResourcePool.Unlock(sb1);
+
+            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.StreamOut);
+
+            Assert.AreEqual(sb1.Buffer.NativePointer, sb2.Buffer.NativePointer);
+        }
+
+        [TestMethod()]
+        public void TestVertexBuffersSORaw()
+        {
+            DX11VertexBuffer sb1 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.StreamOut);
+            this.Device.ResourcePool.Unlock(sb1);
+
+            DX11VertexBuffer sb2 = this.Device.ResourcePool.LockVertexBuffer(20, 16, eVertexBufferWriteMode.Raw);
+
+            Assert.AreNotEqual(sb1.Buffer.NativePointer, sb2.Buffer.NativePointer);
+        }
+
     }
 }
