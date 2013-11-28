@@ -12,8 +12,8 @@ namespace FeralTic.DX11
         {
             this.Device = device;
             this.Context = new DeviceContext2(device.Device);
-            this.RenderTargetStack = new DX11RenderTargetStack(this);
-            this.RenderStateStack = new DX11RenderStateStack(this);
+            this.RenderTargetStack = new RenderTargetStack(this);
+            this.RenderStateStack = new RenderStateStack(this);
         }
 
         public CommandList CommandList { get; private set; }

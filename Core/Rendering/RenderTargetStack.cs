@@ -10,7 +10,7 @@ using SharpDX;
 
 namespace FeralTic.DX11
 {
-    public class DX11RenderTargetStack
+    public class RenderTargetStack
     {
         private DX11RenderContext context;
 
@@ -21,7 +21,7 @@ namespace FeralTic.DX11
         public int StackCount { get { return this.stack.Count; } }
         public int ViewPortStackCount { get { return this.viewportstack.Count; } }
 
-        public DX11RenderTargetStack(DX11RenderContext context)
+        public RenderTargetStack(DX11RenderContext context)
         {
             this.context = context;
             this.viewportstack = new ViewportStack(context);
