@@ -15,14 +15,14 @@ namespace FeralTic.DX11.Resources
     /// <typeparam name="T">Buffer structure type</typeparam>
     public class DX11ConstantBuffer<T> where T :struct
     {
-        private DX11Device device;
+        private DxDevice device;
 
-        public DX11ConstantBuffer(DX11Device device)
+        public DX11ConstantBuffer(DxDevice device)
             : this(device, false)
         {
         }
 
-        public DX11ConstantBuffer(DX11Device device, bool align)
+        public DX11ConstantBuffer(DxDevice device, bool align)
         {
             this.device = device;
             int size;

@@ -9,12 +9,12 @@ namespace FeralTic.DX11
 {
     public class DefaultTextures : IDisposable
     {
-        private DX11Device device;
+        private DxDevice device;
 
         private IDX11Texture2D blacktex;
         private IDX11Texture2D whitetex;
 
-        public DefaultTextures(DX11Device device)
+        public DefaultTextures(DxDevice device)
         {
             this.device = device;
         }

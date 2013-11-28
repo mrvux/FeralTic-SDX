@@ -9,9 +9,9 @@ namespace FeralTic.DX11.Resources
 {
     public class IndexedIndirectBuffer : BaseIndirectBuffer<DrawIndexedInstancedArgs>
     {
-        public IndexedIndirectBuffer(DX11Device device, DrawIndexedInstancedArgs args) : base(device, args) { }
+        public IndexedIndirectBuffer(DxDevice device, DrawIndexedInstancedArgs args) : base(device, args) { }
 
-        public IndexedIndirectBuffer(DX11Device device) : this(device, new DrawIndexedInstancedArgs(1, 1, 0, 0, 0)) { }
+        public IndexedIndirectBuffer(DxDevice device) : this(device, new DrawIndexedInstancedArgs(1, 1, 0, 0, 0)) { }
 
         public void CopyInstanceCount(DeviceContext ctx, UnorderedAccessView uav)
         {

@@ -7,10 +7,9 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11.Queries
 {
-
-    public class DX11StreamOutQuery : IDX11Query
+    public class DX11PipelineQuery : IDX11Query
     {
-        private DX11Device device;
+        private DxDevice device;
 
         private Query query;
 
@@ -18,15 +17,15 @@ namespace FeralTic.DX11.Queries
 
         private readonly int WAIT_MAX = 1024;
 
-        public StreamOutputStatistics Statistics { get; protected set; }
+        public QueryDataPipelineStatistics Statistics { get; protected set; }
 
-        public DX11StreamOutQuery(DX11Device device)
+        public DX11PipelineQuery(DxDevice device)
         {
             this.device = device;
 
             QueryDescription qd = new QueryDescription();
             qd.Flags = QueryFlags.None;
-            qd.Type = QueryType.StreamOutputStatistics;
+            qd.Type = QueryType.PipelineStatistics;
 
             this.query = new Query(device.Device, qd);
         }
@@ -46,11 +45,11 @@ namespace FeralTic.DX11.Queries
         {
             if (this.hasrun == false) { return; }
 
-            for (int i = 0; i < WAIT_MAX; i++ )
+            for (int i = 0; i < WAIT_MAX; i++)
             {
                 if (context.Context.IsDataAvailable(this.query))
                 {
-                    this.Statistics = context.Context.GetData<StreamOutputStatistics>(this.query);
+                    this.Statistics = context.Context.GetData<QueryDataPipelineStatistics>(this.query);
                     return;
                 }
             }
@@ -61,6 +60,6 @@ namespace FeralTic.DX11.Queries
         {
             this.query.Dispose();
         }
-
     }
+
 }

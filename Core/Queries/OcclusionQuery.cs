@@ -10,7 +10,7 @@ namespace FeralTic.DX11.Queries
 {
     public class DX11OcclusionQuery : IDX11Query, IDisposable
     {
-        private DX11Device device;
+        private DxDevice device;
 
         private Query query;
 
@@ -20,7 +20,7 @@ namespace FeralTic.DX11.Queries
 
         public long Statistics { get; protected set; }
 
-        public DX11OcclusionQuery(DX11Device device)
+        public DX11OcclusionQuery(DxDevice device)
         {
             this.device = device;
 

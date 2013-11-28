@@ -12,7 +12,7 @@ namespace FeralTic.DX11
 {
     public class DX11ResourcePoolManager : IDisposable
     {
-        private DX11Device device;
+        private DxDevice device;
 
         private DX11RenderTargetPool targetpool;
         private DX11StructuredBufferPool sbufferpool;
@@ -20,7 +20,7 @@ namespace FeralTic.DX11
         private DX11DepthStencilPool depthpool;
         private DX11VertexBufferPool vbopool;
 
-        public DX11ResourcePoolManager(DX11Device device)
+        public DX11ResourcePoolManager(DxDevice device)
         {
             this.device = device;
             this.targetpool = new DX11RenderTargetPool(this.device);
@@ -64,14 +64,14 @@ namespace FeralTic.DX11
             return this.depthpool.Lock(w, h, format,sd);
         }
 
-        public DX11ResourcePoolEntry<DX11VertexBuffer> LockVertexBuffer(int verticescount,int vertexsize,bool allowstreamout, bool allowraw)
+        public DX11ResourcePoolEntry<DX11VertexBuffer> LockVertexBuffer(int verticescount,int vertexsize, eVertexBufferWriteMode mode)
         {
-            return this.vbopool.Lock(verticescount, vertexsize, allowstreamout,allowraw);
+            return this.vbopool.Lock(verticescount, vertexsize, mode);
         }
 
-        public DX11ResourcePoolEntry<DX11VertexBuffer> LockVertexBuffer<T>(int verticescount, bool allowstreamout, bool allowraw) where T : struct
+        public DX11ResourcePoolEntry<DX11VertexBuffer> LockVertexBuffer<T>(int verticescount, eVertexBufferWriteMode mode) where T : struct
         {
-            return this.vbopool.Lock(verticescount, Marshal.SizeOf(typeof(T)) , allowstreamout,allowraw);
+            return this.vbopool.Lock(verticescount, Marshal.SizeOf(typeof(T)), mode);
         }
 
         public void Unlock(DX11RenderTarget2D target)

@@ -11,9 +11,11 @@ using System.Runtime.InteropServices;
 
 namespace FeralTic.DX11.Resources
 {
+    public enum eVertexBufferWriteMode { None, Raw, StreamOut }
+
     public unsafe class DX11VertexBuffer : IDX11Resource, IDisposable
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public Buffer Buffer { get; protected set; }
         public int VerticesCount { get; protected set; }
@@ -27,9 +29,19 @@ namespace FeralTic.DX11.Resources
         }
 
 
-        public bool AllowRaw
+        public bool AllowUAV
         {
-            get { return this.desc.OptionFlags.HasFlag(ResourceOptionFlags.BufferAllowRawViews); }
+            get { return this.desc.BindFlags.HasFlag(BindFlags.UnorderedAccess); }
+        }
+
+        public eVertexBufferWriteMode WriteMode
+        {
+            get
+            {
+                if (this.AllowStreamOutput) { return eVertexBufferWriteMode.StreamOut; }
+                else if (this.AllowUAV) { return eVertexBufferWriteMode.Raw; }
+                else { return eVertexBufferWriteMode.None; }
+            }
         }
 
 
@@ -43,7 +55,7 @@ namespace FeralTic.DX11.Resources
         /// </summary>
         public InputElement[] InputLayout { get; set; }
 
-        protected DX11VertexBuffer(DX11Device device, int verticescount, int vertexsize, BufferDescription desc, DataStream initial = null)
+        protected DX11VertexBuffer(DxDevice device, int verticescount, int vertexsize, BufferDescription desc, DataStream initial = null)
         {
             this.device = device;
             this.VertexSize = vertexsize;
@@ -62,7 +74,7 @@ namespace FeralTic.DX11.Resources
             this.desc = this.Buffer.Description;
         }
 
-        protected DX11VertexBuffer(DX11Device device, int verticescount, int vertexsize, BufferDescription desc, IntPtr ptr)
+        protected DX11VertexBuffer(DxDevice device, int verticescount, int vertexsize, BufferDescription desc, IntPtr ptr)
         {
             this.device = device;
             this.VertexSize = vertexsize;
@@ -72,7 +84,7 @@ namespace FeralTic.DX11.Resources
             this.desc = this.Buffer.Description;
         }
 
-        public static DX11VertexBuffer CreateWriteable(DX11Device device, int verticesCount, int vertexSize, bool streamout, bool raw)
+        public static DX11VertexBuffer CreateWriteable(DxDevice device, int verticesCount, int vertexSize, eVertexBufferWriteMode mode = eVertexBufferWriteMode.None)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -83,19 +95,21 @@ namespace FeralTic.DX11.Resources
                 Usage = ResourceUsage.Default
             };
 
-            if (streamout) { bd.BindFlags |= BindFlags.StreamOutput; }
+            bd.BindFlags |= BindFlags.ShaderResource;
+            bd.OptionFlags = ResourceOptionFlags.BufferAllowRawViews;
 
-            if (raw) 
-            { 
-                bd.BindFlags |= BindFlags.ShaderResource; 
-                bd.BindFlags |= BindFlags.UnorderedAccess;
-                bd.OptionFlags = ResourceOptionFlags.BufferAllowRawViews;
+            if (mode == eVertexBufferWriteMode.StreamOut)
+            {
+                bd.BindFlags |= BindFlags.StreamOutput;
             }
-
+            else if (mode == eVertexBufferWriteMode.Raw)
+            {
+                bd.BindFlags |= BindFlags.UnorderedAccess;
+            }
             return new DX11VertexBuffer(device, verticesCount, vertexSize, bd, null);
         }
 
-        public static DX11VertexBuffer CreateImmutable(DX11Device device, int verticesCount, int vertexSize, DataStream initial)
+        public static DX11VertexBuffer CreateImmutable(DxDevice device, int verticesCount, int vertexSize, DataStream initial)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -109,7 +123,7 @@ namespace FeralTic.DX11.Resources
             return new DX11VertexBuffer(device, verticesCount, vertexSize, bd, initial);
         }
 
-        public static DX11VertexBuffer CreateImmutable<T>(DX11Device device, T[] initial) where T : struct
+        public static DX11VertexBuffer CreateImmutable<T>(DxDevice device, T[] initial) where T : struct
         {
             int vertexSize = Marshal.SizeOf(typeof(T));
             int verticesCount = initial.Length;
@@ -122,7 +136,7 @@ namespace FeralTic.DX11.Resources
             return result;  
         }
 
-        public static DX11VertexBuffer CreateImmutable<T>(DX11Device device, DataStream initial) where T : struct
+        public static DX11VertexBuffer CreateImmutable<T>(DxDevice device, DataStream initial) where T : struct
         {
             int vertexSize = Marshal.SizeOf(typeof(T));
             int verticesCount = (int)initial.Length / vertexSize;
@@ -130,7 +144,7 @@ namespace FeralTic.DX11.Resources
             return result;
         }
 
-        public static DX11VertexBuffer CreateDynamic(DX11Device device, int verticesCount, int vertexSize, DataStream initial)
+        public static DX11VertexBuffer CreateDynamic(DxDevice device, int verticesCount, int vertexSize, DataStream initial)
         {
             BufferDescription bd = new BufferDescription()
             {

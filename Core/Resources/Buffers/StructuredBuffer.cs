@@ -15,7 +15,7 @@ namespace FeralTic.DX11.Resources
 
     public unsafe class DX11StructuredBuffer : IDX11ShaderResource,IDX11UnorderedResource, IDisposable
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public Buffer Buffer { get; protected set; }
         public ShaderResourceView ShaderView { get; protected set; }
@@ -65,7 +65,7 @@ namespace FeralTic.DX11.Resources
             return result;
         }
 
-        protected DX11StructuredBuffer(DX11Device device, int elementcount, int stride, BufferDescription desc, DataStream initial = null)
+        protected DX11StructuredBuffer(DxDevice device, int elementcount, int stride, BufferDescription desc, DataStream initial = null)
         {
             this.device = device;
             this.ElementCount = elementcount;
@@ -87,7 +87,7 @@ namespace FeralTic.DX11.Resources
             }
         }
 
-        protected DX11StructuredBuffer(DX11Device device, int elementcount, int stride, BufferDescription desc, IntPtr ptr)
+        protected DX11StructuredBuffer(DxDevice device, int elementcount, int stride, BufferDescription desc, IntPtr ptr)
         {
             this.device = device;
             this.ElementCount = elementcount;
@@ -97,7 +97,7 @@ namespace FeralTic.DX11.Resources
             this.ShaderView = new ShaderResourceView(device.Device, this.Buffer);
         }
 
-        protected DX11StructuredBuffer(DX11Device device, int elementcount, int stride, BufferDescription desc, eDX11BufferMode buffermode = eDX11BufferMode.Default)
+        protected DX11StructuredBuffer(DxDevice device, int elementcount, int stride, BufferDescription desc, eDX11BufferMode buffermode = eDX11BufferMode.Default)
         {
             this.device = device;
             this.ElementCount = elementcount;
@@ -120,7 +120,7 @@ namespace FeralTic.DX11.Resources
             this.UnorderedView = new UnorderedAccessView(device.Device, this.Buffer,uavd);
         }
 
-        public static DX11StructuredBuffer CreateImmutable(DX11Device device, int elemenCount, int stride, DataStream initial)
+        public static DX11StructuredBuffer CreateImmutable(DxDevice device, int elemenCount, int stride, DataStream initial)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -134,7 +134,7 @@ namespace FeralTic.DX11.Resources
             return new DX11StructuredBuffer(device, elemenCount, stride, bd, initial);
         }
 
-        public static DX11StructuredBuffer CreateImmutable<T>(DX11Device device, T[] initial) where T : struct
+        public static DX11StructuredBuffer CreateImmutable<T>(DxDevice device, T[] initial) where T : struct
         {
             int stride = Marshal.SizeOf(typeof(T));
             DataStream ds = new DataStream(stride * initial.Length, true, true);
@@ -146,7 +146,7 @@ namespace FeralTic.DX11.Resources
             return sb;
         }
 
-        public static DX11StructuredBuffer CreateDynamic(DX11Device device, int elemenCount, int stride)
+        public static DX11StructuredBuffer CreateDynamic(DxDevice device, int elemenCount, int stride)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -160,12 +160,12 @@ namespace FeralTic.DX11.Resources
             return new DX11StructuredBuffer(device, elemenCount, stride, bd, null);
         }
 
-        public static DX11StructuredBuffer CreateDynamic<T>(DX11Device device, int elemenCount) where T : struct
+        public static DX11StructuredBuffer CreateDynamic<T>(DxDevice device, int elemenCount) where T : struct
         {
             return CreateDynamic(device, elemenCount, Marshal.SizeOf(typeof(T)));
         }
 
-        public static DX11StructuredBuffer CreateStaging(DX11Device device, int elemenCount, int stride)
+        public static DX11StructuredBuffer CreateStaging(DxDevice device, int elemenCount, int stride)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -191,12 +191,12 @@ namespace FeralTic.DX11.Resources
             return result;
         }
 
-        public static DX11StructuredBuffer CreateStaging<T>(DX11Device device, int elemenCount) where T : struct
+        public static DX11StructuredBuffer CreateStaging<T>(DxDevice device, int elemenCount) where T : struct
         {
             return CreateStaging(device, elemenCount, Marshal.SizeOf(typeof(T)));
         }
 
-        public static DX11StructuredBuffer CreateWriteable(DX11Device device, int elemenCount, int stride, eDX11BufferMode mode = eDX11BufferMode.Default)
+        public static DX11StructuredBuffer CreateWriteable(DxDevice device, int elemenCount, int stride, eDX11BufferMode mode = eDX11BufferMode.Default)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -210,17 +210,17 @@ namespace FeralTic.DX11.Resources
             return new DX11StructuredBuffer(device, elemenCount, stride, bd, mode);
         }
 
-        public static DX11StructuredBuffer CreateWriteable<T>(DX11Device device, int elementcount, eDX11BufferMode mode = eDX11BufferMode.Default) where T : struct
+        public static DX11StructuredBuffer CreateWriteable<T>(DxDevice device, int elementcount, eDX11BufferMode mode = eDX11BufferMode.Default) where T : struct
         {
             return CreateWriteable(device, elementcount, Marshal.SizeOf(typeof(T)), mode);
         }
 
-        public static DX11StructuredBuffer CreateAppend<T>(DX11Device device, int elementcount) where T : struct
+        public static DX11StructuredBuffer CreateAppend<T>(DxDevice device, int elementcount) where T : struct
         {
             return CreateWriteable(device, elementcount, Marshal.SizeOf(typeof(T)), eDX11BufferMode.Append);
         }
 
-        public static DX11StructuredBuffer CreateCounter<T>(DX11Device device, int elementcount) where T : struct
+        public static DX11StructuredBuffer CreateCounter<T>(DxDevice device, int elementcount) where T : struct
         {
             return CreateWriteable(device, elementcount, Marshal.SizeOf(typeof(T)), eDX11BufferMode.Counter);
         }

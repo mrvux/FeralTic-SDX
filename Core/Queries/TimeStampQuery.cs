@@ -18,11 +18,11 @@ namespace FeralTic.DX11.Queries
 
         public bool hasrun = false;
 
-        private DX11Device device;
+        private DxDevice device;
 
         private readonly int WAIT_MAX = 1024;
 
-        public DX11TimeStampQuery(DX11Device device)
+        public DX11TimeStampQuery(DxDevice device)
         {
             this.device = device;
             QueryDescription qd = new QueryDescription();

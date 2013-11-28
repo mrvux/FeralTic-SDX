@@ -12,7 +12,7 @@ namespace FeralTic.DX11
 {
     public class DX11StructuredBufferPool : DX11ResourcePool<DX11StructuredBuffer>
     {
-        public DX11StructuredBufferPool(DX11Device device)
+        public DX11StructuredBufferPool(DxDevice device)
             : base(device)
         {
 
@@ -43,7 +43,7 @@ namespace FeralTic.DX11
     
     public class DX11RenderTargetPool : DX11ResourcePool<DX11RenderTarget2D>
     {
-        public DX11RenderTargetPool(DX11Device device)
+        public DX11RenderTargetPool(DxDevice device)
             : base(device)
         {
 
@@ -76,7 +76,7 @@ namespace FeralTic.DX11
 
     public class DX11DepthStencilPool : DX11ResourcePool<DX11DepthStencil>
     {
-        public DX11DepthStencilPool(DX11Device device)
+        public DX11DepthStencilPool(DxDevice device)
             : base(device)
         {
 
@@ -109,13 +109,13 @@ namespace FeralTic.DX11
 
     public class DX11VertexBufferPool : DX11ResourcePool<DX11VertexBuffer>
     {
-        public DX11VertexBufferPool(DX11Device device)
+        public DX11VertexBufferPool(DxDevice device)
             : base(device)
         {
 
         }
 
-        public DX11ResourcePoolEntry<DX11VertexBuffer> Lock(int verticescount, int vertexsize, bool allowstreamout, bool allowraw)
+        public DX11ResourcePoolEntry<DX11VertexBuffer> Lock(int verticescount, int vertexsize, eVertexBufferWriteMode mode)
         {
             //We can lock any buffer of the right size
             int totalsize = vertexsize * verticescount;
@@ -125,14 +125,14 @@ namespace FeralTic.DX11
                 DX11VertexBuffer tr = entry.Element;
 
 
-                if (!entry.IsLocked && totalsize == tr.TotalSize && allowstreamout == tr.AllowStreamOutput)
+                if (!entry.IsLocked && totalsize == tr.TotalSize && mode == tr.WriteMode)
                 {
                     entry.Lock();
                     return entry;
                 }
             }
 
-            DX11VertexBuffer res = DX11VertexBuffer.CreateWriteable(this.device, verticescount, vertexsize, allowstreamout, allowraw);
+            DX11VertexBuffer res = DX11VertexBuffer.CreateWriteable(this.device, verticescount, vertexsize, mode);
 
             DX11ResourcePoolEntry<DX11VertexBuffer> newentry = new DX11ResourcePoolEntry<DX11VertexBuffer>(res);
 
@@ -144,7 +144,7 @@ namespace FeralTic.DX11
 
     public class DX11VolumeTexturePool : DX11ResourcePool<DX11RenderTexture3D>
     {
-        public DX11VolumeTexturePool(DX11Device device)
+        public DX11VolumeTexturePool(DxDevice device)
             : base(device)
         {
 

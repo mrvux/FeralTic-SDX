@@ -8,7 +8,7 @@ namespace FeralTic.DX11
 {
     public class DX11RenderContext : IDisposable
     {
-        public DX11Device Device { get; protected set; }
+        public DxDevice Device { get; protected set; }
 
         public DeviceContext2 Context { get; protected set; }
 
@@ -28,7 +28,7 @@ namespace FeralTic.DX11
 
         }
 
-        public DX11RenderContext(DX11Device device)
+        public DX11RenderContext(DxDevice device)
         {
             this.Device = device;
             this.Context = device.Device.ImmediateContext.QueryInterface<DeviceContext2>();

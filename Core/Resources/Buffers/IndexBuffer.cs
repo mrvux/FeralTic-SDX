@@ -11,14 +11,14 @@ namespace FeralTic.DX11.Resources
 {
     public unsafe class DX11IndexBuffer : IDX11Resource, IDisposable
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public Buffer Buffer { get; protected set; }
 
         public int IndicesCount { get; protected set; }
         private SharpDX.DXGI.Format format;
 
-        protected DX11IndexBuffer(DX11Device device, int indicescount, BufferDescription desc, DataStream initial = null, bool largeformat = true)
+        protected DX11IndexBuffer(DxDevice device, int indicescount, BufferDescription desc, DataStream initial = null, bool largeformat = true)
         {
             this.device = device;
             this.IndicesCount = indicescount;
@@ -36,7 +36,7 @@ namespace FeralTic.DX11.Resources
             }
         }
 
-        protected DX11IndexBuffer(DX11Device device, int indicescount, BufferDescription desc, IntPtr ptr, bool largeformat = true)
+        protected DX11IndexBuffer(DxDevice device, int indicescount, BufferDescription desc, IntPtr ptr, bool largeformat = true)
         {
             this.device = device;
             this.IndicesCount = indicescount;
@@ -47,7 +47,7 @@ namespace FeralTic.DX11.Resources
 
 
         #region CreateImmutable
-        public static DX11IndexBuffer CreateImmutable(DX11Device device, int indicescount, DataStream initial = null, bool largeformat = true)
+        public static DX11IndexBuffer CreateImmutable(DxDevice device, int indicescount, DataStream initial = null, bool largeformat = true)
         {
             int indexsize = largeformat ? 4 : 2;
             BufferDescription bd = new BufferDescription()
@@ -62,7 +62,7 @@ namespace FeralTic.DX11.Resources
             return new DX11IndexBuffer(device, indicescount, bd, initial,largeformat);
         }
 
-        public static DX11IndexBuffer CreateImmutable(DX11Device device, short[] initial)
+        public static DX11IndexBuffer CreateImmutable(DxDevice device, short[] initial)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -81,7 +81,7 @@ namespace FeralTic.DX11.Resources
         }
 
 
-        public static DX11IndexBuffer CreateImmutable(DX11Device device, int[] initial)
+        public static DX11IndexBuffer CreateImmutable(DxDevice device, int[] initial)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -99,7 +99,7 @@ namespace FeralTic.DX11.Resources
             return result;
         }
 
-        public static DX11IndexBuffer CreateImmutable(DX11Device device, uint[] initial)
+        public static DX11IndexBuffer CreateImmutable(DxDevice device, uint[] initial)
         {
             BufferDescription bd = new BufferDescription()
             {

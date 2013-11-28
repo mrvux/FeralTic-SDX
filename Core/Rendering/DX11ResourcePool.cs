@@ -39,10 +39,10 @@ namespace FeralTic.DX11
     public class DX11ResourcePool<T> : IDisposable where T : class, IDisposable
     {
         protected List<DX11ResourcePoolEntry<T>> pool = new List<DX11ResourcePoolEntry<T>>();
-        protected DX11Device device;
+        protected DxDevice device;
 
 
-        public DX11ResourcePool(DX11Device device)
+        public DX11ResourcePool(DxDevice device)
         {
             this.device = device;
         }

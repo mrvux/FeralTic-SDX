@@ -14,7 +14,7 @@ namespace FeralTic.DX11.Resources
 {
     public unsafe class DX11RawBuffer : IDX11ShaderResource,IDX11UnorderedResource, IDisposable
     {
-        private DX11Device device;
+        private DxDevice device;
 
         public Buffer Buffer { get; protected set; }
         public ShaderResourceView ShaderView { get; protected set; }
@@ -28,7 +28,7 @@ namespace FeralTic.DX11.Resources
             return buffer.Buffer;
         }
 
-        protected DX11RawBuffer(DX11Device device, BufferDescription desc, IntPtr ptr, bool createUAV)
+        protected DX11RawBuffer(DxDevice device, BufferDescription desc, IntPtr ptr, bool createUAV)
         {
             this.device = device;
             this.Size = desc.SizeInBytes;
@@ -72,7 +72,7 @@ namespace FeralTic.DX11.Resources
             }
         }
 
-        public static DX11RawBuffer CreateImmutable(DX11Device device, DataStream initial)
+        public static DX11RawBuffer CreateImmutable(DxDevice device, DataStream initial)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -85,7 +85,7 @@ namespace FeralTic.DX11.Resources
             return new DX11RawBuffer(device, bd, initial.DataPointer, false);
         }
 
-        public static DX11RawBuffer CreateWriteable(DX11Device device, int size)
+        public static DX11RawBuffer CreateWriteable(DxDevice device, int size)
         {
             BufferDescription bd = new BufferDescription()
             {

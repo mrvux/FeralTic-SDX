@@ -13,14 +13,14 @@ namespace FeralTic.DX11.Resources
 {
     public class BaseIndirectBuffer<T> where T : struct
     {
-        private DX11Device device;
+        private DxDevice device;
         private Buffer staging;
 
         public Buffer ArgumentBuffer { get; protected set; }
 
         public DX11StructuredBuffer WriteBuffer { get; protected set; }
 
-        public BaseIndirectBuffer(DX11Device device, T args)
+        public BaseIndirectBuffer(DxDevice device, T args)
         {
             this.device = device;
 

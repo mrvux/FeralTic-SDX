@@ -10,9 +10,9 @@ namespace FeralTic.DX11.Resources
 {
     public class DispatchIndirectBuffer : BaseIndirectBuffer<DispatchArgs>
     {
-        public DispatchIndirectBuffer(DX11Device device, DispatchArgs args) : base(device, args) { }
+        public DispatchIndirectBuffer(DxDevice device, DispatchArgs args) : base(device, args) { }
 
-        public DispatchIndirectBuffer(DX11Device device) : this(device, new DispatchArgs(1, 1, 1)) { }
+        public DispatchIndirectBuffer(DxDevice device) : this(device, new DispatchArgs(1, 1, 1)) { }
 
     }
 }

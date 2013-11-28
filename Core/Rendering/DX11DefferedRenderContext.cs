@@ -8,7 +8,7 @@ namespace FeralTic.DX11
 {
     public class DX11DefferedRenderContext : DX11RenderContext
     {
-        public DX11DefferedRenderContext(DX11Device device)
+        public DX11DefferedRenderContext(DxDevice device)
         {
             this.Device = device;
             this.Context = new DeviceContext2(device.Device);
