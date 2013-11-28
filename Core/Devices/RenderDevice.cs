@@ -10,13 +10,13 @@ namespace FeralTic.DX11
 {
     public class RenderDevice : DxDevice
     {
-        public DX11BlendStates BlendStates { get; private set; }
+        public BlendStates BlendStates { get; private set; }
 
-        public DX11RasterizerStates RasterizerStates { get; private set; }
+        public RasterizerStates RasterizerStates { get; private set; }
 
-        public DX11DepthStencilStates DepthStencilStates { get; private set; }
+        public DepthStencilStates DepthStencilStates { get; private set; }
 
-        public DX11SamplerStates SamplerStates { get; private set; }
+        public SamplerStates SamplerStates { get; private set; }
 
         public DefaultTextures DefaultTextures { get; private set; }
 
@@ -34,10 +34,10 @@ namespace FeralTic.DX11
 
         protected override void OnLoad()
         {
-            this.BlendStates = new DX11BlendStates(this);
-            this.DepthStencilStates = new DX11DepthStencilStates(this);
-            this.RasterizerStates = new DX11RasterizerStates(this);
-            this.SamplerStates = new DX11SamplerStates(this);
+            this.BlendStates = new BlendStates(this);
+            this.DepthStencilStates = new DepthStencilStates(this);
+            this.RasterizerStates = new RasterizerStates(this);
+            this.SamplerStates = new SamplerStates(this);
 
             this.DefaultTextures = new DefaultTextures(this);
 

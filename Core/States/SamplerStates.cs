@@ -6,7 +6,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11
 {
-    public class DX11SamplerStates : DX11RenderStates<SamplerState>
+    public class SamplerStates : RenderStates<SamplerState>
     {
         private DxDevice device;
 
@@ -17,7 +17,7 @@ namespace FeralTic.DX11
         public SamplerState LinearBorder { get; private set; }
         public SamplerState PointBorder { get; private set; }
 
-        public DX11SamplerStates(DxDevice device)
+        public SamplerStates(DxDevice device)
         {
             this.device = device;
             this.Initialize();

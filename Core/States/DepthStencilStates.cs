@@ -6,7 +6,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11
 {
-    public class DX11DepthStencilStates : DX11RenderStates<DepthStencilState>
+    public class DepthStencilStates : RenderStates<DepthStencilState>
     {
         private DxDevice device;
 
@@ -24,7 +24,7 @@ namespace FeralTic.DX11
         public DepthStencilState StencilZero { get; private set; }
 
 
-        public DX11DepthStencilStates(DxDevice device)
+        public DepthStencilStates(DxDevice device)
         {
             this.device = device;
             this.Initialize();

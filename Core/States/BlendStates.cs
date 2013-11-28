@@ -7,7 +7,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11
 {
-    public partial class DX11BlendStates : DX11RenderStates<BlendState>
+    public partial class BlendStates : RenderStates<BlendState>
     {
         private DxDevice device;
 
@@ -19,7 +19,7 @@ namespace FeralTic.DX11
 
 
 
-        public DX11BlendStates(DxDevice device)
+        public BlendStates(DxDevice device)
         {
             this.device = device;
             this.Initialize();

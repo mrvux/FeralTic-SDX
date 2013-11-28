@@ -7,7 +7,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11
 {
-    public partial class DX11BlendStates : DX11RenderStates<BlendState>
+    public partial class BlendStates : RenderStates<BlendState>
     {
         public BlendState1 LogicalInvert { get; private set; }
 

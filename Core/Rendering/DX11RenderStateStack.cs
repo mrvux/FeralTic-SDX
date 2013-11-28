@@ -9,9 +9,9 @@ namespace FeralTic.DX11
     {
         private DX11RenderContext context;
 
-        private DX11RenderState defaultstate;
+        private RenderState defaultstate;
 
-        private Stack<DX11RenderState> stack;
+        private Stack<RenderState> stack;
 
         public int Count
         {
@@ -21,8 +21,8 @@ namespace FeralTic.DX11
         public DX11RenderStateStack(DX11RenderContext context)
         {
             this.context = context;
-            this.defaultstate = new DX11RenderState(context.Device);
-            stack = new Stack<DX11RenderState>();
+            this.defaultstate = new RenderState(context.Device);
+            stack = new Stack<RenderState>();
         }
 
         public void PushDefault()
@@ -30,12 +30,12 @@ namespace FeralTic.DX11
             this.Push(this.defaultstate);
         }
 
-        public DX11RenderState Peek()
+        public RenderState Peek()
         {
             return stack.Peek();
         }
 
-        public void Push(DX11RenderState state)
+        public void Push(RenderState state)
         { 
             stack.Push(state);
             this.Apply();

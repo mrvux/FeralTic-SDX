@@ -5,13 +5,13 @@ using System.Text;
 
 namespace FeralTic.DX11
 {
-    public abstract class DX11RenderStates<T> : IDisposable where T : IDisposable
+    public abstract class RenderStates<T> : IDisposable where T : IDisposable
     {
         private Dictionary<string, T> states = new Dictionary<string, T>();
 
         private List<string> statekeys = new List<string>();
 
-        protected DX11RenderStates() { }
+        protected RenderStates() { }
 
         protected abstract void Initialize();
         public abstract string EnumName { get ; }

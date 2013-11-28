@@ -7,7 +7,7 @@ using SharpDX;
 
 namespace FeralTic.DX11
 {
-    public class DX11RenderState : IDX11Resource
+    public class RenderState : IDX11Resource
     {
         private DxDevice device;
 
@@ -23,7 +23,7 @@ namespace FeralTic.DX11
 
         public int BlendSampleMask { get; set; }
 
-        public DX11RenderState(DxDevice device)
+        public RenderState(DxDevice device)
         {
             this.device = device;
             this.BlendFactor = new Color4(0, 0, 0, 0);
@@ -31,9 +31,9 @@ namespace FeralTic.DX11
             this.BlendSampleMask = int.MaxValue;
         }
 
-        public DX11RenderState Clone()
+        public RenderState Clone()
         {
-            DX11RenderState result = new DX11RenderState(this.device);
+            RenderState result = new RenderState(this.device);
             result.Blend = this.Blend;
             result.DepthStencil = this.DepthStencil;
             result.Rasterizer = this.Rasterizer;

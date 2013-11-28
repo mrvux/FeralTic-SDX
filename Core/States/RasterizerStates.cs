@@ -6,7 +6,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11
 {
-    public class DX11RasterizerStates : DX11RenderStates<RasterizerState>
+    public class RasterizerStates : RenderStates<RasterizerState>
     {
         private DxDevice device;
 
@@ -15,7 +15,7 @@ namespace FeralTic.DX11
         public RasterizerState NoCullSolid { get; private set; }
         public RasterizerState WireFrame { get; private set; }
 
-        public DX11RasterizerStates(DxDevice device)
+        public RasterizerStates(DxDevice device)
         {
             this.device = device;
             this.Initialize();
