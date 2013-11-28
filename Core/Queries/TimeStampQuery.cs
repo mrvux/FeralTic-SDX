@@ -8,7 +8,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11.Queries
 {
-    public class DX11TimeStampQuery : IDX11Query
+    public class TimeStampQuery : IDxQuery
     {
         private Query tstart;
         private Query tend;
@@ -22,7 +22,7 @@ namespace FeralTic.DX11.Queries
 
         private readonly int WAIT_MAX = 1024;
 
-        public DX11TimeStampQuery(DxDevice device)
+        public TimeStampQuery(DxDevice device)
         {
             this.device = device;
             QueryDescription qd = new QueryDescription();

@@ -7,7 +7,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11.Queries
 {
-    public class DX11PipelineQuery : IDX11Query
+    public class PipelineQuery : IDxQuery
     {
         private DxDevice device;
 
@@ -19,7 +19,7 @@ namespace FeralTic.DX11.Queries
 
         public QueryDataPipelineStatistics Statistics { get; protected set; }
 
-        public DX11PipelineQuery(DxDevice device)
+        public PipelineQuery(DxDevice device)
         {
             this.device = device;
 

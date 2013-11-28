@@ -16,28 +16,28 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void CreateOcclusion()
         {
-            DX11OcclusionQuery occlusion = new DX11OcclusionQuery(this.Device);
+            OcclusionQuery occlusion = new OcclusionQuery(this.Device);
             occlusion.Dispose();           
         }
 
         [TestMethod()]
         public void CreatePipelineStats()
         {
-            DX11PipelineQuery query = new DX11PipelineQuery(this.Device);
+            OcclusionQuery query = new OcclusionQuery(this.Device);
             query.Dispose();
         }
 
         [TestMethod()]
         public void CreateStreamOut()
         {
-            DX11StreamOutQuery query = new DX11StreamOutQuery(this.Device);
+            StreamOutQuery query = new StreamOutQuery(this.Device);
             query.Dispose();
         }
 
         [TestMethod()]
         public void CreateTimeStamp()
         {
-            DX11TimeStampQuery query = new DX11TimeStampQuery(this.Device);
+            TimeStampQuery query = new TimeStampQuery(this.Device);
             query.Dispose();
         }
 
