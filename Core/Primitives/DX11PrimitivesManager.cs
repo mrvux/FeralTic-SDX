@@ -100,6 +100,7 @@ namespace FeralTic.DX11.Geometry
 
                     DX11Effect shader = DX11Effect.CompileFromResource(Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx");
                     
+                    
                     this.fulltrivs = new Effect(device.Device, shader.ByteCode);
                     this.vsonlypass = this.fulltrivs.GetTechniqueByName("FullScreenTriangleVSOnly").GetPassByIndex(0);
                     this.fullscreenpass = this.fulltrivs.GetTechniqueByName("FullScreenTriangle").GetPassByIndex(0);

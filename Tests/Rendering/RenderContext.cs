@@ -5,13 +5,13 @@ using FeralTic.DX11;
 namespace FeralTic.Tests.Rendering
 {
     [TestClass]
-    public class RenderContext
+    public class RenderContextTest
     {
         [TestMethod]
         public void ImmediateTest()
         {
             DxDevice device = new DxDevice();
-            DX11RenderContext immediate = new DX11RenderContext(device);
+            RenderContext immediate = new RenderContext(device);
             immediate.Dispose();
             device.Dispose();
         }
@@ -20,9 +20,9 @@ namespace FeralTic.Tests.Rendering
         public void ImmediateAndDefferedTest()
         {
             DxDevice device = new DxDevice();
-            DX11RenderContext immediate = new DX11RenderContext(device);
+            RenderContext immediate = new RenderContext(device);
 
-            DX11DefferedRenderContext deffered = new DX11DefferedRenderContext(device);
+            DefferedRenderContext deffered = new DefferedRenderContext(device);
 
             deffered.Dispose();
             immediate.Dispose();

@@ -60,7 +60,6 @@ namespace FeralTic.DX11.Resources
 
         public static DX11Texture2D CreateDynamic(DxDevice device, int width, int height, Format format)
         {
-            //device.ComPointer.
             var desc = new Texture2DDescription()
             {
                 ArraySize = 1,
@@ -89,29 +88,41 @@ namespace FeralTic.DX11.Resources
             DataStream ds;
             DataBox db = ctx.MapSubresource(this.Texture, 0, 0, MapMode.WriteDiscard, SharpDX.Direct3D11.MapFlags.None, out ds);
 
-            int stride = pixelsize * this.Width;
+            try
+            {
 
-            if (stride != db.RowPitch)
-            {
-                byte* bsource = (byte*)ptr.ToPointer();
-                byte* bdest = (byte*)ptr.ToPointer();
-                try
+                int stride = pixelsize * this.Width;
+
+                if (stride != db.RowPitch)
                 {
-                    //Row per row copy
-                    for (int i = 0; i < this.Height; i++)
+                    byte* bsource = (byte*)ptr.ToPointer();
+                    byte* bdest = (byte*)ptr.ToPointer();
+                    try
                     {
-                        memcpybyte(bdest,bsource,stride);
-                        bdest += db.RowPitch;
-                        bsource += stride;
+                        //Row per row copy
+                        for (int i = 0; i < this.Height; i++)
+                        {
+                            memcpybyte(bdest, bsource, stride);
+                            bdest += db.RowPitch;
+                            bsource += stride;
+                        }
                     }
+                    catch { }
                 }
-                catch { }
+                else
+                {
+                    memcpy(db.DataPointer, ptr, len);
+                }
             }
-            else
+            catch
             {
-                memcpy(db.DataPointer, ptr, len);
+
             }
-            ctx.UnmapSubresource(this.Texture, 0);
+            finally
+            {
+                ctx.UnmapSubresource(this.Texture, 0);
+            }
+            
         }
 
 
