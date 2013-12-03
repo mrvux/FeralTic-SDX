@@ -10,44 +10,34 @@ using FeralTic.DX11.Resources;
 
 namespace FeralTic.DX11.Geometry
 {
-
     public partial class DX11PrimitivesManager
     {
         private delegate AbstractPrimitiveDescriptor CreatePrimitiveDelegate();
 
-
         private Dictionary<string, CreatePrimitiveDelegate> primitivecreator = new Dictionary<string,CreatePrimitiveDelegate>();
         private Dictionary<string, Type> primitivetypes = new Dictionary<string, Type>();
 
+        private void Register<T>(string key) where T : AbstractPrimitiveDescriptor, new()
+        {
+            this.primitivecreator.Add(key, () => new T());
+            this.primitivetypes.Add(key,typeof(T));
+        }
+
         private void InitializeDelegates()
         {
-            this.primitivecreator.Add("Box", () => new Box());
-            this.primitivecreator.Add("Cylinder", () => new Cylinder());
-            this.primitivecreator.Add("Grid", () => new Grid());
-            this.primitivecreator.Add("IcoGrid", () => new IcoGrid());
-            this.primitivecreator.Add("Isocahedron", () => new Isocahedron());
-            this.primitivecreator.Add("Octahedron", () => new Octahedron());
-            this.primitivecreator.Add("Tetrahedron", () => new Tetrahedron());
-            this.primitivecreator.Add("Quad", () => new Quad());
-            this.primitivecreator.Add("RoundRect", () => new RoundRect());
-            this.primitivecreator.Add("Segment", () => new Segment());
-            this.primitivecreator.Add("SegmentZ", () => new SegmentZ());
-            this.primitivecreator.Add("Sphere", () => new Sphere());
-            this.primitivecreator.Add("Torus", () => new Torus());
-
-            this.primitivetypes.Add("Box", typeof(Box));
-            this.primitivetypes.Add("Cylinder", typeof(Cylinder));
-            this.primitivetypes.Add("Grid", typeof(Grid));
-            this.primitivetypes.Add("IcoGrid", typeof(IcoGrid));
-            this.primitivetypes.Add("Isocahedron", typeof(Isocahedron));
-            this.primitivetypes.Add("Octahedron", typeof(Octahedron));
-            this.primitivetypes.Add("Tetrahedron", typeof(Tetrahedron));
-            this.primitivetypes.Add("Quad", typeof(Quad));
-            this.primitivetypes.Add("RoundRect", typeof(RoundRect));
-            this.primitivetypes.Add("Segment", typeof(Segment));
-            this.primitivetypes.Add("SegmentZ", typeof(SegmentZ));
-            this.primitivetypes.Add("Sphere", typeof(Sphere));
-            this.primitivetypes.Add("Torus", typeof(Torus));
+            Register<Box>("Box");
+            Register<Cylinder>("Cylinder");
+            Register<Grid>("Grid");
+            Register<IcoGrid>("IcoGrid");
+            Register<Isocahedron>("Isocahedron");
+            Register<Octahedron>("Octahedron");
+            Register<Tetrahedron>("Tetrahedron");
+            Register<Quad>("Quad");
+            Register<RoundRect>("RoundRect");
+            Register<Segment>("Segment");
+            Register<SegmentZ>("SegmentZ");
+            Register<Sphere>("Sphere");
+            Register<Torus>("Torus");
         }
 
         public Type GetDescriptorType(string ptype)
