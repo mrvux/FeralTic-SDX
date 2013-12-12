@@ -15,7 +15,7 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void CreateSimple()
         {
-            DX11RenderTarget2D rt = new DX11RenderTarget2D(this.Device, 320, 240, new SampleDescription(1, 0), SharpDX.DXGI.Format.R8G8B8A8_UNorm, false, 0, false);
+            DX11RenderTarget2D rt = new DX11RenderTarget2D(this.Device, 320, 240, new SampleDescription(1, 0), SharpDX.DXGI.Format.B8G8R8A8_UNorm, false, 0, false);
 
             Assert.IsNull(rt.UnorderedView);
 

@@ -4,11 +4,17 @@ using System.Linq;
 using System.Text;
 
 using SharpDX.Direct3D11;
+using Buffer = SharpDX.Direct3D11.Buffer;
 
-namespace FeralTic
+namespace FeralTic.DX11
 {
     public interface IDxResource : IDisposable
     {
+    }
+
+    public interface IDxBuffer : IDxResource
+    {
+        Buffer Buffer { get; }
     }
 
     public interface IDxShaderResource : IDxResource
@@ -54,7 +60,7 @@ namespace FeralTic
         int Height { get; }
     }
 
-    public interface IDxRenderTarget : IDisposable
+    public interface IDxRenderTarget : IDxResource, IDisposable
     {
         RenderTargetView RenderView { get; }
         int Width { get; }

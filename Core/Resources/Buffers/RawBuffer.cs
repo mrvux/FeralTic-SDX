@@ -12,7 +12,15 @@ using SharpDX.Direct3D;
 
 namespace FeralTic.DX11.Resources
 {
-    public unsafe class DX11RawBuffer : IDxShaderResource,IDxUnorderedResource, IDisposable
+    public struct RawBufferBindings
+    {
+        public bool AllowVertexBuffer;
+        public bool AllowIndexBuffer;
+        public bool AllowStreamOut;
+        public bool AllowUAV;
+    }
+
+    public unsafe class DX11RawBuffer : IDxBuffer, IDxShaderResource,IDxUnorderedResource, IDisposable
     {
         private DxDevice device;
 
@@ -85,18 +93,25 @@ namespace FeralTic.DX11.Resources
             return new DX11RawBuffer(device, bd, initial.DataPointer, false);
         }
 
-        public static DX11RawBuffer CreateWriteable(DxDevice device, int size)
+        public static DX11RawBuffer CreateWriteable(DxDevice device, int size, RawBufferBindings binding)
         {
             BufferDescription bd = new BufferDescription()
             {
-                BindFlags = BindFlags.ShaderResource | BindFlags.UnorderedAccess,
+                BindFlags = BindFlags.ShaderResource,
                 CpuAccessFlags = CpuAccessFlags.None,
                 OptionFlags = ResourceOptionFlags.BufferAllowRawViews,
                 SizeInBytes = size,
                 Usage = ResourceUsage.Default,
                 StructureByteStride = 4
             };
-            return new DX11RawBuffer(device, bd, IntPtr.Zero, true);
+
+            bd.BindFlags |= binding.AllowUAV ? BindFlags.UnorderedAccess : 0;
+            bd.BindFlags |= binding.AllowIndexBuffer ? BindFlags.IndexBuffer : 0;
+            bd.BindFlags |= binding.AllowVertexBuffer ? BindFlags.VertexBuffer : 0;
+            bd.BindFlags |= binding.AllowUAV ? BindFlags.UnorderedAccess : 0;
+
+
+            return new DX11RawBuffer(device, bd, IntPtr.Zero, binding.AllowUAV);
         }
 
         public static DX11RawBuffer CreateStaging(DX11RawBuffer buffer)

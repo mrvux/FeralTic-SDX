@@ -9,7 +9,7 @@ using Buffer = SharpDX.Direct3D11.Buffer;
 
 namespace FeralTic.DX11.Resources
 {
-    public unsafe class DX11IndexBuffer : IDxResource, IDisposable
+    public unsafe class DX11IndexBuffer : IDxBuffer, IDisposable
     {
         private DxDevice device;
 

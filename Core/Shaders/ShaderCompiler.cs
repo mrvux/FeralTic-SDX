@@ -12,7 +12,7 @@ using SharpDX.D3DCompiler;
 
 namespace FeralTic.DX11
 {
-    public class DX11ShaderCompiler
+    public class ShaderCompiler
     {
         #region Compile (from string)
         private static ShaderBytecode Compile(string content, bool isfile, Include include,string profile,string entrypoint)

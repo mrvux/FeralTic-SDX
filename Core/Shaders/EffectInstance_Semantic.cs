@@ -7,7 +7,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11
 {
-    public partial class DX11EffectInstance
+    public partial class EffectInstance
     {
         #region Scalar
         public void SetBySemantic(string name, bool value)

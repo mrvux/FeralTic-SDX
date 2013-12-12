@@ -10,7 +10,7 @@ using SharpDX.D3DCompiler;
 namespace FeralTic.DX11
 {
 
-    public partial class DX11EffectInstance : IDisposable
+    public partial class EffectInstance : IDisposable
     {
         public class CounterResetUAV
         {
@@ -39,22 +39,21 @@ namespace FeralTic.DX11
         public EffectTechnique CurrentTechnique { get { return this.currenttechnique; } }
         public DxDevice Device { get { return this.device; } }
 
-
-        public DX11EffectInstance(DxDevice device, DX11Effect effect)
+        public EffectInstance(DxDevice device, DX11Effect effect)
         {
             this.device = device;
             this.effect = new Effect(device.Device, effect.ByteCode);
             this.currenttechnique = this.effect.GetTechniqueByIndex(0);
         }
 
-        public DX11EffectInstance(DxDevice device, ShaderBytecode bytecode)
+        public EffectInstance(DxDevice device, ShaderBytecode bytecode)
         {
             this.device = device;
             this.effect = new Effect(device.Device, bytecode);
             this.currenttechnique = this.effect.GetTechniqueByIndex(0);
         }
 
-        public DX11EffectInstance(DxDevice device, Effect effect)
+        public EffectInstance(DxDevice device, Effect effect)
         {
             this.device = device;
             this.effect = effect;

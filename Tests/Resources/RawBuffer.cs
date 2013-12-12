@@ -15,11 +15,75 @@ namespace FlareTic.Tests
         [TestMethod]
         public void CreateRawWriteable()
         {
-            DX11RawBuffer buffer = DX11RawBuffer.CreateWriteable(this.Device, 64);
+            RawBufferBindings binding = new RawBufferBindings()
+            {
+                 AllowIndexBuffer = false,
+                 AllowStreamOut = false,
+                 AllowUAV = true,
+                 AllowVertexBuffer = false
+            };
+            DX11RawBuffer buffer = DX11RawBuffer.CreateWriteable(this.Device, 64, binding);
 
             Assert.IsNotNull(buffer.Buffer,"Buffer is null");
             Assert.IsNotNull(buffer.ShaderView,"Shader View is null");
             Assert.IsNotNull(buffer.UnorderedView, "UAV is null");
+
+            buffer.Dispose();
+        }
+
+        [TestMethod]
+        public void CreateRawWriteableAll()
+        {
+            RawBufferBindings binding = new RawBufferBindings()
+            {
+                AllowIndexBuffer = true,
+                AllowStreamOut = true,
+                AllowUAV = true,
+                AllowVertexBuffer = true
+            };
+            DX11RawBuffer buffer = DX11RawBuffer.CreateWriteable(this.Device, 64, binding);
+
+            Assert.IsNotNull(buffer.Buffer, "Buffer is null");
+            Assert.IsNotNull(buffer.ShaderView, "Shader View is null");
+            Assert.IsNotNull(buffer.UnorderedView, "UAV is null");
+
+            buffer.Dispose();
+        }
+
+        [TestMethod]
+        public void CreateRawWriteableV()
+        {
+            RawBufferBindings binding = new RawBufferBindings()
+            {
+                AllowIndexBuffer = true,
+                AllowStreamOut = false,
+                AllowUAV = false,
+                AllowVertexBuffer = false
+            };
+            DX11RawBuffer buffer = DX11RawBuffer.CreateWriteable(this.Device, 64, binding);
+
+            Assert.IsNotNull(buffer.Buffer, "Buffer is null");
+            Assert.IsNotNull(buffer.ShaderView, "Shader View is null");
+            Assert.IsNull(buffer.UnorderedView, "UAV is not null");
+
+            buffer.Dispose();
+        }
+
+        [TestMethod]
+        public void CreateRawWriteableVIS()
+        {
+            RawBufferBindings binding = new RawBufferBindings()
+            {
+                AllowIndexBuffer = true,
+                AllowStreamOut = true,
+                AllowUAV = false,
+                AllowVertexBuffer = true
+            };
+            DX11RawBuffer buffer = DX11RawBuffer.CreateWriteable(this.Device, 64, binding);
+
+            Assert.IsNotNull(buffer.Buffer, "Buffer is null");
+            Assert.IsNotNull(buffer.ShaderView, "Shader View is null");
+            Assert.IsNull(buffer.UnorderedView, "UAV is not null");
 
             buffer.Dispose();
         }

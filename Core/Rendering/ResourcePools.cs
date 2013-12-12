@@ -32,11 +32,8 @@ namespace FeralTic.DX11
             }
 
             DX11StructuredBuffer res = DX11StructuredBuffer.CreateWriteable(device, numelements, stride, mode);
-
             ResourcePoolEntry<DX11StructuredBuffer> newentry = new ResourcePoolEntry<DX11StructuredBuffer>(res);
-
             this.pool.Add(newentry);
-
             return newentry;
         }
     }
