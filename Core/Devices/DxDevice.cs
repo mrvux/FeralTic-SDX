@@ -44,6 +44,12 @@ namespace FeralTic.DX11
             get { return this.Device.FeatureLevel >= FeatureLevel.Level_11_0; }
         }
 
+
+        public bool IsFeatureLevel101
+        {
+            get { return this.Device.FeatureLevel >= FeatureLevel.Level_10_1; }
+        }
+
         public static implicit operator Device2(DxDevice device)
         {
             return device.Device;
