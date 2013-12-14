@@ -125,6 +125,18 @@ namespace FeralTic.DX11.Resources
             return new DX11RawBuffer(buffer.device, bd, IntPtr.Zero, false);
         }
 
+        public static DX11RawBuffer CreateStaging(DxDevice device, IDxBuffer buffer)
+        {
+            BufferDescription bd = buffer.Buffer.Description;
+            bd.CpuAccessFlags = CpuAccessFlags.Read | CpuAccessFlags.Write;
+            bd.OptionFlags = ResourceOptionFlags.None;
+            bd.Usage = ResourceUsage.Staging;
+            bd.BindFlags = BindFlags.None;
+
+            return new DX11RawBuffer(device, bd, IntPtr.Zero, false);
+        }
+
+
 
         public DataStream MapForWrite(RenderContext context)
         {

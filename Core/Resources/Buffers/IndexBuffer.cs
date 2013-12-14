@@ -16,6 +16,7 @@ namespace FeralTic.DX11.Resources
         public Buffer Buffer { get; protected set; }
 
         public int IndicesCount { get; protected set; }
+
         private SharpDX.DXGI.Format format;
 
         protected DX11IndexBuffer(DxDevice device, int indicescount, BufferDescription desc, DataStream initial = null, bool largeformat = true)
@@ -23,7 +24,6 @@ namespace FeralTic.DX11.Resources
             this.device = device;
             this.IndicesCount = indicescount;
             this.format = largeformat ? SharpDX.DXGI.Format.R32_UInt : SharpDX.DXGI.Format.R16_UInt;
-
 
             if (initial != null)
             {
