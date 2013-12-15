@@ -169,10 +169,30 @@ namespace FeralTic.DX11
         }
         #endregion
 
+        /*public bool[] TechniqueValids { get; private set; }
+        public string[] TechniqueNames { get; private set; }*/
+
         public void Dispose()
         {
             if (this.DefaultEffect != null) { this.DefaultEffect.Dispose(); }
             if (this.CompilationResult != null) { this.CompilationResult.Dispose(); }
         }
+
+        /*private void Preprocess()
+        {
+            //Set techniques
+            int techcnt = this.DefaultEffect.Description.TechniqueCount;
+
+            this.TechniqueNames = new string[techcnt];
+            this.TechniqueValids = new bool[techcnt];
+
+            for (int i = 0; i < techcnt; i++)
+            {
+                EffectTechnique technique = this.DefaultEffect.GetTechniqueByIndex(i);
+
+                this.TechniqueNames[i] = technique.Description.Name;
+                this.TechniqueValids[i] = technique.IsValid;
+            }
+        }*/
     }
 }

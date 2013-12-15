@@ -1,4 +1,5 @@
-﻿using FeralTic.DX11;
+﻿#if DIRECTX11_1
+using FeralTic.DX11;
 using FeralTic.DX11.Resources;
 using System;
 using System.Collections.Generic;
@@ -46,5 +47,6 @@ namespace FeralTic.Resources
         {
             return Task.Run<IDxTexture2D>(() => (LoadFromFile(device, path, ct,started)));
         }
-    }
+   }
 }
+#endif

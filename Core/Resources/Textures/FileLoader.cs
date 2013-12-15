@@ -1,4 +1,6 @@
-﻿using SharpDX.Direct3D11;
+﻿#if DIRECTX11_1
+
+using SharpDX.Direct3D11;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,3 +58,5 @@ namespace FeralTic.DX11.Resources
         }
     }
 }
+
+#endif
