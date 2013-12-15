@@ -39,14 +39,31 @@ namespace FeralTic.DX11.Resources
             get { return this.description.Format; }
         }
 
+
         public static DX11Texture2D FromFile(DxDevice device, string path, bool mips = true)
         {
+            #if DIRECTX11_1
             DX11Texture2D texture = new DX11Texture2D();
             texture.Texture = FileLoader.CreateTexture2DFromBitmap(device.Device, FileLoader.LoadBitmap(device.WICFactory, path), mips);
             texture.description = texture.Texture.Description;
             texture.ShaderView = new ShaderResourceView(device.Device, texture.Texture);
             if (mips) { device.Device.ImmediateContext.GenerateMips(texture.ShaderView); }
             return texture;
+            #else
+            DX11Texture2D texture = new DX11Texture2D();
+            texture.Texture = Texture2D.FromFile<Texture2D>(device, path);
+            texture.description = texture.Texture.Description;
+            texture.ShaderView = new ShaderResourceView(device.Device, texture.Texture);
+            return texture;
+            #endif
+        }
+
+        public static void SaveToFile(RenderContext context,IDxTexture2D texture,string path,ImageFileFormat fileformat)
+        {
+            #if DIRECTX11_1
+            #else
+            Texture2D.ToFile(context, texture.Texture, fileformat, path);
+            #endif
         }
 
         public static DX11Texture2D FromReference(DxDevice device, Texture2D texture, ShaderResourceView view)
@@ -82,24 +99,42 @@ namespace FeralTic.DX11.Resources
             
         }
 
+        public static DX11Texture2D CreateStaging(DxDevice device, IDxTexture2D source)
+        {
+            var desc = source.Texture.Description;
+            desc.BindFlags = BindFlags.None;
+            desc.CpuAccessFlags = CpuAccessFlags.Read;
+            desc.Usage = ResourceUsage.Staging;
+
+            DX11Texture2D texture = new DX11Texture2D();
+            texture.Texture = new Texture2D(device.Device, desc);
+            texture.description = texture.Texture.Description;
+            return texture;
+
+        }
+
+        public DataBox MapForRead(RenderContext context)
+        {
+            DataStream ds;
+            DataBox db = context.Context.MapSubresource(this.Texture,0,0, MapMode.Read, SharpDX.Direct3D11.MapFlags.None,out ds);
+            return db;
+        }
+
         public unsafe void WriteData(RenderContext context, IntPtr ptr, int len, int pixelsize)
         {
             DeviceContext ctx = context;
             DataStream ds;
             DataBox db = ctx.MapSubresource(this.Texture, 0, 0, MapMode.WriteDiscard, SharpDX.Direct3D11.MapFlags.None, out ds);
-
             try
             {
 
                 int stride = pixelsize * this.Width;
-
                 if (stride != db.RowPitch)
                 {
                     byte* bsource = (byte*)ptr.ToPointer();
                     byte* bdest = (byte*)ptr.ToPointer();
                     try
                     {
-                        //Row per row copy
                         for (int i = 0; i < this.Height; i++)
                         {
                             memcpybyte(bdest, bsource, stride);
@@ -121,10 +156,13 @@ namespace FeralTic.DX11.Resources
             finally
             {
                 ctx.UnmapSubresource(this.Texture, 0);
-            }
-            
+            }  
         }
 
+        public void UnMap(RenderContext context)
+        {
+            context.Context.UnmapSubresource(this.Texture,0);
+        }
 
         public void Dispose()
         {

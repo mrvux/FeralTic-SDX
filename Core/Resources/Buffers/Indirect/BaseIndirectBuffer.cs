@@ -11,12 +11,24 @@ using Buffer = SharpDX.Direct3D11.Buffer;
 
 namespace FeralTic.DX11.Resources
 {
-    public class BaseIndirectBuffer<T> where T : struct
+    public interface IDxIndirectBuffer : IDxBuffer
+    {
+        Buffer ArgumentBuffer { get; }
+
+        DX11StructuredBuffer WriteBuffer { get; }
+
+        void UpdateArgumentBuffer(RenderContext context);
+    }
+
+    public class BaseIndirectBuffer<T> : IDxIndirectBuffer where T : struct
     {
         private DxDevice device;
         private Buffer staging;
 
         public Buffer ArgumentBuffer { get; protected set; }
+
+        public Buffer Buffer { get { return this.ArgumentBuffer; } }
+
 
         public DX11StructuredBuffer WriteBuffer { get; protected set; }
 
