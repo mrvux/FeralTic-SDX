@@ -5,10 +5,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+#if DIRECTX11_2
 using DXGIDevice = SharpDX.DXGI.Device2;
 using DXGIAdapter = SharpDX.DXGI.Adapter2;
 using DXGIFactory = SharpDX.DXGI.Factory2;
 using WICFactory = SharpDX.WIC.ImagingFactory2;
+using DirectXDevice = SharpDX.Direct3D11.Device2;
+#else
+#if DIRECTX11_1
+using DXGIDevice = SharpDX.DXGI.Device2;
+using DXGIAdapter = SharpDX.DXGI.Adapter2;
+using DXGIFactory = SharpDX.DXGI.Factory2;
+using WICFactory = SharpDX.WIC.ImagingFactory2;
+using DirectXDevice = SharpDX.Direct3D11.Device1;
+#else
+using DXGIDevice = SharpDX.DXGI.Device1;
+using DXGIAdapter = SharpDX.DXGI.Adapter1;
+using DXGIFactory = SharpDX.DXGI.Factory1;
+using WICFactory = SharpDX.WIC.ImagingFactory;
+using DirectXDevice = SharpDX.Direct3D11.Device;
+#endif
+#endif
 
 namespace FeralTic.DX11
 {
@@ -16,7 +33,7 @@ namespace FeralTic.DX11
 
     public class DxDevice : IDisposable
     {
-        public Device2 Device { get; private set; }
+        public DirectXDevice Device { get; private set; }
 
         public DXGIAdapter Adapter { get; private set; }
 
@@ -36,7 +53,14 @@ namespace FeralTic.DX11
 
         public bool IsFeatureLevel11_1
         {
-            get { return this.Device.FeatureLevel >= FeatureLevel.Level_11_1; }
+            get 
+            { 
+                #if DIRECTX11_1
+                return this.Device.FeatureLevel >= FeatureLevel.Level_11_1; 
+                #else
+                return false;
+                #endif
+            }
         }
 
         public bool IsFeatureLevel11
@@ -50,7 +74,7 @@ namespace FeralTic.DX11
             get { return this.Device.FeatureLevel >= FeatureLevel.Level_10_1; }
         }
 
-        public static implicit operator Device2(DxDevice device)
+        public static implicit operator DirectXDevice(DxDevice device)
         {
             return device.Device;
         }
@@ -68,7 +92,9 @@ namespace FeralTic.DX11
         {
             FeatureLevel[] levels = new FeatureLevel[]
             {
-                FeatureLevel.Level_11_1,
+                #if DIRECTX11_1
+                 FeatureLevel.Level_11_1,
+                #endif
                 FeatureLevel.Level_11_0,
                 FeatureLevel.Level_10_1,
                 FeatureLevel.Level_10_0,
@@ -91,7 +117,9 @@ namespace FeralTic.DX11
                 dev = new Device(DriverType.Hardware, this.creationflags, levels);
             }
 
-            this.Device = dev.QueryInterface<Device2>();
+            #if DIRECTX11_1
+            this.Device = dev.QueryInterface<DirectXDevice>();
+            #endif    
             
             DXGIDevice dxgidevice = this.Device.QueryInterface<DXGIDevice>();
             

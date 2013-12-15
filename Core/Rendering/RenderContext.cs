@@ -4,13 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+#if DIRECTX11_2
+using DirectXContext = SharpDX.Direct3D11.DeviceContext2;
+#else
+#if DIRECTX11_1
+using DirectXContext = SharpDX.Direct3D11.DeviceContext1;
+#else
+using DirectXContext = SharpDX.Direct3D11.DeviceContext;
+#endif
+#endif
+
 namespace FeralTic.DX11
 {
     public class RenderContext : IDisposable
     {
         public DxDevice Device { get; protected set; }
 
-        public DeviceContext2 Context { get; protected set; }
+        public DirectXContext Context { get; protected set; }
 
         private static ShaderResourceView[] nullsrvs = new ShaderResourceView[128];
         private static UnorderedAccessView[] nulluavs = new UnorderedAccessView[8];
@@ -18,7 +28,7 @@ namespace FeralTic.DX11
         public RenderTargetStack RenderTargetStack { get; protected set; }
         public RenderStateStack RenderStateStack { get; protected set; }
 
-        public static implicit operator DeviceContext2(RenderContext context)
+        public static implicit operator DirectXContext(RenderContext context)
         {
             return context.Context;
         }
@@ -31,7 +41,13 @@ namespace FeralTic.DX11
         public RenderContext(DxDevice device)
         {
             this.Device = device;
-            this.Context = device.Device.ImmediateContext.QueryInterface<DeviceContext2>();
+
+            #if DIRECTX11_1
+            this.Context = device.Device.ImmediateContext.QueryInterface<DirectXContext>();
+            #else
+            this.Context = device.Device.ImmediateContext;
+            #endif
+
             this.RenderTargetStack = new RenderTargetStack(this);
             this.RenderStateStack = new RenderStateStack(this);
             this.RenderStateStack.PushDefault();
