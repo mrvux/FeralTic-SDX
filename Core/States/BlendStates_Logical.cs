@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if DIRECTX11_1
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,3 +42,4 @@ namespace FeralTic.DX11
 
     }
 }
+#endif

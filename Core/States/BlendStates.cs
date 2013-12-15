@@ -17,13 +17,13 @@ namespace FeralTic.DX11
         public BlendState Multiply { get; private set; }
         public BlendState AlphaAdd { get; private set; }
 
-
-
         public BlendStates(DxDevice device)
         {
             this.device = device;
             this.Initialize();
+            #if DIRECTX11_1
             this.InitializeLogical();
+            #endif
         }
 
         public override string EnumName
