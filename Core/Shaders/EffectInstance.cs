@@ -78,11 +78,13 @@ namespace FeralTic.DX11
         public void ApplyPass(RenderContext context, int index = 0)
         {
             this.currenttechnique.GetPassByIndex(index).Apply(context.Context);
+            this.ApplyCounterUAVS(context);
         }
 
         public void ApplyPass(RenderContext context,EffectPass pass)
         {
             pass.Apply(context.Context);
+            this.ApplyCounterUAVS(context);
         }
 
         public EffectPass GetPass(int index)
@@ -99,6 +101,35 @@ namespace FeralTic.DX11
         {
             this.Effect.GetVariableByName(interfacename).AsInterface().ClassInstance = this.Effect.GetVariableByName(classname).AsClassInstance();
         }
+
+        #region Apply Counter UAVS
+        private void ApplyCounterUAVS(RenderContext context)
+        {
+            foreach (CounterResetUAV ru in this.resetuavs)
+            {
+
+                int i = 0;
+                bool found = false;
+
+                //Get currently bound UAVs
+                UnorderedAccessView[] uavs = context.Context.ComputeShader.GetUnorderedAccessViews(0, 8);
+
+                //Search for uav slot, if found, reapply with counter value
+                for (i = 0; i < 8 && !found; i++)
+                {
+                    if (uavs[i].NativePointer == ru.UAV.NativePointer)
+                    {
+                        found = true;
+                    }
+                }
+                if (found)
+                {
+                    context.Context.ComputeShader.SetUnorderedAccessView(i - 1, ru.UAV, ru.Counter);
+                }
+            }
+            this.resetuavs.Clear();
+        }
+        #endregion
 
     }
 }
