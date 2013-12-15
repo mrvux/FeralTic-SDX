@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Base Defaults -->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">DirectX11_Debug</Configuration>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <OutputPath>$(SolutionDir)\Build\$(Configuration)\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <!-- Win 7 Desktop Debug defaults -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'DirectX11_Debug' ">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>false</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugType>Full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- Win 7 Desktop Release defaults -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'DirectX11_Release' ">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DebugType>None</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- Win 8 Desktop Debug defaults -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'DirectX11_1_Debug' ">
+    <DefineConstants>DEBUG;TRACE;DIRECTX11_1</DefineConstants>
+    <Optimize>false</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugType>Full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- Win 8 Desktop Release defaults -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'DirectX11_1_Release' ">
+    <DefineConstants>TRACE;DIRECTX11_1</DefineConstants>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DebugType>None</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- Win 8.1 Desktop Debug defaults -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'DirectX11_2_Debug' ">
+    <DefineConstants>DEBUG;TRACE;DIRECTX11_1;DIRECTX11_2</DefineConstants>
+    <Optimize>false</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DebugType>Full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <!-- Win 8.1 Desktop Debug defaults -->
+  <PropertyGroup Condition=" '$(Configuration)' == 'DirectX11_2_Release' ">
+    <DefineConstants>TRACE;DIRECTX11_1;DIRECTX11_2</DefineConstants>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DebugType>None</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  
+  <!-- Load references for DirectX11 -->
+  <ItemGroup Condition=" '$(Configuration)' == 'DirectX11_Release' Or '$(Configuration)' == 'DirectX11_Debug' ">
+    <Reference Include="SharpDX">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11.Effects">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.Direct3D11.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
+    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11\sharpdx_direct3d11_effects_x86.dll">
+      <Link>sharpdx_direct3d11_1_effects_x86.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- Load references for DirectX11.1 -->
+  <ItemGroup Condition=" '$(Configuration)' == 'DirectX11_1_Release' Or '$(Configuration)' == 'DirectX11_1_Debug' ">
+    <Reference Include="SharpDX">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11.Effects">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.Direct3D11.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
+    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_1\d3dcompiler_46.dll">
+      <Link>d3dcompiler_46.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_1\d3dcsx_46.dll">
+      <Link>d3dcsx_46.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_1\sharpdx_direct3d11_1_effects_x86.dll">
+      <Link>sharpdx_direct3d11_1_effects_x86.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- Load references for DirectX11.2 -->
+  <ItemGroup Condition=" '$(Configuration)' == 'DirectX11_2_Release' Or '$(Configuration)' == 'DirectX11_2_Debug' ">
+    <Reference Include="SharpDX">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11.Effects">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.Direct3D11.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1">
+      <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.Direct2D1.dll</HintPath>
+    </Reference>
+    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_2\d3dcompiler_46.dll">
+      <Link>d3dcompiler_46.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_2\d3dcsx_46.dll">
+      <Link>d3dcsx_46.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_2\sharpdx_direct3d11_1_effects_x86.dll">
+      <Link>sharpdx_direct3d11_1_effects_x86.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>
