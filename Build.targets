@@ -5,12 +5,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">DirectX11_Debug</Configuration>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <OutputPath>$(SolutionDir)\Build\$(Configuration)\</OutputPath>
+    <OutputPath>$(SolutionDir)\Build\$(Platform)\$(Configuration)\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x64' ">
+    <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
 
   <!-- Win 7 Desktop Debug defaults -->
@@ -71,93 +77,83 @@
   <ItemGroup Condition=" '$(Configuration)' == 'DirectX11_Release' Or '$(Configuration)' == 'DirectX11_Debug' ">
     <Reference Include="SharpDX">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.DXGI">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.DXGI.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.D3DCompiler">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.D3DCompiler.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct3D11">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.Direct3D11.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct3D11.Effects">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.Direct3D11.Effects.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct2D1">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11\SharpDX.Direct2D1.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
-    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11\sharpdx_direct3d11_effects_x86.dll">
-      <Link>sharpdx_direct3d11_1_effects_x86.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <!-- Load references for DirectX11.1 -->
   <ItemGroup Condition=" '$(Configuration)' == 'DirectX11_1_Release' Or '$(Configuration)' == 'DirectX11_1_Debug' ">
     <Reference Include="SharpDX">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.DXGI">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.DXGI.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.D3DCompiler">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.D3DCompiler.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct3D11">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.Direct3D11.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct3D11.Effects">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.Direct3D11.Effects.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct2D1">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_1\SharpDX.Direct2D1.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
-    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_1\d3dcompiler_46.dll">
-      <Link>d3dcompiler_46.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_1\d3dcsx_46.dll">
-      <Link>d3dcsx_46.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_1\sharpdx_direct3d11_1_effects_x86.dll">
-      <Link>sharpdx_direct3d11_1_effects_x86.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <!-- Load references for DirectX11.2 -->
   <ItemGroup Condition=" '$(Configuration)' == 'DirectX11_2_Release' Or '$(Configuration)' == 'DirectX11_2_Debug' ">
     <Reference Include="SharpDX">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.DXGI">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.DXGI.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.D3DCompiler">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.D3DCompiler.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct3D11">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.Direct3D11.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct3D11.Effects">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.Direct3D11.Effects.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="SharpDX.Direct2D1">
       <HintPath>$(SolutionDir)\externals\sharpdx\DirectX11_2\SharpDX.Direct2D1.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
-    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_2\d3dcompiler_46.dll">
-      <Link>d3dcompiler_46.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_2\d3dcsx_46.dll">
-      <Link>d3dcsx_46.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="$(SolutionDir)\externals\sharpdx\DirectX11_2\sharpdx_direct3d11_1_effects_x86.dll">
-      <Link>sharpdx_direct3d11_1_effects_x86.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 </Project>
