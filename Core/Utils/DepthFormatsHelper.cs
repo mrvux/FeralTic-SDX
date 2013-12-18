@@ -34,7 +34,7 @@ namespace FeralTic.DX11
                 case eDepthFormat.d32s8:
                     return Format.R32G8X24_Typeless;
                 default:
-                    return Format.R32_Typeless; //Defaults as R32
+                    return Format.R32_Typeless;
             }
         }
 
