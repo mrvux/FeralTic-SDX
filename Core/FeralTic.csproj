@@ -26,6 +26,7 @@
     <Compile Include="Primitives\DX11PrimitiveDescriptors.cs" />
     <Compile Include="Primitives\DX11PrimitivesManager.cs" />
     <Compile Include="Primitives\DX11Primitives_RoundRect.cs" />
+    <Compile Include="Primitives\DX11Primitive_Null.cs" />
     <Compile Include="Primitives\DX11Primitive_Box.cs" />
     <Compile Include="Primitives\DX11Primitive_Cylinder.cs" />
     <Compile Include="Primitives\DX11Primitive_Grid.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="States\SamplerStates.cs" />
     <Compile Include="Utils\DepthFormatsHelper.cs" />
     <Compile Include="Utils\FormatMappers.cs" />
+    <Compile Include="Utils\Frustrum.cs" />
     <Compile Include="Utils\MergeUtils.cs" />
     <Compile Include="Utils\TextureUtils.cs" />
     <Compile Include="Utils\VertexLayouts\Pos2Norm2Tex2Vertex.cs" />

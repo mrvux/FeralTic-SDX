@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using SharpDX;
 using FeralTic.DX11.Resources;
+using SharpDX.Direct3D;
 
 namespace FeralTic.DX11.Geometry
 {
@@ -14,8 +15,14 @@ namespace FeralTic.DX11.Geometry
         public abstract IDX11Geometry GetGeometry(RenderDevice device);
     }
 
+
     public class Box : AbstractPrimitiveDescriptor
     {
+        public Box()
+        {
+            this.Size = new Vector3(1,1,1);
+        }
+
         public Vector3 Size { get; set; }
 
         public override string PrimitiveType { get { return "Box"; } }
@@ -33,6 +40,17 @@ namespace FeralTic.DX11.Geometry
 
     public class Cylinder : AbstractPrimitiveDescriptor
     {
+        public Cylinder()
+        {
+            this.Radius1 = 0.5f;
+            this.Radius2 = 0.5f;
+            this.Length = 1.0f;
+            this.Cycles = 1.0f;
+            this.Caps = true;
+            this.ResolutionX = 15;
+            this.ResolutionY = 1;
+        }
+
         public float Radius1 { get; set; }
         public float Radius2 { get; set; }
         public float Cycles { get; set; }
@@ -62,6 +80,13 @@ namespace FeralTic.DX11.Geometry
 
     public class Grid : AbstractPrimitiveDescriptor
     {
+        public Grid()
+        {
+            this.Size = new Vector2(1, 1);
+            this.ResolutionX = 2;
+            this.ResolutionY = 2;
+        }
+
         public Vector2 Size { get; set; }
         public int ResolutionX { get; set; }
         public int ResolutionY { get; set; }
@@ -83,6 +108,13 @@ namespace FeralTic.DX11.Geometry
 
     public class IcoGrid : AbstractPrimitiveDescriptor
     {
+        public IcoGrid()
+        {
+            this.Size = new Vector2(1, 1);
+            this.ResolutionX = 2;
+            this.ResolutionY = 2;
+        }
+
         public Vector2 Size { get; set; }
         public int ResolutionX { get; set; }
         public int ResolutionY { get; set; }
@@ -104,6 +136,12 @@ namespace FeralTic.DX11.Geometry
 
     public class IcoSphere : AbstractPrimitiveDescriptor
     {
+        public IcoSphere()
+        {
+            this.Radius = 0.5f;
+            this.SubDivisions = 1;
+        }
+
         public float Radius { get; set; }
         public int SubDivisions { get; set; }
 
@@ -123,6 +161,11 @@ namespace FeralTic.DX11.Geometry
 
     public class Isocahedron : AbstractPrimitiveDescriptor
     {
+        public Isocahedron()
+        {
+            this.Size = new Vector3(1,1,1);
+        }
+
         public Vector3 Size { get; set; }
 
         public override string PrimitiveType { get { return "Isocahedron"; } }
@@ -140,6 +183,11 @@ namespace FeralTic.DX11.Geometry
 
     public class Octahedron : AbstractPrimitiveDescriptor
     {
+        public Octahedron()
+        {
+            this.Size = new Vector3(1,1,1);
+        }
+
         public Vector3 Size { get; set; }
 
         public override string PrimitiveType { get { return "Octahedron"; } }
@@ -157,6 +205,11 @@ namespace FeralTic.DX11.Geometry
 
     public class Quad : AbstractPrimitiveDescriptor
     {
+        public Quad()
+        {
+            this.Size = new Vector2(1,1);
+        }
+
         public Vector2 Size { get; set; }
 
         public override string PrimitiveType { get { return "Quad"; } }
@@ -176,15 +229,10 @@ namespace FeralTic.DX11.Geometry
     {
         public RoundRect()
         {
-
-        }
-
-        public RoundRect(Vector2 inner, float outer, int ires, bool enablecenter)
-        {
-            this.CornerResolution = ires;
-            this.InnerRadius = inner;
-            this.OuterRadius = outer;
-            this.EnableCenter = enablecenter;
+            this.InnerRadius = new Vector2(0.35f, 0.35f);
+            this.OuterRadius = 0.15f;
+            this.EnableCenter = true;
+            this.CornerResolution = 20;
         }
 
         public Vector2 InnerRadius { get; set;}
@@ -211,6 +259,15 @@ namespace FeralTic.DX11.Geometry
 
     public class Segment : AbstractPrimitiveDescriptor
     {
+        public Segment()
+        {
+            this.Phase = 0.0f;
+            this.Cycles = 1.0f;
+            this.InnerRadius = 0.0f;
+            this.Flat = true;
+            this.Resolution = 20;
+        }
+
         public float Phase { get; set; }
         public float Cycles { get; set; }
         public float InnerRadius { get; set; }
@@ -236,6 +293,15 @@ namespace FeralTic.DX11.Geometry
 
     public class SegmentZ : AbstractPrimitiveDescriptor
     {
+        public SegmentZ()
+        {
+            this.Phase = 0.0f;
+            this.Cycles = 1.0f;
+            this.InnerRadius = 0.0f;
+            this.Z = 0.5f;
+            this.Resolution = 20;
+        }
+
         public float Phase { get; set; }
         public float Cycles { get; set; }
         public float InnerRadius { get; set; }
@@ -261,6 +327,15 @@ namespace FeralTic.DX11.Geometry
 
     public class Sphere : AbstractPrimitiveDescriptor
     {
+        public Sphere()
+        {
+            this.Radius = 0.5f;
+            this.CyclesX = 1.0f;
+            this.CyclesY = 1.0f;
+            this.ResX = 15;
+            this.ResY = 15;
+        }
+
         public float Radius { get; set; }
         public int ResX { get; set; }
         public int ResY { get; set; }
@@ -286,6 +361,11 @@ namespace FeralTic.DX11.Geometry
 
     public class Tetrahedron : AbstractPrimitiveDescriptor
     {
+        public Tetrahedron()
+        {
+            this.Size = new Vector3(1.0f, 1.0f, 1.0f);
+        }
+
         public Vector3 Size { get; set; }
 
         public override string PrimitiveType { get { return "Tetrahedron"; } }
@@ -305,19 +385,17 @@ namespace FeralTic.DX11.Geometry
     {
         public Torus()
         {
+            this.Radius = 0.5f;
+            this.Thickness = 0.1f;
+            this.ResolutionX = 15;
+            this.ResolutionY = 15;
+            this.PhaseX = 1.0f;
+            this.PhaseY = 1.0f;
+            this.Rotation = 1.0f;
+            this.CY = 1.0f;
         }
 
-        public Torus(int resX, int resY, float radius, float thick, float phasey, float phasex, float rot, float cy)
-        {
-            this.ResolutionX = resX;
-            this.ResolutionY = resY;
-            this.Radius = radius;
-            this.Thickness = thick;
-            this.PhaseX = phasex;
-            this.PhaseY = phasey;
-            this.Rotation = rot;
-            this.CY = cy;
-        }
+
 
         public int ResolutionX { get; set; }
         public int ResolutionY { get; set; }
@@ -350,7 +428,56 @@ namespace FeralTic.DX11.Geometry
         }
     }
 
+    public class NullGeometry : AbstractPrimitiveDescriptor
+    {
+        public NullGeometry()
+        {
+            this.VertexCount = 1;
+            this.InstanceCount = 1;
+            this.Topology = PrimitiveTopology.PointList;
+        }
 
+        public int VertexCount { get; set; }
+        public int InstanceCount { get; set; }
+        public PrimitiveTopology Topology { get; set; }
 
+        public override string PrimitiveType { get { return "Null"; } }
 
+        public override void Initialize(Dictionary<string, object> properties)
+        {
+            this.VertexCount = (int)properties["VertexCount"];
+            this.InstanceCount = (int)properties["InstanceCount"];
+            this.Topology = (PrimitiveTopology)properties["Topology"];
+        }
+
+        public override IDX11Geometry GetGeometry(RenderDevice device)
+        {
+            return device.Primitives.NullDrawer(this);
+        }
+    }
+
+    public class Dispatcher : AbstractPrimitiveDescriptor
+    {
+        public Dispatcher()
+        {
+            this.ThreadCountX = 1;
+            this.ThreadCountY = 1;
+            this.ThreadCountZ = 1;
+        }
+
+        public int ThreadCountX { get; set; }
+        public int ThreadCountY { get; set; }
+        public int ThreadCountZ { get; set; }
+ 
+        public override string PrimitiveType { get { return "Dispatcher"; } }
+
+        public override void Initialize(Dictionary<string, object> properties)
+        {
+        }
+
+        public override IDX11Geometry GetGeometry(RenderDevice device)
+        {
+            return device.Primitives.Dispatcher(this);
+        }
+    }
 }

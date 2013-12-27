@@ -1,6 +1,7 @@
 ﻿using FeralTic.DX11;
 using FeralTic.DX11.Geometry;
 using SharpDX.Direct3D11;
+using SharpDX.DXGI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,11 @@ namespace FeralTic.DX11
 
         }
 
-
+        public bool IsSupported(FormatSupport usage, Format format)
+        {
+            FormatSupport support = this.Device.CheckFormatSupport(format);
+            return (support | usage) == support;
+        }
 
         protected override void OnLoad()
         {

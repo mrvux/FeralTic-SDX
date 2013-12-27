@@ -120,6 +120,12 @@ namespace FeralTic.DX11.Resources
             return db;
         }
 
+        public unsafe void WriteData<T>(RenderContext context, IntPtr ptr) where T : struct
+        {
+           int pixelsize = Marshal.SizeOf(typeof(T));
+           WriteData(context, ptr, pixelsize * Width * Height, pixelsize);
+        }
+
         public unsafe void WriteData(RenderContext context, IntPtr ptr, int len, int pixelsize)
         {
             DeviceContext ctx = context;

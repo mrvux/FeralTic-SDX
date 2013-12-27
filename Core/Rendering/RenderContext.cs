@@ -50,7 +50,6 @@ namespace FeralTic.DX11
 
             this.RenderTargetStack = new RenderTargetStack(this);
             this.RenderStateStack = new RenderStateStack(this);
-            this.RenderStateStack.PushDefault();
         }
 
         public void ClearShaderStages()

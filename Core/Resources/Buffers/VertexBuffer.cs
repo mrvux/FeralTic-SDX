@@ -158,6 +158,45 @@ namespace FeralTic.DX11.Resources
             return new DX11VertexBuffer(device, verticesCount, vertexSize, bd, initial);
         }
 
+        public static DX11VertexBuffer CreateDynamic<T>(DxDevice device, int verticesCount, DataStream initial) where T : struct
+        {
+            return CreateDynamic(device, verticesCount, Marshal.SizeOf(typeof(T)), initial);
+        }
+
+        public DataStream MapForWrite(RenderContext context)
+        {
+            DataStream ds;
+            context.Context.MapSubresource(this.Buffer, 0, MapMode.WriteDiscard, MapFlags.None, out ds);
+            return ds;
+        }
+
+        public DataStream MapForRead(RenderContext context)
+        {
+            DataStream ds;
+            context.Context.MapSubresource(this.Buffer, 0, MapMode.Read, MapFlags.None, out ds);
+            return ds;
+        }
+
+        public void Unmap(RenderContext context)
+        {
+            context.Context.UnmapSubresource(this.Buffer, 0);
+        }
+
+        public void WriteData<T>(RenderContext context, T[] data) where T : struct
+        {
+            DataStream ds = this.MapForWrite(context);
+            ds.WriteRange<T>(data);
+            this.Unmap(context);
+        }
+
+        public T[] ReadData<T>(RenderContext context) where T : struct
+        {
+            DataStream ds = this.MapForRead(context);
+            T[] result = ds.ReadRange<T>(this.VerticesCount);
+            this.Unmap(context);
+            return result;
+        }
+
         public void Bind(RenderContext context, InputLayout layout, int slot = 0)
         {
             context.Context.InputAssembler.InputLayout = layout;
