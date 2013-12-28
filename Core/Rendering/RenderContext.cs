@@ -62,6 +62,15 @@ namespace FeralTic.DX11
             Context.ComputeShader.Set(null);
         }
 
+        public void ClearPipelineStages()
+        {
+            Context.VertexShader.Set(null);
+            Context.HullShader.Set(null);
+            Context.DomainShader.Set(null);
+            Context.GeometryShader.Set(null);
+            Context.PixelShader.Set(null);
+        }
+
         public void CleanUpPS()
         {
             Context.PixelShader.SetShaderResources(0, nullsrvs);

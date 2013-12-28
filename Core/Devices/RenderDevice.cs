@@ -1,5 +1,6 @@
 ﻿using FeralTic.DX11;
 using FeralTic.DX11.Geometry;
+using FeralTic.DX11.Resources;
 using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using System;
@@ -25,10 +26,22 @@ namespace FeralTic.DX11
 
         public DX11PrimitivesManager Primitives { get; private set; }
 
+        public bool HasBufferSupport { get; private set; }
+
         public RenderDevice(DeviceCreationFlags flags = DeviceCreationFlags.BgraSupport, int adapterindex = 0)
             : base(flags,adapterindex)
         {
-
+            //Since flag doesn't report buffer support on win7, we just try to create a small buffer
+            try
+            {
+                DX11RawBuffer b = DX11RawBuffer.CreateWriteable(this, 16, new RawBufferBindings() { AllowUAV = true });
+                b.Dispose();
+                this.HasBufferSupport = true;
+            }
+            catch 
+            {
+                this.HasBufferSupport = false;
+            }       
         }
 
         public bool IsSupported(FormatSupport usage, Format format)
