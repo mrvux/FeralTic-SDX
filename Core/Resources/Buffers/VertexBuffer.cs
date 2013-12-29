@@ -55,6 +55,11 @@ namespace FeralTic.DX11.Resources
         /// </summary>
         public InputElement[] InputLayout { get; set; }
 
+        private DX11VertexBuffer(DxDevice device)
+        {
+            this.device = device;
+        }
+
         protected DX11VertexBuffer(DxDevice device, int verticescount, int vertexsize, BufferDescription desc, DataStream initial = null)
         {
             this.device = device;
@@ -82,6 +87,22 @@ namespace FeralTic.DX11.Resources
 
             this.Buffer = new SharpDX.Direct3D11.Buffer(device.Device, ptr, desc);
             this.desc = this.Buffer.Description;
+        }
+
+        public static DX11VertexBuffer CreateFromRawBuffer(DxDevice device, int verticesCount, int vertexSize, DX11RawBuffer buffer)
+        {
+            if (!buffer.Description.BindFlags.HasFlag(BindFlags.VertexBuffer))
+            {
+                throw new ArgumentException("Raw Buffer does not have Vertex Buffer Bind flag");
+            }
+
+            DX11VertexBuffer vbo = new DX11VertexBuffer(device);
+            vbo.Buffer = buffer.Buffer;
+            vbo.desc = buffer.Description;
+            vbo.VertexSize = vertexSize;
+            vbo.VerticesCount = verticesCount;
+
+            return vbo;
         }
 
         public static DX11VertexBuffer CreateWriteable(DxDevice device, int verticesCount, int vertexSize, eVertexBufferWriteMode mode = eVertexBufferWriteMode.None)
