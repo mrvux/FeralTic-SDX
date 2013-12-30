@@ -19,6 +19,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GeometryFX\GeometryFXExtensions.cs" />
+    <Compile Include="GeometryFX\GeometryFXSettings.cs" />
     <Compile Include="IViewProjectionSettings.cs" />
     <Compile Include="LayerDelegate.cs" />
     <Compile Include="LayerFX\eRendeHint.cs" />
@@ -28,9 +30,7 @@
     <Compile Include="TextureFX\TextureFXPassSettings.cs" />
     <Compile Include="TextureFX\TextureFXSettings.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="GeometryFX\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Core\FeralTic.csproj">
       <Project>{7cca78ab-5839-4cb6-a685-85bc3ea77c9d}</Project>
