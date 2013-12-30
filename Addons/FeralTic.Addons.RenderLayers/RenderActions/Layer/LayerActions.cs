@@ -45,5 +45,17 @@ namespace FeralTic.RenderLayers.RenderActions
             Action<LayerSettings> restore = (rs) => { rs.View = view; rs.Projection = projection; settings.ViewProjection = view * projection; };
             return restore;
         }
+
+        public static Action<LayerSettings> Billboard(LayerSettings settings, Matrix transform, bool doublescale)
+        {
+            Matrix view = settings.View;
+            Matrix proj = settings.Projection;
+            float f = doublescale ? 2.0f : 1.0f;
+            settings.View = Matrix.Identity;
+            settings.Projection = Matrix.Scaling(f / settings.RenderWidth, f / settings.RenderHeight, 1.0f) * transform;
+            settings.ViewProjection = settings.Projection;
+            Action<LayerSettings> restore = (rs) => { rs.View = view; rs.Projection = proj; settings.ViewProjection = view * proj; };
+            return restore;
+        }
     }
 }
