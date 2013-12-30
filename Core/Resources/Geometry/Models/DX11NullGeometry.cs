@@ -81,7 +81,7 @@ namespace FeralTic.DX11.Resources
             this.AssignDrawer(owner.Drawer);
         }
 
-        public override IDX11Geometry ShallowCopy()
+        public override IDxGeometry ShallowCopy()
         {
             return new DX11NullGeometry(this);
         }

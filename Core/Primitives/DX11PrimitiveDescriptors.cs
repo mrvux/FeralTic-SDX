@@ -12,7 +12,7 @@ namespace FeralTic.DX11.Geometry
     {
         public abstract string PrimitiveType { get; }
         public abstract void Initialize(Dictionary<string, object> properties);
-        public abstract IDX11Geometry GetGeometry(RenderDevice device);
+        public abstract IDxGeometry GetGeometry(RenderDevice device);
     }
 
 
@@ -32,7 +32,7 @@ namespace FeralTic.DX11.Geometry
             this.Size = (Vector3)properties["Size"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Box(this);
         }
@@ -72,7 +72,7 @@ namespace FeralTic.DX11.Geometry
             this.Caps = (bool)properties["Caps"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Cylinder(this);
         }
@@ -100,7 +100,7 @@ namespace FeralTic.DX11.Geometry
             this.ResolutionY = (int)properties["ResolutionY"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Grid(this);
         }
@@ -128,7 +128,7 @@ namespace FeralTic.DX11.Geometry
             this.ResolutionY = (int)properties["ResolutionY"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.IcoGrid(this);
         }
@@ -153,7 +153,7 @@ namespace FeralTic.DX11.Geometry
             this.SubDivisions = (int)properties["SubDivisions"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.IcoSphere(this);
         }
@@ -175,7 +175,7 @@ namespace FeralTic.DX11.Geometry
             this.Size = (Vector3)properties["Size"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Isocahedron(this);
         }
@@ -197,7 +197,7 @@ namespace FeralTic.DX11.Geometry
             this.Size = (Vector3)properties["Size"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Octahedron(this);
         }
@@ -219,7 +219,7 @@ namespace FeralTic.DX11.Geometry
             this.Size = (Vector2)properties["Size"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.QuadNormals(this);
         }
@@ -250,7 +250,7 @@ namespace FeralTic.DX11.Geometry
             this.EnableCenter = (bool)properties["EnableCenter"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.RoundRect(this);
         }
@@ -285,7 +285,7 @@ namespace FeralTic.DX11.Geometry
             this.Flat = (bool)properties["Flat"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Segment(this);
         }
@@ -319,7 +319,7 @@ namespace FeralTic.DX11.Geometry
             this.Z = (float)properties["Z"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.SegmentZ(this);
         }
@@ -353,7 +353,7 @@ namespace FeralTic.DX11.Geometry
             this.CyclesY = (float)properties["CyclesY"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Sphere(this);
         }
@@ -375,7 +375,7 @@ namespace FeralTic.DX11.Geometry
             this.Size = (Vector3)properties["Size"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Tetrahedron(this);
         }
@@ -422,7 +422,7 @@ namespace FeralTic.DX11.Geometry
             this.CY = (float)properties["CY"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Torus(this);
         }
@@ -450,7 +450,7 @@ namespace FeralTic.DX11.Geometry
             this.Topology = (PrimitiveTopology)properties["Topology"];
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.NullDrawer(this);
         }
@@ -475,7 +475,7 @@ namespace FeralTic.DX11.Geometry
         {
         }
 
-        public override IDX11Geometry GetGeometry(RenderDevice device)
+        public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Dispatcher(this);
         }

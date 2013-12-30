@@ -10,7 +10,7 @@ using SharpDX.Direct3D;
 
 namespace FeralTic.DX11.Resources
 {
-    public abstract class DX11BaseGeometry : IDX11Geometry
+    public abstract class DX11BaseGeometry : IDxGeometry
     {
         protected DxDevice device;
 
@@ -59,7 +59,7 @@ namespace FeralTic.DX11.Resources
 
         public abstract void Dispose();
 
-        public abstract IDX11Geometry ShallowCopy();
+        public abstract IDxGeometry ShallowCopy();
 
         public object Tag { get; set; }
 

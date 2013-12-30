@@ -99,7 +99,7 @@
     <Compile Include="Resources\Textures\DX11Texture1D.cs" />
     <Compile Include="Resources\Textures\DX11Texture1DArray.cs" />
     <Compile Include="Resources\Textures\DX11Texture2D.cs" />
-    <Compile Include="Resources\IDX11Resource.cs" />
+    <Compile Include="Resources\IDxResource.cs" />
     <Compile Include="Resources\Textures\FileLoader.cs">
       <SubType>Code</SubType>
     </Compile>

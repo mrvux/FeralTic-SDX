@@ -73,7 +73,7 @@ namespace FeralTic.DX11.Resources
             }
         }
 
-        public override IDX11Geometry ShallowCopy()
+        public override IDxGeometry ShallowCopy()
         {
             return new DX11VertexGeometry(this);
         }

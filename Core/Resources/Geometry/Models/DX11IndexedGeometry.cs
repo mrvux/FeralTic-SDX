@@ -84,7 +84,7 @@ namespace FeralTic.DX11.Resources
             if (this.ownsido) { if (this.IndexBuffer != null) { this.IndexBuffer.Dispose(); } }
         }
 
-        public override IDX11Geometry ShallowCopy()
+        public override IDxGeometry ShallowCopy()
         {
             return new DX11IndexedGeometry(this);
         }

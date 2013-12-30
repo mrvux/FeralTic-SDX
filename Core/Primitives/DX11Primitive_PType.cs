@@ -52,7 +52,7 @@ namespace FeralTic.DX11.Geometry
             }
         }
 
-        public IDX11Geometry GetByPrimitiveType(string ptype, Dictionary<string,object> properties)
+        public IDxGeometry GetByPrimitiveType(string ptype, Dictionary<string,object> properties)
         {
             if (this.primitivecreator.ContainsKey(ptype))
             {

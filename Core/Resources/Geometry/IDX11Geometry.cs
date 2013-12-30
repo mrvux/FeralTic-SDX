@@ -11,7 +11,7 @@ namespace FeralTic.DX11
     /// <summary>
     /// Base interface for any geometry
     /// </summary>
-    public interface IDX11Geometry : IDxResource, IDisposable
+    public interface IDxGeometry : IDxResource, IDisposable
     {
         /// <summary>
         /// Default topology for our geometry
@@ -36,7 +36,7 @@ namespace FeralTic.DX11
 
         bool HasBoundingBox { get; set; }
 
-        IDX11Geometry ShallowCopy();
+        IDxGeometry ShallowCopy();
 
         string PrimitiveType { get; set; }
 
