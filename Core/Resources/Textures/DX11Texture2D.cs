@@ -58,9 +58,13 @@ namespace FeralTic.DX11.Resources
             #endif
         }
 
-        public static void SaveToFile(RenderContext context,IDxTexture2D texture,string path,ImageFileFormat fileformat)
+        public static void SaveToFile(DxDevice device, RenderContext context,IDxTexture2D texture,string path,ImageFileFormat fileformat)
         {
             #if DIRECTX11_1
+            DX11Texture2D staging = DX11Texture2D.CreateStaging(device, texture);
+            context.Context.CopyResource(texture.Texture, staging.Texture);
+            FileLoader.SaveToFile(device.WICFactory, context, fileformat, staging, path);
+            staging.Dispose();
             #else
             Texture2D.ToFile(context, texture.Texture, fileformat, path);
             #endif

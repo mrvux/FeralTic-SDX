@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 
 namespace FeralTic.DX11.Resources
 {
-    public class DX11SwapChain : IDxRenderTarget
+    public class DX11SwapChain : IDxRenderTarget , IDxTexture2D
     {
         private DxDevice device;
         private IntPtr handle;
@@ -37,6 +37,21 @@ namespace FeralTic.DX11.Resources
         public int Height
         {
             get { return this.TextureDesc.Height; }
+        }
+
+        public Texture2D Texture
+        {
+            get { return this.resource; }
+        }
+
+        public Format Format
+        {
+            get { return this.TextureDesc.Format; }
+        }
+
+        public ShaderResourceView ShaderView
+        {
+            get { return null; }
         }
 
         public DX11SwapChain(DxDevice device, IntPtr handle)
@@ -119,5 +134,7 @@ namespace FeralTic.DX11.Resources
             if (this.resource != null) { this.resource.Dispose(); }
             if (this.swapchain != null) { this.swapchain.Dispose(); }
         }
+
+
     }
 }
