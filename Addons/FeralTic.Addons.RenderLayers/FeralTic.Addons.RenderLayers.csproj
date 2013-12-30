@@ -21,9 +21,15 @@
   <ItemGroup>
     <Compile Include="GeometryFX\GeometryFXExtensions.cs" />
     <Compile Include="GeometryFX\GeometryFXSettings.cs" />
+    <Compile Include="ICustomShaderVariable.cs" />
+    <Compile Include="IShaderSemantic.cs" />
     <Compile Include="IViewProjectionSettings.cs" />
     <Compile Include="LayerDelegate.cs" />
     <Compile Include="LayerFX\eRendeHint.cs" />
+    <Compile Include="LayerFX\IObjectLayerValidator.cs" />
+    <Compile Include="LayerFX\LayerSettings.cs" />
+    <Compile Include="LayerFX\LayerSettings_Transforms.cs" />
+    <Compile Include="LayerFX\ObjectLayerSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderActions\GeometryConvolution.cs" />
     <Compile Include="RenderActions\Geometry\GeometryConvolutionTasks.cs" />
