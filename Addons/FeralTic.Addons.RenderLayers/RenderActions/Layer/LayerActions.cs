@@ -46,7 +46,7 @@ namespace FeralTic.RenderLayers.RenderActions
             return restore;
         }
 
-        public static Action<LayerSettings> Billboard(LayerSettings settings, Matrix transform, bool doublescale)
+        public static Action<LayerSettings> PixelBillBoard(LayerSettings settings, Matrix transform, bool doublescale)
         {
             Matrix view = settings.View;
             Matrix proj = settings.Projection;
