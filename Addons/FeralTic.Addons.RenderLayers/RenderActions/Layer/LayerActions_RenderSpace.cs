@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FeralTic.RenderLayers.RenderActions
 {
-    public static class LayerActions
+    public static partial class LayerActions
     {
         public static Action<LayerSettings> WithinView(LayerSettings settings)
         {
