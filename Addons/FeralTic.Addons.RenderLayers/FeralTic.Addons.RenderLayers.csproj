@@ -33,6 +33,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderActions\GeometryConvolution.cs" />
     <Compile Include="RenderActions\Geometry\GeometryConvolutionTasks.cs" />
+    <Compile Include="RenderActions\Layer\LayerActions.cs" />
     <Compile Include="TextureFX\TextureFXActions.cs" />
     <Compile Include="TextureFX\TextureFXPassSettings.cs" />
     <Compile Include="TextureFX\TextureFXSettings.cs" />

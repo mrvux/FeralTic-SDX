@@ -9,7 +9,7 @@ using FeralTic.DX11;
 using SharpDX.Direct3D;
 using SharpDX;
 
-namespace FeralTic.RenderLayers
+namespace FeralTic.RenderLayers.RenderActions
 {
     public class IndexedInstancer : GeometryConvolution<DX11IndexedGeometry, DX11IndexedGeometry>
     {

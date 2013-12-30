@@ -27,9 +27,6 @@ namespace FeralTic.RenderLayers.LayerFX
             this.ViewportCount = 1;
             this.ViewportIndex = 0;
             this.RenderHint = eRenderHint.Forward;
-
-            //this.CustomSemantics = new List<IDX11RenderSemantic>();
-            //this.ResourceSemantics = new List<DX11Resource<IDX11RenderSemantic>>();
         }
 
         public eRenderHint RenderHint { get; set; }
