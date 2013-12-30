@@ -47,6 +47,7 @@ namespace FeralTic.RenderLayers.LayerFX
         public bool ResetCounter { get; set; }
         public int CounterValue { get; set; }
 
+        public int DrawCallCount { get; set; } 
         public bool DepthOnly { get; set; }
 
         public List<IObjectLayerValidator> ObjectValidators { get; set; }
