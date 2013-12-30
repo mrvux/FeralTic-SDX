@@ -25,10 +25,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderActions\GeometryConvolution.cs" />
     <Compile Include="RenderActions\Geometry\GeometryConvolutionTasks.cs" />
+    <Compile Include="TextureFX\TextureFXPassSettings.cs" />
+    <Compile Include="TextureFX\TextureFXSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GeometryFX\" />
-    <Folder Include="TextureFX\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\FeralTic.csproj">
