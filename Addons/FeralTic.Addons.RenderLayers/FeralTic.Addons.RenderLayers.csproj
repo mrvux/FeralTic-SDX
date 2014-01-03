@@ -38,7 +38,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderActions\GeometryConvolution.cs" />
     <Compile Include="RenderActions\Geometry\GeometryConvolutionTasks.cs" />
-    <Compile Include="RenderActions\Layer\LayerActions.cs" />
+    <Compile Include="RenderActions\Layer\LayerActions_Geometry.cs" />
+    <Compile Include="RenderActions\Layer\LayerActions_RenderSpace.cs" />
     <Compile Include="RenderActions\Layer\LayerShaderActions.cs" />
     <Compile Include="RenderActions\Layer\LayerShaderObjectActions.cs" />
     <Compile Include="RenderActions\ViewProjectionShaderActions.cs" />
