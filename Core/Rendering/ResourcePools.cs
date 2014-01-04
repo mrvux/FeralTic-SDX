@@ -18,7 +18,7 @@ namespace FeralTic.DX11
 
         }
 
-        public ResourcePoolEntry<DX11StructuredBuffer> Lock(int stride, int numelements,eDX11BufferMode mode = eDX11BufferMode.Default)
+        public ResourcePoolEntry<DX11StructuredBuffer> Lock(int stride, int numelements,eDxBufferMode mode = eDxBufferMode.Default)
         {
             foreach (ResourcePoolEntry<DX11StructuredBuffer> entry in this.pool)
             {

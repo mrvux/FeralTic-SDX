@@ -44,12 +44,12 @@ namespace FeralTic.DX11
             return this.targetpool.Lock(w, h, format, sd, genMM, mmLevels);
         }
 
-        public ResourcePoolEntry<DX11StructuredBuffer> LockStructuredBuffer(int stride, int numelements, eDX11BufferMode mode = eDX11BufferMode.Default)
+        public ResourcePoolEntry<DX11StructuredBuffer> LockStructuredBuffer(int stride, int numelements, eDxBufferMode mode = eDxBufferMode.Default)
         {
             return this.sbufferpool.Lock(stride, numelements, mode);
         }
 
-        public ResourcePoolEntry<DX11StructuredBuffer> LockStructuredBuffer<T>(int numelements, eDX11BufferMode mode = eDX11BufferMode.Default) where T : struct
+        public ResourcePoolEntry<DX11StructuredBuffer> LockStructuredBuffer<T>(int numelements, eDxBufferMode mode = eDxBufferMode.Default) where T : struct
         {
             return this.sbufferpool.Lock(Marshal.SizeOf(typeof(T)), numelements, mode);
         }

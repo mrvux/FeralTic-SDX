@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 
 namespace FeralTic.DX11.Resources
 {
-    public enum eDX11BufferMode { Default = 0, Append = 2, Counter = 4 }
+    public enum eDxBufferMode { Default = 0, Append = 2, Counter = 4 }
 
     public unsafe class DX11StructuredBuffer : IDxBuffer, IDxShaderResource,IDxUnorderedResource, IDisposable
     {
@@ -24,7 +24,7 @@ namespace FeralTic.DX11.Resources
 
         public int ElementCount { get; protected set; }
         public int Stride { get; protected set; }
-        public eDX11BufferMode BufferMode { get; protected set; }
+        public eDxBufferMode BufferMode { get; protected set; }
 
         /// <summary>
         /// Vertex Input Layout
@@ -70,7 +70,7 @@ namespace FeralTic.DX11.Resources
             this.device = device;
             this.ElementCount = elementcount;
             this.Stride = stride;
-            this.BufferMode = eDX11BufferMode.Default;
+            this.BufferMode = eDxBufferMode.Default;
 
             if (initial != null)
             {
@@ -92,12 +92,12 @@ namespace FeralTic.DX11.Resources
             this.device = device;
             this.ElementCount = elementcount;
             this.Stride = stride;
-            this.BufferMode = eDX11BufferMode.Default;
+            this.BufferMode = eDxBufferMode.Default;
             this.Buffer = new SharpDX.Direct3D11.Buffer(device.Device,ptr, desc);
             this.ShaderView = new ShaderResourceView(device.Device, this.Buffer);
         }
 
-        protected DX11StructuredBuffer(DxDevice device, int elementcount, int stride, BufferDescription desc, eDX11BufferMode buffermode = eDX11BufferMode.Default)
+        protected DX11StructuredBuffer(DxDevice device, int elementcount, int stride, BufferDescription desc, eDxBufferMode buffermode = eDxBufferMode.Default)
         {
             this.device = device;
             this.ElementCount = elementcount;
@@ -196,7 +196,7 @@ namespace FeralTic.DX11.Resources
             return CreateStaging(device, elemenCount, Marshal.SizeOf(typeof(T)));
         }
 
-        public static DX11StructuredBuffer CreateWriteable(DxDevice device, int elemenCount, int stride, eDX11BufferMode mode = eDX11BufferMode.Default)
+        public static DX11StructuredBuffer CreateWriteable(DxDevice device, int elemenCount, int stride, eDxBufferMode mode = eDxBufferMode.Default)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -210,19 +210,19 @@ namespace FeralTic.DX11.Resources
             return new DX11StructuredBuffer(device, elemenCount, stride, bd, mode);
         }
 
-        public static DX11StructuredBuffer CreateWriteable<T>(DxDevice device, int elementcount, eDX11BufferMode mode = eDX11BufferMode.Default) where T : struct
+        public static DX11StructuredBuffer CreateWriteable<T>(DxDevice device, int elementcount, eDxBufferMode mode = eDxBufferMode.Default) where T : struct
         {
             return CreateWriteable(device, elementcount, Marshal.SizeOf(typeof(T)), mode);
         }
 
         public static DX11StructuredBuffer CreateAppend<T>(DxDevice device, int elementcount) where T : struct
         {
-            return CreateWriteable(device, elementcount, Marshal.SizeOf(typeof(T)), eDX11BufferMode.Append);
+            return CreateWriteable(device, elementcount, Marshal.SizeOf(typeof(T)), eDxBufferMode.Append);
         }
 
         public static DX11StructuredBuffer CreateCounter<T>(DxDevice device, int elementcount) where T : struct
         {
-            return CreateWriteable(device, elementcount, Marshal.SizeOf(typeof(T)), eDX11BufferMode.Counter);
+            return CreateWriteable(device, elementcount, Marshal.SizeOf(typeof(T)), eDxBufferMode.Counter);
         }
 
         public void Dispose()
