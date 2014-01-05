@@ -118,6 +118,19 @@ namespace FeralTic.DX11.Resources
         }
         #endregion
 
+        public void CopyToStructuredBuffer(RenderContext context,ref DX11StructuredBuffer sb)
+        {
+            if (this.format != SharpDX.DXGI.Format.R32_UInt)
+            {
+                throw new Exception("Only Large indices formats supported");
+            }
+            if (sb == null)
+            {
+                sb = DX11StructuredBuffer.CreateWriteable<uint>(this.device, this.IndicesCount);
+            }
+            context.Context.CopyResource(this.Buffer, sb.Buffer);
+        }
+
         public DX11StructuredBuffer CopyToStructuredBuffer(RenderContext context)
         {
             if (this.format != SharpDX.DXGI.Format.R32_UInt)
