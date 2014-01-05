@@ -71,13 +71,13 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void TestBuffersWithFlags()
         {
-            DX11StructuredBuffer sb1 = this.Device.ResourcePool.LockStructuredBuffer(16, 16, eDX11BufferMode.Default);
+            DX11StructuredBuffer sb1 = this.Device.ResourcePool.LockStructuredBuffer(16, 16, eDxBufferMode.Default);
             this.Device.ResourcePool.Unlock(sb1);
 
-            DX11StructuredBuffer sb2 = this.Device.ResourcePool.LockStructuredBuffer(16, 16, eDX11BufferMode.Append);
+            DX11StructuredBuffer sb2 = this.Device.ResourcePool.LockStructuredBuffer(16, 16, eDxBufferMode.Append);
             this.Device.ResourcePool.Unlock(sb2);
 
-            DX11StructuredBuffer sb3 = this.Device.ResourcePool.LockStructuredBuffer(16, 16, eDX11BufferMode.Counter);
+            DX11StructuredBuffer sb3 = this.Device.ResourcePool.LockStructuredBuffer(16, 16, eDxBufferMode.Counter);
             this.Device.ResourcePool.Unlock(sb2);
 
             Assert.AreNotEqual(sb1.Buffer.NativePointer, sb2.Buffer.NativePointer);

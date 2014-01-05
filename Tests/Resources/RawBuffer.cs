@@ -18,8 +18,7 @@ namespace FlareTic.Tests
             RawBufferBindings binding = new RawBufferBindings()
             {
                  AllowIndexBuffer = false,
-                 AllowStreamOut = false,
-                 AllowUAV = true,
+                 WriteMode = eRawBufferWriteMode.Uav,
                  AllowVertexBuffer = false
             };
             DX11RawBuffer buffer = DX11RawBuffer.CreateWriteable(this.Device, 64, binding);
@@ -31,24 +30,6 @@ namespace FlareTic.Tests
             buffer.Dispose();
         }
 
-        [TestMethod]
-        public void CreateRawWriteableAll()
-        {
-            RawBufferBindings binding = new RawBufferBindings()
-            {
-                AllowIndexBuffer = true,
-                AllowStreamOut = true,
-                AllowUAV = true,
-                AllowVertexBuffer = true
-            };
-            DX11RawBuffer buffer = DX11RawBuffer.CreateWriteable(this.Device, 64, binding);
-
-            Assert.IsNotNull(buffer.Buffer, "Buffer is null");
-            Assert.IsNotNull(buffer.ShaderView, "Shader View is null");
-            Assert.IsNotNull(buffer.UnorderedView, "UAV is null");
-
-            buffer.Dispose();
-        }
 
         [TestMethod]
         public void CreateRawWriteableV()
@@ -56,8 +37,7 @@ namespace FlareTic.Tests
             RawBufferBindings binding = new RawBufferBindings()
             {
                 AllowIndexBuffer = true,
-                AllowStreamOut = false,
-                AllowUAV = false,
+                WriteMode = eRawBufferWriteMode.None,
                 AllowVertexBuffer = false
             };
             DX11RawBuffer buffer = DX11RawBuffer.CreateWriteable(this.Device, 64, binding);
@@ -75,8 +55,7 @@ namespace FlareTic.Tests
             RawBufferBindings binding = new RawBufferBindings()
             {
                 AllowIndexBuffer = true,
-                AllowStreamOut = true,
-                AllowUAV = false,
+                WriteMode = eRawBufferWriteMode.StreamOut,
                 AllowVertexBuffer = true
             };
             DX11RawBuffer buffer = DX11RawBuffer.CreateWriteable(this.Device, 64, binding);
@@ -92,8 +71,15 @@ namespace FlareTic.Tests
         [TestMethod]
         public void CreateRawImmutable()
         {
+            RawBufferBindings binding = new RawBufferBindings()
+            {
+                AllowIndexBuffer = false,
+                WriteMode = eRawBufferWriteMode.None,
+                AllowVertexBuffer = false
+            };
+
             DataStream ds = new DataStream(64, true, true);
-            DX11RawBuffer buffer = DX11RawBuffer.CreateImmutable(this.Device,ds);
+            DX11RawBuffer buffer = DX11RawBuffer.CreateImmutable(this.Device,ds,binding);
 
             Assert.IsNotNull(buffer.Buffer, "Buffer is null");
             Assert.IsNotNull(buffer.ShaderView, "Shader View is null");
@@ -105,6 +91,13 @@ namespace FlareTic.Tests
         [TestMethod]
         public void RawStagingCopy()
         {
+            RawBufferBindings binding = new RawBufferBindings()
+            {
+                AllowIndexBuffer = false,
+                WriteMode = eRawBufferWriteMode.None,
+                AllowVertexBuffer = true
+            };
+
             DataStream ds = new DataStream(16 * sizeof(uint), true, true);
             for (uint i = 0; i < 16; i++)
             {
@@ -112,7 +105,7 @@ namespace FlareTic.Tests
             }
             ds.Position = 0;
 
-            DX11RawBuffer buffer = DX11RawBuffer.CreateImmutable(this.Device, ds);
+            DX11RawBuffer buffer = DX11RawBuffer.CreateImmutable(this.Device, ds,binding);
             ds.Dispose();
 
             Assert.IsNotNull(buffer.Buffer, "Immutable Buffer is null");

@@ -12,12 +12,13 @@ using SharpDX.Direct3D;
 
 namespace FeralTic.DX11.Resources
 {
+    public enum eRawBufferWriteMode { None, StreamOut, Uav }
+
     public struct RawBufferBindings
     {
         public bool AllowVertexBuffer;
         public bool AllowIndexBuffer;
-        public bool AllowStreamOut;
-        public bool AllowUAV;
+        public eRawBufferWriteMode WriteMode;
     }
 
     public unsafe class DX11RawBuffer : IDxBuffer, IDxShaderResource,IDxUnorderedResource, IDisposable
@@ -109,13 +110,13 @@ namespace FeralTic.DX11.Resources
                 StructureByteStride = 4
             };
 
-            bd.BindFlags |= binding.AllowUAV ? BindFlags.UnorderedAccess : 0;
+            bd.BindFlags |= binding.WriteMode == eRawBufferWriteMode.Uav ? BindFlags.UnorderedAccess : 0;
             bd.BindFlags |= binding.AllowIndexBuffer ? BindFlags.IndexBuffer : 0;
             bd.BindFlags |= binding.AllowVertexBuffer ? BindFlags.VertexBuffer : 0;
-            bd.BindFlags |= binding.AllowStreamOut ? BindFlags.StreamOutput : 0;
+            bd.BindFlags |= binding.WriteMode == eRawBufferWriteMode.StreamOut ? BindFlags.StreamOutput : 0;
 
 
-            return new DX11RawBuffer(device, bd, IntPtr.Zero, binding.AllowUAV);
+            return new DX11RawBuffer(device, bd, IntPtr.Zero, binding.WriteMode == eRawBufferWriteMode.Uav);
         }
 
         public static DX11RawBuffer CreateStaging(DX11RawBuffer buffer)

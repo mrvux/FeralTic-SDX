@@ -60,7 +60,7 @@ namespace FeralTic.RenderLayers.GeometryFX
 
             if (rawbuffer == null)
             {
-                rawbuffer = DX11RawBuffer.CreateWriteable(this.Device, buffersize, new RawBufferBindings() { AllowVertexBuffer = true, AllowStreamOut = true });
+                rawbuffer = DX11RawBuffer.CreateWriteable(this.Device, buffersize, new RawBufferBindings() { AllowVertexBuffer = true, WriteMode= eRawBufferWriteMode.StreamOut });
             }
             this.binding = new StreamOutputBufferBinding[] { new StreamOutputBufferBinding(this.rawbuffer.Buffer, 0) };
             this.outputgeometry = this.PrepareGeometry(geometry);

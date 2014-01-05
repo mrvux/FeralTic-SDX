@@ -34,7 +34,7 @@ namespace FeralTic.DX11
             //Since flag doesn't report buffer support on win7, we just try to create a small buffer
             try
             {
-                DX11RawBuffer b = DX11RawBuffer.CreateWriteable(this, 16, new RawBufferBindings() { AllowUAV = true });
+                DX11RawBuffer b = DX11RawBuffer.CreateWriteable(this, 16, new RawBufferBindings() { WriteMode = eRawBufferWriteMode.Uav });
                 b.Dispose();
                 this.HasBufferSupport = true;
             }

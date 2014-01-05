@@ -35,7 +35,7 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void CreateAppend()
         {
-            DX11StructuredBuffer sb = DX11StructuredBuffer.CreateWriteable(this.Device, 16, 16,eDX11BufferMode.Append);
+            DX11StructuredBuffer sb = DX11StructuredBuffer.CreateWriteable(this.Device, 16, 16,eDxBufferMode.Append);
             Assert.IsNotNull(sb.Buffer, "Buffer Is Null");
             Assert.IsNotNull(sb.ShaderView, "SRV Is Null");
             Assert.IsNotNull(sb.UnorderedView, "UAV Is Null");
@@ -45,7 +45,7 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void CreateAppendGeneric()
         {
-            DX11StructuredBuffer sb = DX11StructuredBuffer.CreateWriteable<Vector4>(this.Device, 16,eDX11BufferMode.Append);
+            DX11StructuredBuffer sb = DX11StructuredBuffer.CreateWriteable<Vector4>(this.Device, 16, eDxBufferMode.Append);
             Assert.IsNotNull(sb.Buffer, "Buffer Is Null");
             Assert.IsNotNull(sb.ShaderView, "SRV Is Null");
             Assert.IsNotNull(sb.UnorderedView, "UAV Is Null");
@@ -55,7 +55,7 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void CreateCounter()
         {
-            DX11StructuredBuffer sb = DX11StructuredBuffer.CreateWriteable(this.Device, 16, 16, eDX11BufferMode.Counter);
+            DX11StructuredBuffer sb = DX11StructuredBuffer.CreateWriteable(this.Device, 16, 16, eDxBufferMode.Counter);
             Assert.IsNotNull(sb.Buffer, "Buffer Is Null");
             Assert.IsNotNull(sb.ShaderView, "SRV Is Null");
             Assert.IsNotNull(sb.UnorderedView, "UAV Is Null");
@@ -65,7 +65,7 @@ namespace FeralTic.Tests
         [TestMethod()]
         public void CreateCounterGeneric()
         {
-            DX11StructuredBuffer sb = DX11StructuredBuffer.CreateWriteable<Vector4>(this.Device, 16, eDX11BufferMode.Counter);
+            DX11StructuredBuffer sb = DX11StructuredBuffer.CreateWriteable<Vector4>(this.Device, 16, eDxBufferMode.Counter);
             Assert.IsNotNull(sb.Buffer, "Buffer Is Null");
             Assert.IsNotNull(sb.ShaderView, "SRV Is Null");
             Assert.IsNotNull(sb.UnorderedView, "UAV Is Null");
