@@ -108,7 +108,7 @@ namespace FeralTic.DX11.Resources
             bd.BindFlags |= binding.AllowUAV ? BindFlags.UnorderedAccess : 0;
             bd.BindFlags |= binding.AllowIndexBuffer ? BindFlags.IndexBuffer : 0;
             bd.BindFlags |= binding.AllowVertexBuffer ? BindFlags.VertexBuffer : 0;
-            bd.BindFlags |= binding.AllowUAV ? BindFlags.UnorderedAccess : 0;
+            bd.BindFlags |= binding.AllowStreamOut ? BindFlags.StreamOutput : 0;
 
 
             return new DX11RawBuffer(device, bd, IntPtr.Zero, binding.AllowUAV);

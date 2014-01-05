@@ -30,6 +30,16 @@ namespace FeralTic.RenderLayers.GeometryFX
         private InputElement[] outputlayout;
         private int outputvertexsize;
 
+        public IDxGeometry OutputGeometry
+        {
+            get { return this.outputgeometry; }
+        }
+
+        public DX11RawBuffer RawBufferOutput
+        {
+            get { return this.rawbuffer; }
+        }
+
         public void AssignPass(EffectPass pass)
         {
             this.outputlayout = pass.GetStreamOutputLayout(out this.outputvertexsize);
@@ -87,6 +97,7 @@ namespace FeralTic.RenderLayers.GeometryFX
                 vd.VertexSize = this.outputvertexsize;
                 vd.VerticesCount = this.outputvertexcount;
                 vd.InputLayout = this.outputlayout;
+                vd.Topology = geometry.Topology;
                 if (this.AsAuto)
                 {
                     DX11VertexAutoDrawer auto = new DX11VertexAutoDrawer();
@@ -103,6 +114,7 @@ namespace FeralTic.RenderLayers.GeometryFX
                     vd.VertexSize = this.outputvertexsize;
                     vd.VerticesCount = this.outputvertexcount;
                     vd.InputLayout = this.outputlayout;
+                    vd.Topology = geometry.Topology;
                     DX11VertexAutoDrawer auto = new DX11VertexAutoDrawer();
                     vd.AssignDrawer(auto);
                     return vd;
@@ -123,6 +135,7 @@ namespace FeralTic.RenderLayers.GeometryFX
                 vd.VertexSize = this.outputvertexsize;
                 vd.VerticesCount = this.outputvertexcount;
                 vd.InputLayout = this.outputlayout;
+                vd.Topology = geometry.Topology;
                 if (this.AsAuto)
                 {
                     DX11VertexAutoDrawer auto = new DX11VertexAutoDrawer();
@@ -137,6 +150,11 @@ namespace FeralTic.RenderLayers.GeometryFX
         public void BindOutput(RenderContext context)
         {
             context.Context.StreamOutput.SetTargets(this.binding);
+        }
+
+        public void UnbindOutput(RenderContext context)
+        {
+            context.Context.StreamOutput.SetTargets(new StreamOutputBufferBinding[0]);
         }
     }
 }
