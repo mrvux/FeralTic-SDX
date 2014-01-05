@@ -80,7 +80,7 @@ namespace FeralTic.DX11.Resources
             }
         }
 
-        public static DX11RawBuffer CreateImmutable(DxDevice device, DataStream initial)
+        public static DX11RawBuffer CreateImmutable(DxDevice device, DataStream initial, RawBufferBindings binding)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -90,6 +90,10 @@ namespace FeralTic.DX11.Resources
                 SizeInBytes = (int)initial.Length,
                 Usage = ResourceUsage.Immutable
             };
+
+            //Ignore UAV/StreamOut, since our buffer is immutable
+            bd.BindFlags |= binding.AllowIndexBuffer ? BindFlags.IndexBuffer : 0;
+            bd.BindFlags |= binding.AllowVertexBuffer ? BindFlags.VertexBuffer : 0;
             return new DX11RawBuffer(device, bd, initial.DataPointer, false);
         }
 
