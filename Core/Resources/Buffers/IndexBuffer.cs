@@ -19,6 +19,14 @@ namespace FeralTic.DX11.Resources
 
         private SharpDX.DXGI.Format format;
 
+        protected DX11IndexBuffer(DxDevice device, int indicescount, SharpDX.Direct3D11.Buffer buffer)
+        {
+            this.format = SharpDX.DXGI.Format.R32_UInt;
+            this.device = device;
+            this.IndicesCount = indicescount;
+            this.Buffer = buffer;
+        }
+
         protected DX11IndexBuffer(DxDevice device, int indicescount, BufferDescription desc, DataStream initial = null, bool largeformat = true)
         {
             this.device = device;
@@ -47,6 +55,19 @@ namespace FeralTic.DX11.Resources
 
 
         #region CreateImmutable
+        public static DX11IndexBuffer CreateFromRawBuffer(DxDevice device, DX11RawBuffer rawbuffer)
+        {
+            if (!rawbuffer.Description.BindFlags.HasFlag(BindFlags.IndexBuffer))
+            {
+                throw new ArgumentException("RawBuffer was not created with IndexBuffer bind flags");
+            }
+            
+            int indicescount = rawbuffer.Size / 4;
+
+            DX11IndexBuffer result = new DX11IndexBuffer(device, indicescount, rawbuffer.Buffer);
+            return result;
+        }
+
         public static DX11IndexBuffer CreateImmutable(DxDevice device, int indicescount, DataStream initial = null, bool largeformat = true)
         {
             int indexsize = largeformat ? 4 : 2;
