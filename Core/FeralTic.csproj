@@ -100,9 +100,7 @@
     <Compile Include="Resources\Textures\DX11Texture1DArray.cs" />
     <Compile Include="Resources\Textures\DX11Texture2D.cs" />
     <Compile Include="Resources\IDxResource.cs" />
-    <Compile Include="Resources\Textures\FileLoader.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Resources\Textures\TextureLoader.cs" />
     <Compile Include="Shaders\DX11Effect.cs" />
     <Compile Include="Shaders\EffectInstance.cs" />
     <Compile Include="Shaders\EffectInstance_Semantic.cs" />

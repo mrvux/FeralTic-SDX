@@ -22,25 +22,14 @@ namespace FeralTic.Resources
 
             if (started != null) { started.Report(true); }
             //Thread.Sleep(4000);
-            SharpDX.WIC.BitmapSource src = FileLoader.LoadBitmap(device.WICFactory, path);
 
+            IDxTexture2D texture = TextureLoader.LoadFromFile(device, path);
             if (ct.IsCancellationRequested)
             {
-                src.Dispose();
+                texture.Dispose();
                 throw new OperationCanceledException();
             }
-
-            SharpDX.Direct3D11.Texture2D tex = FileLoader.CreateTexture2DFromBitmap(device, src, false);
-            ShaderResourceView srv = new ShaderResourceView(device, tex);
-
-            if (ct.IsCancellationRequested)
-            {
-                srv.Dispose();
-                tex.Dispose();
-                src.Dispose();
-                throw new OperationCanceledException();
-            }
-            return DX11Texture2D.FromReference(device, tex, srv);
+            return texture;
         }
 
         public static Task<IDxTexture2D> LoadFromFileAsync(RenderDevice device, string path, CancellationToken ct, IProgress<bool> started = null)

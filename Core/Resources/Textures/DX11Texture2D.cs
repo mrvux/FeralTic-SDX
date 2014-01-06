@@ -39,37 +39,6 @@ namespace FeralTic.DX11.Resources
             get { return this.description.Format; }
         }
 
-
-        public static DX11Texture2D FromFile(DxDevice device, string path, bool mips = true)
-        {
-            #if DIRECTX11_1
-            DX11Texture2D texture = new DX11Texture2D();
-            texture.Texture = FileLoader.CreateTexture2DFromBitmap(device.Device, FileLoader.LoadBitmap(device.WICFactory, path), mips);
-            texture.description = texture.Texture.Description;
-            texture.ShaderView = new ShaderResourceView(device.Device, texture.Texture);
-            if (mips) { device.Device.ImmediateContext.GenerateMips(texture.ShaderView); }
-            return texture;
-            #else
-            DX11Texture2D texture = new DX11Texture2D();
-            texture.Texture = Texture2D.FromFile<Texture2D>(device, path);
-            texture.description = texture.Texture.Description;
-            texture.ShaderView = new ShaderResourceView(device.Device, texture.Texture);
-            return texture;
-            #endif
-        }
-
-        public static void SaveToFile(DxDevice device, RenderContext context,IDxTexture2D texture,string path,ImageFileFormat fileformat)
-        {
-            #if DIRECTX11_1
-            DX11Texture2D staging = DX11Texture2D.CreateStaging(device, texture);
-            context.Context.CopyResource(texture.Texture, staging.Texture);
-            FileLoader.SaveToFile(device.WICFactory, context, fileformat, staging, path);
-            staging.Dispose();
-            #else
-            Texture2D.ToFile(context, texture.Texture, fileformat, path);
-            #endif
-        }
-
         public static DX11Texture2D FromReference(DxDevice device, Texture2D texture, ShaderResourceView view)
         {
             DX11Texture2D result = new DX11Texture2D();
