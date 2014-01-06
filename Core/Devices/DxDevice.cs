@@ -11,6 +11,7 @@ using DXGIAdapter = SharpDX.DXGI.Adapter2;
 using DXGIFactory = SharpDX.DXGI.Factory2;
 using WICFactory = SharpDX.WIC.ImagingFactory2;
 using DirectXDevice = SharpDX.Direct3D11.Device2;
+using D2DFactory = SharpDX.Direct2D1.Factory1;
 #else
 #if DIRECTX11_1
 using DXGIDevice = SharpDX.DXGI.Device2;
@@ -40,6 +41,8 @@ namespace FeralTic.DX11
         public DXGIFactory Factory { get; private set; }
 
         public WICFactory WICFactory { get; private set; }
+
+        public D2DFactory D2DFactory { get; private set; }
 
         public bool AutoReset { get; set; }
 
@@ -82,6 +85,7 @@ namespace FeralTic.DX11
         public DxDevice(DeviceCreationFlags flags = DeviceCreationFlags.BgraSupport, int adapterindex = 0)
         {
             this.WICFactory = new WICFactory();
+            this.D2DFactory = new D2DFactory();
             this.creationflags = flags;
             this.adapterindex = adapterindex;
             this.Initialize();
