@@ -17,35 +17,20 @@ namespace FeralTic.DX11.Resources
         private class NativeMethods
         {
             [DllImport("DirectXTexLib_x86",CharSet=CharSet.Unicode)]
-            public static extern long LoadTextureFromWICFile(IntPtr device, string path, out IntPtr resource);
-
-            [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
-            public static extern long LoadTextureFromDDSFile(IntPtr device, string path, out IntPtr resource);
-
-            [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
-            public static extern long LoadTextureFromTGAFile(IntPtr device, string path, out IntPtr resource);
+            public static extern long LoadTextureFromFile(IntPtr device, string path,out IntPtr resource, int miplevels);
 
             [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
             public static extern long SaveTextureToFile(IntPtr device,IntPtr context,IntPtr resource, string path,int format);
+
+            [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
+            public static extern long SaveBC7TextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path);
         }
 
         public static DX11Texture2D LoadFromFile(DxDevice device, string path)
         {
             IntPtr resource;
-            long retcode;
-
-            switch (Path.GetExtension(path).ToLower())
-            {
-                case ".dds":
-                    retcode = NativeMethods.LoadTextureFromDDSFile(device.Device.NativePointer, path, out resource);
-                    break;
-                case ".tga":
-                    retcode = NativeMethods.LoadTextureFromTGAFile(device.Device.NativePointer, path, out resource);
-                    break;
-                default:
-                    retcode = NativeMethods.LoadTextureFromWICFile(device.Device.NativePointer, path, out resource);
-                    break;
-            }
+            int levels = 0;
+            long retcode = NativeMethods.LoadTextureFromFile(device.Device.NativePointer, path, out resource, levels);
 
             if (retcode == 0)
             {
@@ -92,6 +77,16 @@ namespace FeralTic.DX11.Resources
         {
             eImageFormat format = GetCodec(path);
             long retcode = NativeMethods.SaveTextureToFile(device.Device.NativePointer, context.Context.NativePointer, texture.Texture.NativePointer, path, (int)format);
+
+            if (retcode != 0)
+            {
+                throw new Exception("Failed to Save Texture");
+            }
+        }
+
+        public static void SaveToFileBC7(DxDevice device, RenderContext context, IDxTexture2D texture, string path)
+        {
+            long retcode = NativeMethods.SaveBC7TextureToFile(device.Device.NativePointer, context.Context.NativePointer, texture.Texture.NativePointer, path);
 
             if (retcode != 0)
             {
