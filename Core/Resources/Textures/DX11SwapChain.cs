@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 
 namespace FeralTic.DX11.Resources
 {
-    public class DX11SwapChain : IDxRenderTarget , IDxTexture2D
+    public class DX11SwapChain : IDxRenderTarget , IDxTexture2D, IDxUnorderedResource
     {
         private DxDevice device;
         private IntPtr handle;
@@ -26,6 +26,7 @@ namespace FeralTic.DX11.Resources
         public Texture2DDescription TextureDesc { get; protected set; }
         private Texture2D resource;
 
+        public UnorderedAccessView UnorderedView { get; protected set; }
 
         public IntPtr Handle { get { return this.handle; } }
 
@@ -54,6 +55,8 @@ namespace FeralTic.DX11.Resources
             get { return null; }
         }
 
+
+
         public DX11SwapChain(DxDevice device, IntPtr handle)
             : this(device, handle, Format.R8G8B8A8_UNorm, new SampleDescription(1,0))
         {
@@ -74,7 +77,7 @@ namespace FeralTic.DX11.Resources
                 OutputHandle = handle,
                 SampleDescription = sampledesc,
                 SwapEffect = SwapEffect.Discard,
-                Usage = Usage.RenderTargetOutput | Usage.ShaderInput,
+                Usage = Usage.RenderTargetOutput | Usage.ShaderInput | Usage.UnorderedAccess,
                 Flags = SwapChainFlags.None
             };
 
@@ -86,6 +89,8 @@ namespace FeralTic.DX11.Resources
             this.RenderView = new RenderTargetView(device.Device, this.resource);
             this.RenderViewDesc = this.RenderView.Description;
 
+            this.UnorderedView = new UnorderedAccessView(device, this.resource);
+
         }
 
         public void Resize()
@@ -95,8 +100,7 @@ namespace FeralTic.DX11.Resources
 
         public void Resize(int w, int h)
         {
-            
-
+            if (this.UnorderedView != null) { this.UnorderedView.Dispose(); }
             if (this.RenderView != null) { this.RenderView.Dispose(); }
             this.resource.Dispose();
 
@@ -106,6 +110,7 @@ namespace FeralTic.DX11.Resources
 
             this.TextureDesc = this.resource.Description;
             this.RenderView = new RenderTargetView(device.Device, this.resource);
+            this.UnorderedView = new UnorderedAccessView(device, this.resource);
         }
 
         public void Present(int syncInterval,PresentFlags flags)
@@ -130,11 +135,10 @@ namespace FeralTic.DX11.Resources
 
         public void Dispose()
         {
+            if (this.UnorderedView != null) { this.UnorderedView.Dispose(); }
             if (this.RenderView != null) { this.RenderView.Dispose(); }
             if (this.resource != null) { this.resource.Dispose(); }
             if (this.swapchain != null) { this.swapchain.Dispose(); }
         }
-
-
     }
 }
