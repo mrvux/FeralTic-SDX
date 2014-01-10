@@ -96,7 +96,7 @@ namespace FeralTic.DX11.Resources
             this.DepthView = new DepthStencilView(device, this.Texture, dsvd);
 
             dsvd.Flags = DepthStencilViewFlags.ReadOnlyDepth;
-            if (depthformat == eDepthFormat.d24s8 || depthformat == eDepthFormat.d32s8) { dsvd.Flags |= DepthStencilViewFlags.ReadOnlyStencil; }
+            if (depthformat.HasStencil()) { dsvd.Flags |= DepthStencilViewFlags.ReadOnlyStencil; }
 
             this.ReadOnlyView = new DepthStencilView(device.Device, this.Texture, dsvd);
 

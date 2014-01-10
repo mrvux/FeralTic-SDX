@@ -7,27 +7,48 @@ using SharpDX.DXGI;
 
 using Device = SharpDX.Direct3D11.Device;
 using FeralTic.DX11.Utils;
+using SharpDX.Direct3D;
 
 namespace FeralTic.DX11.Resources
 {
     public class DX11CubeDepthStencil : DX11Texture2D, IDxDepthStencil
     {
-        public DX11SliceDepthStencil[] SliceDSV { get; protected set; }
+        private DxDevice device;
 
-        public DepthStencilView DSV { get; protected set; }
+        public DepthStencilView DepthView { get; protected set; }
+        public DepthStencilView ReadOnlyView { get; protected set; }
+        public ShaderResourceView ShaderView { get; protected set; }
+        public Texture2D Texture { get; protected set; }
 
-        public DepthStencilView ReadOnlyDSV { get; protected set; }
+        public DX11SliceDepthStencil[] SliceDepthViews { get; protected set; }
 
-        public DX11CubeDepthStencil(DX11RenderContext context, int size, SampleDescription sd, Format format)
+        private Texture2DDescription resourceDesc;
+
+        public int Width
         {
-            this.context = context;
+            get { return resourceDesc.Width; }
+        }
+
+        public int Height
+        {
+            get { return resourceDesc.Height; }
+        }
+
+        public Format Format
+        {
+            get { return resourceDesc.Format; }
+        }
+
+        public DX11CubeDepthStencil(DxDevice device, int size, SampleDescription sd, eDepthFormat depthformat)
+        {
+            this.device = device;
 
             var texBufferDesc = new Texture2DDescription
             {
                 ArraySize = 6,
                 BindFlags = BindFlags.DepthStencil | BindFlags.ShaderResource,
                 CpuAccessFlags = CpuAccessFlags.None,
-                Format = DepthFormatsHelper.GetGenericTextureFormat(format),
+                Format = depthformat.GetTypeLessFormat(),
                 Height = size,
                 Width = size,
                 OptionFlags = ResourceOptionFlags.TextureCube,
@@ -36,56 +57,61 @@ namespace FeralTic.DX11.Resources
                 MipLevels = 1
             };
 
-            this.Resource = new Texture2D(context.Device, texBufferDesc);
-
-            this.desc = texBufferDesc;
-
-            //Create faces SRV/RTV
-            this.SliceDSV = new DX11SliceDepthStencil[6];
+            this.Texture = new Texture2D(device, texBufferDesc);
+            this.resourceDesc = this.Texture.Description;
 
             ShaderResourceViewDescription svd = new ShaderResourceViewDescription()
             {
                 Dimension = ShaderResourceViewDimension.TextureCube,
-                Format = DepthFormatsHelper.GetSRVFormat(format),
-                MipLevels = 1,
-                MostDetailedMip = 0,
-                First2DArrayFace = 0
+                Format = depthformat.GetSRVFormat(),
+                TextureCube = new ShaderResourceViewDescription.TextureCubeResource()
+                {
+                    MipLevels = 1,
+                    MostDetailedMip = 0
+                }
             };
 
             DepthStencilViewDescription dsvd = new DepthStencilViewDescription()
             {
-                ArraySize= 6,
+                Format = depthformat.GetDepthFormat(),
                 Dimension = DepthStencilViewDimension.Texture2DArray,
-                FirstArraySlice = 0,
-                Format = DepthFormatsHelper.GetDepthFormat(format),
-                MipSlice = 0
+                Texture2DArray = new DepthStencilViewDescription.Texture2DArrayResource()
+                {
+                    ArraySize = 6,
+                    FirstArraySlice = 0,
+                    MipSlice = 0
+                }
             };
 
-            this.DSV = new DepthStencilView(context.Device, this.Resource, dsvd);
+            this.DepthView = new DepthStencilView(device, this.Texture, dsvd);
 
-            if (context.IsFeatureLevel11)
+            if (device.IsFeatureLevel11)
             {
                 dsvd.Flags = DepthStencilViewFlags.ReadOnlyDepth;
-                if (format == Format.D24_UNorm_S8_UInt) { dsvd.Flags |= DepthStencilViewFlags.ReadOnlyStencil; }
+                if (depthformat.HasStencil()) { dsvd.Flags |= DepthStencilViewFlags.ReadOnlyStencil; }
 
-                this.ReadOnlyDSV = new DepthStencilView(context.Device, this.Resource, dsvd);
+                this.ReadOnlyView = new DepthStencilView(device, this.Texture, dsvd);
             }
 
-            this.SRV = new ShaderResourceView(context.Device, this.Resource, svd);
+            this.ShaderView = new ShaderResourceView(device, this.Texture, svd);
 
+            this.SliceDepthViews = new DX11SliceDepthStencil[6];
             for (int i = 0; i < 6; i++)
             {
-                this.SliceDSV[i] = new DX11SliceDepthStencil(context, this, i, DepthFormatsHelper.GetDepthFormat(format));
+                this.SliceDepthViews[i] = new DX11SliceDepthStencil(device, this, i, depthformat);
             }
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
             for (int i = 0; i < 6; i++)
             {
-                this.SliceDSV[i].Dispose();
+                this.SliceDepthViews[i].Dispose();
             }
-            base.Dispose();
+            this.DepthView.Dispose();
+            this.ShaderView.Dispose();
+            if (this.ReadOnlyView != null) { this.ReadOnlyView.Dispose(); }
+            this.Texture.Dispose();
         }
     }
 }

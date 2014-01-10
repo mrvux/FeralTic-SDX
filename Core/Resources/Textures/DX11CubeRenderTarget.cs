@@ -2,22 +2,44 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SlimDX.Direct3D11;
-using SlimDX.DXGI;
+using SharpDX.Direct3D11;
+using SharpDX.DXGI;
 
-using Device = SlimDX.Direct3D11.Device;
+using Device = SharpDX.Direct3D11.Device;
+using SharpDX.Direct3D;
 
 namespace FeralTic.DX11.Resources
 {
-    public class DX11CubeRenderTarget : DX11Texture2D, IDX11RenderTargetView
+    public class DX11CubeRenderTarget : IDxTexture2D, IDxRenderTarget
     {
-        public DX11SliceRenderTarget[] SliceRTV { get; protected set; }
+        private DxDevice device;
 
-        public RenderTargetView RTV { get; protected set; }
+        public RenderTargetView RenderView { get; protected set; }
+        public ShaderResourceView ShaderView { get; protected set; }
+        public Texture2D Texture { get; protected set; }
 
-        public DX11CubeRenderTarget(DX11RenderContext context, int size, SampleDescription sd, Format format, bool genMipMaps, int mmLevels)
+        public DX11SliceRenderTarget[] Slices { get; protected set; }
+
+        private Texture2DDescription resourceDesc;
+
+        public int Width
         {
-            this.context = context;
+            get { return resourceDesc.Width; }
+        }
+
+        public int Height
+        {
+            get { return resourceDesc.Height; }
+        }
+
+        public Format Format
+        {
+            get { return resourceDesc.Format; }
+        }
+
+        public DX11CubeRenderTarget(DxDevice device, int size, SampleDescription sd, Format format, bool genMipMaps, int mmLevels)
+        {
+            this.device = device;
 
             var texBufferDesc = new Texture2DDescription
             {
@@ -43,48 +65,55 @@ namespace FeralTic.DX11.Resources
                 texBufferDesc.MipLevels = 1;
             }
 
-            this.Resource = new Texture2D(context.Device, texBufferDesc);
-
-            this.desc = texBufferDesc;
+            this.Texture = new Texture2D(device.Device, texBufferDesc);
+            this.resourceDesc = this.Texture.Description;
 
             //Create faces SRV/RTV
-            this.SliceRTV = new DX11SliceRenderTarget[6];
+            this.Slices = new DX11SliceRenderTarget[6];
 
             ShaderResourceViewDescription svd = new ShaderResourceViewDescription()
             {
-                Dimension = ShaderResourceViewDimension.TextureCube,
                 Format = format,
-                MipLevels = 1,
-                MostDetailedMip = 0,
-                First2DArrayFace = 0
+                Dimension = ShaderResourceViewDimension.TextureCube,
+                TextureCube= new ShaderResourceViewDescription.TextureCubeResource()
+                {
+                    MipLevels = 1,
+                    MostDetailedMip = 0,
+                }
             };
 
             RenderTargetViewDescription rtvd = new RenderTargetViewDescription()
             {
-                ArraySize= 6,
                 Dimension = RenderTargetViewDimension.Texture2DArray,
-                FirstArraySlice = 0,
                 Format = format,
-                MipSlice = 0
+                Texture2DArray = new RenderTargetViewDescription.Texture2DArrayResource()
+                {
+                    ArraySize = 6,
+                    FirstArraySlice = 0,
+                    MipSlice  =0
+                }
             };
 
-            this.RTV = new RenderTargetView(context.Device, this.Resource, rtvd);
+            this.RenderView = new RenderTargetView(device.Device, this.Texture, rtvd);
 
-            this.SRV = new ShaderResourceView(context.Device, this.Resource, svd);
+            this.ShaderView = new ShaderResourceView(device.Device, this.Texture, svd);
 
             for (int i = 0; i < 6; i++)
             {
-                this.SliceRTV[i] = new DX11SliceRenderTarget(context, this, i);
+                this.Slices[i] = new DX11SliceRenderTarget(device, this, i);
             }
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
             for (int i = 0; i < 6; i++)
             {
-                this.SliceRTV[i].Dispose();
+                this.Slices[i].Dispose();
             }
-            base.Dispose();
+            if (this.RenderView != null) { this.RenderView.Dispose(); }
+            if (this.ShaderView != null) { this.ShaderView.Dispose(); }
+            if (this.Texture != null) { this.Texture.Dispose(); }
+
         }
     }
 }

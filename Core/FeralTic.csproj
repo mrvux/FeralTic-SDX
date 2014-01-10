@@ -92,6 +92,12 @@
     <Compile Include="Resources\Geometry\IDX11Geometry.cs" />
     <Compile Include="Resources\Geometry\IDX11GeometryDrawer.cs" />
     <Compile Include="Resources\Loaders\FileTextureLoader.cs" />
+    <Compile Include="Resources\Textures\DX11CubeDepthStencil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Resources\Textures\DX11CubeRenderTarget.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Resources\Textures\DX11DepthStencil.cs" />
     <Compile Include="Resources\Textures\DX11DepthTextureArray.cs">
       <SubType>Code</SubType>
