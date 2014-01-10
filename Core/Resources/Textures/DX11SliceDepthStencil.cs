@@ -8,13 +8,14 @@ using SharpDX.DXGI;
 
 namespace FeralTic.DX11.Resources
 {
-    public class DX11SliceDepthStencil : IDisposable
+    public class DX11SliceDepthStencil : IDxDepthStencil, IDisposable
     {
         private IDxTexture2D parent;
         private DxDevice device;
 
-        public DepthStencilView DSV { get; protected set; }
-        public DepthStencilView ReadOnlyDSV { get { return null; } }
+        public ShaderResourceView ShaderView { get; protected set; }
+        public DepthStencilView DepthView { get; protected set; }
+        public DepthStencilView ReadOnlyView { get { return null; } }
 
         public int Width { get { return this.parent.Width; } }
         public int Height { get { return this.parent.Height; } }
@@ -36,12 +37,12 @@ namespace FeralTic.DX11.Resources
                  }
             };
 
-            this.DSV = new DepthStencilView(device, this.parent.Texture, dsvd);
+            this.DepthView = new DepthStencilView(device, this.parent.Texture, dsvd);
         }
 
         public void Dispose()
         {
-            this.DSV.Dispose();
+            this.DepthView.Dispose();
         }
 
 
