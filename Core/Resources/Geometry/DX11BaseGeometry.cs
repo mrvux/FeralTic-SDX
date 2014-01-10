@@ -44,13 +44,27 @@ namespace FeralTic.DX11.Resources
                 if (pass.VertexShaderDescription.Variable != null)
                 {
                     EffectShaderVariable shader = pass.VertexShaderDescription.Variable;
-                    for (int i = 0 ; i < shader.GetShaderDescription(0).InputParameterCount;i++)
+                    if (shader.IsValid)
                     {
-                        if (shader.GetInputSignatureElementDescription(0,i).SystemValueType == SharpDX.D3DCompiler.SystemValueType.Undefined)
+                        for (int i = 0; i < shader.GetShaderDescription(0).InputParameterCount; i++)
                         {
-                            allownull = false;
+                            if (shader.GetInputSignatureElementDescription(0, i).SystemValueType == SharpDX.D3DCompiler.SystemValueType.Undefined)
+                            {
+                                allownull = false;
+                            }
                         }
                     }
+
+                    try
+                    {
+                        var sb = pass.Description.Signature;
+                    }
+                    catch
+                    {
+                        //If no signature, assume it's compute only
+                        allownull = true;
+                    }
+
                 }
 
                 if (allownull)
@@ -58,7 +72,6 @@ namespace FeralTic.DX11.Resources
                     layout = null;
                     return true;
                 }
-
                 layout = new InputLayout(device.Device, pass.Description.Signature, this.InputLayout);
                 return true;
             }
