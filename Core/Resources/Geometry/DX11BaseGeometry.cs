@@ -40,6 +40,25 @@ namespace FeralTic.DX11.Resources
             layout = null;
             try
             {
+                bool allownull = true;
+                if (pass.VertexShaderDescription.Variable != null)
+                {
+                    EffectShaderVariable shader = pass.VertexShaderDescription.Variable;
+                    for (int i = 0 ; i < shader.GetShaderDescription(0).InputParameterCount;i++)
+                    {
+                        if (shader.GetInputSignatureElementDescription(0,i).SystemValueType == SharpDX.D3DCompiler.SystemValueType.Undefined)
+                        {
+                            allownull = false;
+                        }
+                    }
+                }
+
+                if (allownull)
+                {
+                    layout = null;
+                    return true;
+                }
+
                 layout = new InputLayout(device.Device, pass.Description.Signature, this.InputLayout);
                 return true;
             }
