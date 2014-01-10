@@ -24,6 +24,7 @@ namespace FeralTic.RenderLayers.RenderActions
         {
             DX11IndexedGeometry result = (DX11IndexedGeometry)input.ShallowCopy();
             DX11InstancedIndexedDrawer d = new DX11InstancedIndexedDrawer();
+            result.AssignDrawer(d);
             d.InstanceCount = this.InstanceCount;
             return result;
         }
@@ -42,6 +43,7 @@ namespace FeralTic.RenderLayers.RenderActions
         {
             DX11VertexGeometry result = (DX11VertexGeometry)input.ShallowCopy();
             DX11InstancedVertexDrawer d = new DX11InstancedVertexDrawer();
+            result.AssignDrawer(d);
             d.InstanceCount = this.InstanceCount;
             return result;
         }
@@ -63,6 +65,7 @@ namespace FeralTic.RenderLayers.RenderActions
             {
                 DX11IndexedGeometry indexed = (DX11IndexedGeometry)result;
                 DX11InstancedIndexedDrawer d = new DX11InstancedIndexedDrawer();
+                indexed.AssignDrawer(d);
                 d.InstanceCount = this.InstanceCount;
                 indexed.AssignDrawer(d);
             }
@@ -71,6 +74,7 @@ namespace FeralTic.RenderLayers.RenderActions
             {
                 DX11VertexGeometry vertex = (DX11VertexGeometry)result;
                 DX11InstancedVertexDrawer d = new DX11InstancedVertexDrawer();
+                vertex.AssignDrawer(d);
                 d.InstanceCount = this.InstanceCount;
                 vertex.AssignDrawer(d);
             }
