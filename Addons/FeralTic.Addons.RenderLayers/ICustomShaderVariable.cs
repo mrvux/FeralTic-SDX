@@ -12,4 +12,11 @@ namespace FeralTic.RenderLayers
         string TypeName { get; }
         string Semantic { get; }
     }
+
+    public class CustomShaderVariable : ICustomShaderVariable
+    {
+        public string Name { get; set;  }
+        public string TypeName { get; set; }
+        public string Semantic { get; set; }
+    }
 }
