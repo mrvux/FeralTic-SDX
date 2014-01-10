@@ -93,12 +93,16 @@
     <Compile Include="Resources\Geometry\IDX11GeometryDrawer.cs" />
     <Compile Include="Resources\Loaders\FileTextureLoader.cs" />
     <Compile Include="Resources\Textures\DX11DepthStencil.cs" />
+    <Compile Include="Resources\Textures\DX11DepthTextureArray.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Resources\Textures\DX11MipSliceRenderTarget.cs" />
     <Compile Include="Resources\Textures\DX11RenderMip2D.cs" />
     <Compile Include="Resources\Textures\DX11RenderMip3D.cs" />
     <Compile Include="Resources\Textures\DX11RenderTarget2D.cs" />
     <Compile Include="Resources\Textures\DX11RenderTexture3D.cs" />
     <Compile Include="Resources\Textures\DX11RenderTextureArray.cs" />
+    <Compile Include="Resources\Textures\DX11SliceDepthStencil.cs" />
     <Compile Include="Resources\Textures\DX11SliceRenderTarget.cs" />
     <Compile Include="Resources\Textures\DX11SwapChain.cs" />
     <Compile Include="Resources\Textures\DX11Texture1D.cs" />
