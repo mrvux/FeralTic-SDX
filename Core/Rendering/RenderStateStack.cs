@@ -30,6 +30,11 @@ namespace FeralTic.DX11
             this.Push(this.defaultstate);
         }
 
+        public RenderState Clone()
+        {
+            return stack.Peek().Clone();
+        }
+
         public RenderState Peek()
         {
             return stack.Peek();
