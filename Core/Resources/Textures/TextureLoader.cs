@@ -142,6 +142,28 @@ namespace FeralTic.DX11.Resources
                 throw new Exception("Failed to Save Texture");
             }
         }
+
+        public static void SaveToFile(DxDevice device, RenderContext context, IDxTexture3D texture, string path)
+        {
+            eImageFormat format = eImageFormat.Dds;
+            long retcode = NativeMethods.SaveTextureToFile(device.Device.NativePointer, context.Context.NativePointer, texture.Texture.NativePointer, path, (int)format);
+
+            if (retcode != 0)
+            {
+                throw new Exception("Failed to Save Texture");
+            }
+        }
+
+        public static void SaveToFile(DxDevice device, RenderContext context, IDxTexture1D texture, string path)
+        {
+            eImageFormat format = eImageFormat.Dds;
+            long retcode = NativeMethods.SaveTextureToFile(device.Device.NativePointer, context.Context.NativePointer, texture.Texture.NativePointer, path, (int)format);
+
+            if (retcode != 0)
+            {
+                throw new Exception("Failed to Save Texture");
+            }
+        }
        
     }
 }
