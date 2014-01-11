@@ -89,8 +89,10 @@ namespace FeralTic.DX11.Resources
             this.RenderView = new RenderTargetView(device.Device, this.resource);
             this.RenderViewDesc = this.RenderView.Description;
 
-            this.UnorderedView = new UnorderedAccessView(device, this.resource);
-
+            if (device.IsFeatureLevel11 && this.TextureDesc.SampleDescription.Count == 1)
+            {
+                this.UnorderedView = new UnorderedAccessView(device, this.resource);
+            }
         }
 
         public void Resize()
@@ -110,7 +112,11 @@ namespace FeralTic.DX11.Resources
 
             this.TextureDesc = this.resource.Description;
             this.RenderView = new RenderTargetView(device.Device, this.resource);
-            this.UnorderedView = new UnorderedAccessView(device, this.resource);
+
+            if (device.IsFeatureLevel11 && this.TextureDesc.SampleDescription.Count == 1)
+            {
+                this.UnorderedView = new UnorderedAccessView(device, this.resource);
+            }
         }
 
         public void Present(int syncInterval,PresentFlags flags)
