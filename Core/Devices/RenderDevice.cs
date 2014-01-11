@@ -65,6 +65,7 @@ namespace FeralTic.DX11
 
             this.Primitives = new DX11PrimitivesManager(this);
             this.ResourceScheduler = new ResourceScheduler(this, 1);
+            this.ResourceScheduler.Initialize();
         }
 
         protected override void OnDispose()
