@@ -44,6 +44,55 @@ namespace FeralTic.DX11.Resources
             }
         }
 
+        public static DX11Texture3D LoadTexture3D(DxDevice device, string path)
+        {
+            IntPtr resource;
+            long retcode = NativeMethods.LoadTextureFromFile(device.Device.NativePointer, path, out resource, 1);
+
+            if (retcode == 0)
+            {
+                Resource r = Resource.FromPointer<Resource>(resource);
+                if (r.Dimension != ResourceDimension.Texture3D)
+                {
+                    r.Dispose();
+                    throw new Exception("Texture is not a 3D Texture");
+                }
+
+                Texture3D texture = Texture3D.FromPointer<Texture3D>(resource);
+                ShaderResourceView srv = new ShaderResourceView(device, texture);
+                return DX11Texture3D.FromReference(device, texture, srv);
+            }
+            else
+            {
+                throw new Exception("Failed to load texture");
+            }
+        }
+
+        public static DX11Texture1D LoadTexture1D(DxDevice device, string path)
+        {
+            IntPtr resource;
+            long retcode = NativeMethods.LoadTextureFromFile(device.Device.NativePointer, path, out resource, 1);
+
+            if (retcode == 0)
+            {
+                Resource r = Resource.FromPointer<Resource>(resource);
+                if (r.Dimension != ResourceDimension.Texture1D)
+                {
+                    r.Dispose();
+                    throw new Exception("Texture is not a 1D Texture");
+                }
+
+                Texture1D texture = Texture1D.FromPointer<Texture1D>(resource);
+                ShaderResourceView srv = new ShaderResourceView(device, texture);
+                return DX11Texture1D.FromReference(device, texture, srv);
+            }
+            else
+            {
+                throw new Exception("Failed to load texture");
+            }
+        }
+
+
         private static eImageFormat GetCodec(string path)
         {
             switch (Path.GetExtension(path).ToLower())

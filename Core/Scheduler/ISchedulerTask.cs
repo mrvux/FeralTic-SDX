@@ -32,9 +32,9 @@ namespace FeralTic.DX11
 
         public bool IsDirty { get; protected set; }
 
-        public AbstractLoadTask(RenderDevice context)
+        public AbstractLoadTask(RenderDevice device)
         {
-            this.Device = Device;
+            this.Device = device;
         }
 
         private eShedulerTaskStatus status;

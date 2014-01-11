@@ -31,6 +31,11 @@ namespace FeralTic.DX11.Resources
             get { return this.description.Format; }
         }
 
+        protected DX11Texture1D(DxDevice device)
+        {
+            this.device = device;
+        }
+
         protected DX11Texture1D(DxDevice device, Texture1DDescription desc)
         {
             this.device = device;
@@ -61,6 +66,15 @@ namespace FeralTic.DX11.Resources
             DataStream ds = this.MapForWrite(context);
             ds.WriteRange<T>(data);
             this.Unmap(context);
+        }
+
+        public static DX11Texture1D FromReference(DxDevice device, Texture1D texture, ShaderResourceView view)
+        {
+            DX11Texture1D result = new DX11Texture1D(device);
+            result.description = texture.Description;
+            result.ShaderView = view;
+            result.Texture = texture;
+            return result;
         }
 
         public static DX11Texture1D CreateDynamic(DxDevice device, int width, SharpDX.DXGI.Format format)
