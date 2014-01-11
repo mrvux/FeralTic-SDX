@@ -26,10 +26,10 @@ namespace FeralTic.DX11.Resources
             public static extern long SaveBC7TextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path);
         }
 
-        public static DX11Texture2D LoadFromFile(DxDevice device, string path)
+        public static DX11Texture2D LoadFromFile(DxDevice device, string path, bool mips = true)
         {
             IntPtr resource;
-            int levels = 0;
+            int levels = mips ? 0 : 1;
             long retcode = NativeMethods.LoadTextureFromFile(device.Device.NativePointer, path, out resource, levels);
 
             if (retcode == 0)

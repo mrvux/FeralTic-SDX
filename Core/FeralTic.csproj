@@ -116,6 +116,12 @@
     <Compile Include="Resources\Textures\DX11Texture2D.cs" />
     <Compile Include="Resources\IDxResource.cs" />
     <Compile Include="Resources\Textures\TextureLoader.cs" />
+    <Compile Include="Scheduler\ResourceScheduler.cs" />
+    <Compile Include="Scheduler\SchedulerThread.cs" />
+    <Compile Include="Scheduler\FileTexturePool.cs" />
+    <Compile Include="Scheduler\FileTexturePoolElement.cs" />
+    <Compile Include="Scheduler\ISchedulerTask.cs" />
+    <Compile Include="Scheduler\Tasks\FileTextureTasks.cs" />
     <Compile Include="Shaders\DX11Effect.cs" />
     <Compile Include="Shaders\EffectInstance.cs" />
     <Compile Include="Shaders\EffectInstance_Semantic.cs" />

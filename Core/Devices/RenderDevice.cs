@@ -26,6 +26,8 @@ namespace FeralTic.DX11
 
         public DX11PrimitivesManager Primitives { get; private set; }
 
+        public ResourceScheduler ResourceScheduler { get; private set; }
+
         public bool HasBufferSupport { get; private set; }
 
         public RenderDevice(DeviceCreationFlags flags = DeviceCreationFlags.BgraSupport, int adapterindex = 0)
@@ -62,6 +64,7 @@ namespace FeralTic.DX11
             this.ResourcePool = new ResourcePoolManager(this);
 
             this.Primitives = new DX11PrimitivesManager(this);
+            this.ResourceScheduler = new ResourceScheduler(this, 1);
         }
 
         protected override void OnDispose()
