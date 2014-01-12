@@ -10,7 +10,7 @@ using FeralTic.DX11.Resources;
 
 namespace FeralTic.DX11.Geometry
 {
-    public partial class DX11PrimitivesManager
+    public partial class PrimitivesManager
     {
         private delegate AbstractPrimitiveDescriptor CreatePrimitiveDelegate();
 

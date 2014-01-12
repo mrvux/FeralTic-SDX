@@ -24,7 +24,7 @@ namespace FeralTic.DX11
 
         public ResourcePoolManager ResourcePool { get; private set; }
 
-        public DX11PrimitivesManager Primitives { get; private set; }
+        public PrimitivesManager Primitives { get; private set; }
 
         public ResourceScheduler ResourceScheduler { get; private set; }
 
@@ -63,7 +63,7 @@ namespace FeralTic.DX11
 
             this.ResourcePool = new ResourcePoolManager(this);
 
-            this.Primitives = new DX11PrimitivesManager(this);
+            this.Primitives = new PrimitivesManager(this);
             this.ResourceScheduler = new ResourceScheduler(this, 1);
             this.ResourceScheduler.Initialize();
         }

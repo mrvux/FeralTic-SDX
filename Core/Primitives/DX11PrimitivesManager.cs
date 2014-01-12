@@ -12,7 +12,7 @@ using SharpDX.D3DCompiler;
 
 namespace FeralTic.DX11.Geometry
 {
-    public partial class DX11PrimitivesManager : IDisposable
+    public partial class PrimitivesManager : IDisposable
     {
         private RenderDevice device;
 
@@ -27,7 +27,7 @@ namespace FeralTic.DX11.Geometry
         private InputLayout quadlayout;
 
 
-        public DX11PrimitivesManager(RenderDevice device)
+        public PrimitivesManager(RenderDevice device)
         {
             this.device = device;
             //this.InitializeDelegates();
