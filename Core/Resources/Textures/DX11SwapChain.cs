@@ -77,9 +77,14 @@ namespace FeralTic.DX11.Resources
                 OutputHandle = handle,
                 SampleDescription = sampledesc,
                 SwapEffect = SwapEffect.Discard,
-                Usage = Usage.RenderTargetOutput | Usage.ShaderInput | Usage.UnorderedAccess,
+                Usage = Usage.RenderTargetOutput | Usage.ShaderInput,
                 Flags = SwapChainFlags.None
             };
+
+            if (device.IsFeatureLevel11 && sampledesc.Count == 1)
+            {
+                sd.Usage |= Usage.UnorderedAccess;
+            }
 
             this.swapchain = new SwapChain(device.Factory, device.Device, sd);
 
