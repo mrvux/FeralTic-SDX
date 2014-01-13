@@ -36,8 +36,17 @@ namespace FeralTic.DX11
                 };
             }
 
-            this.LogicalInvert = new BlendState1(this.device.Device, bs);
-            this.AddState("LogicalInvert", this.LogicalInvert);
+            //Some cards have partial dx11.1 support
+            try
+            {
+                this.LogicalInvert = new BlendState1(this.device.Device, bs);
+                this.AddState("LogicalInvert", this.LogicalInvert);
+            } 
+            catch
+            {
+
+            }
+            
         }
 
     }
