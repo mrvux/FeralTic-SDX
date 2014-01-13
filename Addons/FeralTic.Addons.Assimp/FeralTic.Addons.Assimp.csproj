@@ -22,7 +22,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssimpExtensions.cs" />
+    <Compile Include="AssimpLoadInformation.cs" />
+    <Compile Include="DxAssimpModelLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\FeralTic.csproj">
+      <Project>{7cca78ab-5839-4cb6-a685-85bc3ea77c9d}</Project>
+      <Name>FeralTic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

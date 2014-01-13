@@ -19,6 +19,7 @@ using DXGIAdapter = SharpDX.DXGI.Adapter2;
 using DXGIFactory = SharpDX.DXGI.Factory2;
 using WICFactory = SharpDX.WIC.ImagingFactory2;
 using DirectXDevice = SharpDX.Direct3D11.Device1;
+using D2DFactory = SharpDX.Direct2D1.Factory1;
 #else
 using DXGIDevice = SharpDX.DXGI.Device1;
 using DXGIAdapter = SharpDX.DXGI.Adapter1;
