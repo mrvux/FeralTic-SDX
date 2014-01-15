@@ -48,7 +48,7 @@ namespace FeralTic.DX11
 
         protected override void DoProcess()
         {
-            //this.Resource = DX11Texture1D.FromFile(this.Context, path);
+            this.Resource = TextureLoader.LoadTexture1D(this.Device, path);
         }
     }
 
@@ -61,7 +61,7 @@ namespace FeralTic.DX11
 
         protected override void DoProcess()
         {
-            //this.Resource = DX11Texture3D.FromFile(this.Context, path);
+            this.Resource = TextureLoader.LoadTexture3D(this.Device, path);
         }
     }
 }

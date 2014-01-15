@@ -134,6 +134,7 @@
     <Compile Include="Resources\Textures\DX11Texture2D.cs" />
     <Compile Include="Resources\IDxResource.cs" />
     <Compile Include="Resources\Textures\TextureLoader.cs" />
+    <Compile Include="Scheduler\FileTexturePools.cs" />
     <Compile Include="Scheduler\ResourceScheduler.cs" />
     <Compile Include="Scheduler\SchedulerThread.cs" />
     <Compile Include="Scheduler\FileTexturePool.cs" />
