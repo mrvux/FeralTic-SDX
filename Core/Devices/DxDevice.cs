@@ -124,7 +124,9 @@ namespace FeralTic.DX11
 
             #if DIRECTX11_1
             this.Device = dev.QueryInterface<DirectXDevice>();
-            #endif    
+            #else
+            this.Device = dev;
+            #endif
             
             DXGIDevice dxgidevice = this.Device.QueryInterface<DXGIDevice>();
             
