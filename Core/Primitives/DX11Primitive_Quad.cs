@@ -119,7 +119,7 @@ namespace FeralTic.DX11.Geometry
             geom.PrimitiveType = settings.PrimitiveType;
             geom.Topology = PrimitiveTopology.LineStrip;
             geom.InputLayout = Pos4Vertex.Layout;
-            geom.VerticesCount = 4;
+            geom.VerticesCount = 5;
             geom.VertexSize = Pos4Vertex.VertexSize;
             geom.HasBoundingBox = true;
             geom.BoundingBox = new BoundingBox(new Vector3(-sx, -sy, 0.0f), new Vector3(sx, sy, 0.0f));
@@ -129,7 +129,8 @@ namespace FeralTic.DX11.Geometry
                 new Vector4(-sx, -sy, 0.0f, 1.0f),
                 new Vector4(sx, -sy, 0.0f, 1.0f),
                 new Vector4(sx, sy, 0.0f, 1.0f),
-                new Vector4(-sx, sy, 0.0f, 1.0f)
+                new Vector4(-sx, sy, 0.0f, 1.0f),
+                new Vector4(-sx, -sy, 0.0f, 1.0f)
             };
             geom.VertexBuffer = DX11VertexBuffer.CreateImmutable<Vector4>(device, verts).Buffer;
             return geom;
