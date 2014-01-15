@@ -20,9 +20,13 @@ namespace RenderWindow
         {
             var renderForm = new RenderForm("");
 
+            SharpDX.DXGI.Factory f = new SharpDX.DXGI.Factory();
+            SharpDX.DXGI.Adapter a = f.GetAdapter(1);
 
-            SharpDX.Direct3D11.Device d = new Device(SharpDX.Direct3D.DriverType.Hardware,DeviceCreationFlags.VideoSupport | DeviceCreationFlags.BgraSupport);
-            
+
+            SharpDX.Direct3D11.Device d = new Device(a,DeviceCreationFlags.VideoSupport | DeviceCreationFlags.BgraSupport);
+            SharpDX.Direct3D11.Device2 d2 = d.QueryInterface<SharpDX.Direct3D11.Device2>();
+            //d.Dispose();*/
 
            /* var device = new RenderDevice(, 1);
             RenderContext context = new RenderContext(device);

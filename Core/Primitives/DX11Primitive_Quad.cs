@@ -106,5 +106,34 @@ namespace FeralTic.DX11.Geometry
 
             return geom;
         }
+
+        public DX11VertexGeometry QuadLine(Quad settings)
+        {
+            Vector2 size = settings.Size;
+
+            float sx = 0.5f * size.X;
+            float sy = 0.5f * size.Y;
+
+            DX11VertexGeometry geom = new DX11VertexGeometry(device);
+            geom.Tag = settings;
+            geom.PrimitiveType = settings.PrimitiveType;
+            geom.Topology = PrimitiveTopology.LineStrip;
+            geom.InputLayout = Pos4Vertex.Layout;
+            geom.VerticesCount = 4;
+            geom.VertexSize = Pos4Vertex.VertexSize;
+            geom.HasBoundingBox = true;
+            geom.BoundingBox = new BoundingBox(new Vector3(-sx, -sy, 0.0f), new Vector3(sx, sy, 0.0f));
+
+            Vector4[] verts = new Vector4[]
+            {
+                new Vector4(-sx, -sy, 0.0f, 1.0f),
+                new Vector4(sx, -sy, 0.0f, 1.0f),
+                new Vector4(sx, sy, 0.0f, 1.0f),
+                new Vector4(-sx, sy, 0.0f, 1.0f)
+            };
+            geom.VertexBuffer = DX11VertexBuffer.CreateImmutable<Vector4>(device, verts).Buffer;
+            return geom;
+        }
+
     }
 }

@@ -90,6 +90,64 @@ namespace FeralTic.DX11.Geometry
             return geom;
         }
 
+        public DX11VertexGeometry BoxLine(Box settings)
+        {
+            float sx = 0.5f * settings.Size.X;
+            float sy = 0.5f * settings.Size.Y;
+            float sz = 0.5f * settings.Size.Z;
+
+            Vector3 s3 = new Vector3(sx, sy, sz);
+            Vector4 size = new Vector4(sx, sy, sz, 1.0f);
+
+            DX11VertexGeometry geom = new DX11VertexGeometry(device);
+            geom.Tag = settings;
+            geom.PrimitiveType = settings.PrimitiveType;
+            geom.Topology = PrimitiveTopology.LineList;
+            geom.VerticesCount = 24;
+            geom.VertexSize = Pos4Vertex.VertexSize;
+            geom.InputLayout = Pos4Vertex.Layout;
+            geom.HasBoundingBox = true;
+            geom.BoundingBox = new BoundingBox(-s3, s3);
+
+            DataStream vertexstream = new DataStream(12 * Pos4Vertex.VertexSize, true, true);
+            vertexstream.Position = 0;
+
+            //Front Face
+            vertexstream.Write<Vector4>(BoxData.BottomLeftFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.BottomRightFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.BottomRightFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopRightFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopRightFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopLeftFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopLeftFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.BottomLeftFront.MulComp(size));
+
+            //Back face
+            vertexstream.Write<Vector4>(BoxData.BottomLeftBack.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.BottomRightBack.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.BottomRightBack.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopRightBack.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopRightBack.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopLeftBack.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopLeftBack.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.BottomLeftBack.MulComp(size));
+
+            //Connections
+            vertexstream.Write<Vector4>(BoxData.BottomLeftFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.BottomLeftBack.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopLeftFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopLeftBack.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopRightFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.TopRightBack.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.BottomRightFront.MulComp(size));
+            vertexstream.Write<Vector4>(BoxData.BottomRightBack.MulComp(size));
+
+            var vbo = DX11VertexBuffer.CreateImmutable<Vector4>(device, vertexstream);
+            geom.VertexBuffer = vbo.Buffer;
+            vertexstream.Dispose();
+            return geom;
+        }
+
         #region Faces
         private void WriteFrontFace(DataStream verts,DataStream inds, Vector4 size)
         {
