@@ -27,11 +27,14 @@ namespace FeralTic.Addons.AssetImport
             {
                 int vertexsize;
                 var layout = mesh.InputLayout(loadInfo, out vertexsize);
-                DataStream ds = mesh.LoadVertices(loadInfo, vertexsize);
+
+                BoundingBox bb;
+                DataStream ds = mesh.LoadVertices(loadInfo, vertexsize, out bb);
 
                 DX11IndexedGeometry geom = new DX11IndexedGeometry(device)
                 {
-                    HasBoundingBox = false,
+                    HasBoundingBox = true,
+                    BoundingBox = bb,
                     IndexBuffer = DX11IndexBuffer.CreateImmutable(device, inds),
                     InputLayout = layout,
                     PrimitiveType = "AssimpModel",

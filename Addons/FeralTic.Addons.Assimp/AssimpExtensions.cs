@@ -78,12 +78,25 @@ namespace FeralTic.Addons.AssetImport
             return result.ToArray();
         }
 
-        public static DataStream LoadVertices(this Assimp.Mesh mesh,AssimpLoadInformation loadInfo, int vertexsize)
+        public static DataStream LoadVertices(this Assimp.Mesh mesh, AssimpLoadInformation loadInfo, int vertexsize, out BoundingBox bb)
         {
+            bb = new BoundingBox();
+            bb.Maximum = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+            bb.Minimum = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+
             DataStream ds = new DataStream(mesh.VertexCount * vertexsize, true, true);
             for (int i = 0; i < mesh.VertexCount; i++)
             {
-                ds.Write<Assimp.Vector3D>(mesh.Vertices[i]);
+                var vert = mesh.Vertices[i];
+                ds.Write<Assimp.Vector3D>(vert);
+
+                bb.Minimum.X = vert.X < bb.Minimum.X ? vert.X : bb.Minimum.X;
+                bb.Minimum.Y = vert.Y < bb.Minimum.Y ? vert.Y : bb.Minimum.Y;
+                bb.Minimum.Z = vert.Z < bb.Minimum.Z ? vert.Z : bb.Minimum.Z;
+
+                bb.Maximum.X = vert.X > bb.Maximum.X ? vert.X : bb.Maximum.X;
+                bb.Maximum.Y = vert.Y > bb.Maximum.Y ? vert.Y : bb.Maximum.X;
+                bb.Maximum.Z = vert.Z > bb.Maximum.Z ? vert.Z : bb.Maximum.Z;
 
                 if (mesh.HasNormals && loadInfo.Normals)
                 {
