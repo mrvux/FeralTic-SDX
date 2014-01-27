@@ -25,6 +25,7 @@
     <Compile Include="Devices\RenderDevice.cs" />
     <Compile Include="Devices\NullDevice.cs" />
     <Compile Include="Primitives\Descriptors\AbstractPrimitiveDescriptor.cs" />
+    <Compile Include="Primitives\Descriptors\Polygon2d.cs" />
     <Compile Include="Primitives\Descriptors\Text.cs" />
     <Compile Include="Primitives\Descriptors\Dispatcher.cs" />
     <Compile Include="Primitives\Descriptors\NullGeometry.cs" />
@@ -44,6 +45,7 @@
     <Compile Include="Primitives\Descriptors\Box.cs" />
     <Compile Include="Primitives\DX11PrimitivesManager.cs" />
     <Compile Include="Primitives\DX11Primitives_RoundRect.cs" />
+    <Compile Include="Primitives\DX11Primitive_Polygon2d.cs" />
     <Compile Include="Primitives\DX11Primitive_Null.cs" />
     <Compile Include="Primitives\DX11Primitive_Box.cs" />
     <Compile Include="Primitives\DX11Primitive_Cylinder.cs" />
