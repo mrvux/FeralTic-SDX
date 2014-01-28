@@ -88,6 +88,11 @@ namespace FeralTic.DX11
             this.refcount--;
         }
 
+        public void Abort()
+        {
+            this.m_task.MarkForAbort();
+        }
+
         public int RefCount
         {
             get { return this.refcount; }

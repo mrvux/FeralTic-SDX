@@ -17,6 +17,8 @@ namespace FeralTic.DX11
 
         private List<TElement> pool = new List<TElement>();
 
+        public int ElementCount { get { return pool.Count; } }
+
         public event EventHandler OnElementLoaded;
 
         protected abstract TElement CreateElement(RenderDevice device, string path, bool mips, bool async = false);
@@ -98,7 +100,15 @@ namespace FeralTic.DX11
                 {
                     if (e.RefCount < 0 || (e.Status == eShedulerTaskStatus.Error || e.Status == eShedulerTaskStatus.Aborted))
                     {
-                        if (e.Resource != null) { e.Resource.Dispose(); }
+                        if (e.Status == eShedulerTaskStatus.Queued)
+                        {
+                            e.Abort();
+                        }
+                        else if (e.Resource != null) 
+                        { 
+                            e.Resource.Dispose(); 
+                        }
+                        
                     }
                     else
                     {
