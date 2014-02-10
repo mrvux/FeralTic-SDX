@@ -7,6 +7,7 @@ using SharpDX.DXGI;
 
 using FeralTic.DX11.Resources;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace FeralTic.DX11
 {

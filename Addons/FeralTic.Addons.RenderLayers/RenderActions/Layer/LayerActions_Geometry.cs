@@ -19,5 +19,14 @@ namespace FeralTic.RenderLayers.RenderActions
             Action<LayerSettings> restore = (rs) => { rs.Geometry = geom; };
             return restore;
         }
+
+        public static Action<LayerSettings> DetachGeometry(LayerSettings settings)
+        {
+            IDxGeometry geom = settings.Geometry;
+
+            settings.Geometry = null;
+            Action<LayerSettings> restore = (rs) => { rs.Geometry = geom; };
+            return restore;
+        }
     }
 }

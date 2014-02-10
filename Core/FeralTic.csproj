@@ -108,7 +108,7 @@
     <Compile Include="Resources\Geometry\Models\DX11IndexedGeometry.cs" />
     <Compile Include="Resources\Geometry\Models\DX11NullGeometry.cs" />
     <Compile Include="Resources\Geometry\Models\DX11VertexGeometry.cs" />
-    <Compile Include="Resources\Geometry\IDX11Geometry.cs" />
+    <Compile Include="Resources\Geometry\IDxGeometry.cs" />
     <Compile Include="Resources\Geometry\IDX11GeometryDrawer.cs" />
     <Compile Include="Resources\Loaders\FileTextureLoader.cs" />
     <Compile Include="Resources\Textures\DX11CubeDepthStencil.cs">

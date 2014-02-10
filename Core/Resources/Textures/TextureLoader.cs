@@ -26,6 +26,7 @@ namespace FeralTic.DX11.Resources
 
     public class TextureLoader
     {
+        //TODO: DllImport to load 64 bits version
         private class NativeMethods
         {
             [DllImport("DirectXTexLib_x86",CharSet=CharSet.Unicode)]
@@ -37,8 +38,6 @@ namespace FeralTic.DX11.Resources
             [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
             public static extern long SaveCompressedTextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path, int blocktype);
         }
-
-
         public static DX11Texture2D LoadFromFile(DxDevice device, string path, bool mips = true)
         {
             IntPtr resource;
