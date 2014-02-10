@@ -6,7 +6,7 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11.Resources
 {
-    public interface IDX11GeometryDrawer
+    public interface IDxGeometryDrawer
     {
         void Draw(RenderContext ctx);
     }
@@ -15,7 +15,7 @@ namespace FeralTic.DX11.Resources
     /// Drawer for DX11 geometry
     /// </summary>
     /// <typeparam name="T">Geometry type</typeparam>
-    public interface IDX11GeometryDrawer<T> : IDX11GeometryDrawer where T : IDxGeometry
+    public interface IDX11GeometryDrawer<T> : IDxGeometryDrawer where T : IDxGeometry
     {
         /// <summary>
         /// Assigns the geometry to the drawer
