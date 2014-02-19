@@ -33,6 +33,7 @@ namespace FeralTic.RenderLayers.RenderActions
         public static Action<LayerSettings> DepthOnly(LayerSettings settings)
         {
             bool orig = settings.DepthOnly;
+            settings.DepthOnly = true;
             Action<LayerSettings> restore = (rs) => { rs.DepthOnly = orig; };
             return restore;
         }

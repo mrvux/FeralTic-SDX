@@ -64,7 +64,7 @@ namespace FeralTic.DX11
             this.ResourcePool = new ResourcePoolManager(this);
 
             this.Primitives = new PrimitivesManager(this);
-            this.ResourceScheduler = new ResourceScheduler(this, 1);
+            this.ResourceScheduler = new ResourceScheduler(this, 3);
             this.ResourceScheduler.Initialize();
         }
 

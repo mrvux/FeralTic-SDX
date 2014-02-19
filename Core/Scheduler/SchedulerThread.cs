@@ -47,7 +47,7 @@ namespace FeralTic.DX11
                 {
                     task.Process();
                 }
-                Thread.Sleep(10);
+                Thread.Sleep(3);
             }
         }
 

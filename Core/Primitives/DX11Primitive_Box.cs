@@ -109,7 +109,7 @@ namespace FeralTic.DX11.Geometry
             geom.HasBoundingBox = true;
             geom.BoundingBox = new BoundingBox(-s3, s3);
 
-            DataStream vertexstream = new DataStream(12 * Pos4Vertex.VertexSize, true, true);
+            DataStream vertexstream = new DataStream(24 * Pos4Vertex.VertexSize, true, true);
             vertexstream.Position = 0;
 
             //Front Face

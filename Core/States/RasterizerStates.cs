@@ -14,6 +14,8 @@ namespace FeralTic.DX11
         public RasterizerState FrontCullSolid { get; private set; }
         public RasterizerState NoCullSolid { get; private set; }
         public RasterizerState WireFrame { get; private set; }
+        public RasterizerState LineAlpha { get; private set; }
+        public RasterizerState LineQuadrilateral { get; private set; }
 
         public RasterizerStates(DxDevice device)
         {
@@ -34,6 +36,7 @@ namespace FeralTic.DX11
             this.CreateBackCullSimple();
             this.CreateFrontCullSimple();
             this.CreateNoCullSimple();
+            this.CreateLine();
         }
 
         private void CreateNoCullSimple()
@@ -103,6 +106,29 @@ namespace FeralTic.DX11
 
             rsd.FillMode = FillMode.Wireframe;
             this.AddState("FrontCullWireframe", new RasterizerState(device.Device, rsd));
+        }
+
+        private void CreateLine()
+        {
+            RasterizerStateDescription rsd = new RasterizerStateDescription()
+            {
+                CullMode = CullMode.None,
+                DepthBias = 0,
+                DepthBiasClamp = 0.0f,
+                FillMode = FillMode.Solid,
+                IsAntialiasedLineEnabled = true,
+                IsDepthClipEnabled = true,
+                IsFrontCounterClockwise = false,
+                IsScissorEnabled = false,
+                SlopeScaledDepthBias = 0.0f
+            };
+
+            this.LineAlpha = new RasterizerState(device.Device, rsd);
+            this.AddState("LineAlpha", this.LineAlpha);
+
+            rsd.IsMultisampleEnabled = true;
+            this.LineQuadrilateral = new RasterizerState(device, rsd);
+            this.AddState("LineQuadrilateral", this.LineQuadrilateral);
         }
     }
 }

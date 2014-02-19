@@ -125,7 +125,7 @@ namespace FeralTic.DX11.Geometry
 
                 innerv.Position = new Vector4(x, y, z, 1.0f);
                 outerv.Position = new Vector4(x, y, -z, 1.0f);
-                innerv.Normals = Vector3.Normalize(new Vector3(innerv.Position.X, innerv.Position.Y, 0.0f));
+                innerv.Normals = Vector3.Normalize(new Vector3(innerv.Position.X,innerv.Position.Y,0.0f));
                 outerv.Normals = Vector3.Normalize(new Vector3(innerv.Position.X, innerv.Position.Y, 0.0f));
 
                 vertices[i] = innerv;

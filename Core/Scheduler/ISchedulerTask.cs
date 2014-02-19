@@ -58,7 +58,11 @@ namespace FeralTic.DX11
 
         public void Process()
         {
-            if (this.IsDirty) { this.SetStatus(eShedulerTaskStatus.Aborted); return; }
+            if (this.IsDirty) 
+            { 
+                this.SetStatus(eShedulerTaskStatus.Aborted); 
+                return; 
+            }
 
             this.SetStatus(eShedulerTaskStatus.Loading);
 

@@ -100,11 +100,6 @@ namespace FeralTic.DX11
             this.vbopool.UnLock(target);
         }
 
-        /*public void UnlockStructuredBuffers()
-        {
-            this.sbufferpool.UnlockAll();
-        }*/
-
         public void ClearUnlocked()
         {
             this.sbufferpool.ClearUnlocked();
@@ -119,10 +114,15 @@ namespace FeralTic.DX11
             get { return this.targetpool.Count; }
         }
 
-        /*public int BufferCount
+        public int StructuredBufferCount
         {
             get { return this.sbufferpool.Count; }
-        }*/
+        }
+
+        public int DepthStencilCount
+        {
+            get { return this.depthpool.Count; }
+        }
 
         public void Dispose()
         {

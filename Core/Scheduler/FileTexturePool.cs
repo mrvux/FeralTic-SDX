@@ -8,42 +8,50 @@ using System.Text;
 
 namespace FeralTic.DX11
 {
-
-    public class FileTexturePool
+    public abstract class FileTexturePool<TElement,TResource, TTask> 
+        where TElement : FileTexturePoolElement<TResource, TTask>
+        where TResource : IDxResource
+        where TTask : AbstractLoadTask<TResource>
     {
         private object m_lock = new object();
 
-        private List<FileTexturePoolElement> pool = new List<FileTexturePoolElement>();
+        private List<TElement> pool = new List<TElement>();
+
+        public int ElementCount { get { return pool.Count; } }
 
         public event EventHandler OnElementLoaded;
 
-        public bool TryGetFile(RenderDevice device, string path, bool domips,bool async, out IDxTexture2D texture)
+        protected abstract TElement CreateElement(RenderDevice device, string path, bool mips, bool async = false);
+
+        public bool TryGetFile(RenderDevice device, string path, bool domips,bool async, out TResource texture)
         {
             lock (m_lock)
             {
-                foreach (FileTexturePoolElement element in this.pool)
+                foreach (TElement element in this.pool)
                 {
                     if (element.DoMips == domips && element.FileName == path)
                     {
                         if (element.Status == eShedulerTaskStatus.Completed)
                         {
                             element.IncrementCounter();
-                            texture = element.Texture;
+                            texture = element.Resource;
                             return true;
                         }
                         else
                         {
                             element.IncrementCounter();
-                            texture = null;
+                            texture = default(TResource);
                             return false;
                         }
                     }
                 }
             }
 
-
-            FileTexturePoolElement elem = new FileTexturePoolElement(device, path, domips, async);
-            elem.OnLoadComplete += elem_OnLoadComplete;
+            TElement elem = this.CreateElement(device, path, domips, async);
+            elem.OnLoadComplete += (e) =>
+                {                      
+                    if (this.OnElementLoaded != null) { this.OnElementLoaded(this, new EventArgs()); }
+                };
             
             lock (m_lock)
             {
@@ -52,38 +60,31 @@ namespace FeralTic.DX11
                     this.pool.Add(elem);
                     if (elem.Status == eShedulerTaskStatus.Completed)
                     {
-                        texture = elem.Texture;
+                        texture = elem.Resource;
                         return true;
                     }
                     else
                     {
-                        texture = null;
+                        texture = default(TResource);
                         return false;
                     }
 
                 }
                 else
                 {
-                    texture = null;
+                    texture = default(TResource);
                     return false;
                 }
             }
-
         }
 
-        void elem_OnLoadComplete(FileTexturePoolElement element)
-        {
-            if (this.OnElementLoaded != null)
-            {
-                this.OnElementLoaded(this, new EventArgs());
-            }
-        }
+
 
         public void DecrementAll()
         {
             lock (m_lock)
             {
-                foreach (FileTexturePoolElement e in this.pool)
+                foreach (TElement e in this.pool)
                 {
                     e.DecrementCounter();
                 }
@@ -94,12 +95,20 @@ namespace FeralTic.DX11
         {
             lock (m_lock)
             {
-                List<FileTexturePoolElement> newlist = new List<FileTexturePoolElement>();
-                foreach (FileTexturePoolElement e in this.pool)
+                List<TElement> newlist = new List<TElement>();
+                foreach (TElement e in this.pool)
                 {
                     if (e.RefCount < 0 || (e.Status == eShedulerTaskStatus.Error || e.Status == eShedulerTaskStatus.Aborted))
                     {
-                        if (e.Texture != null) { e.Texture.Dispose(); }
+                        if (e.Status == eShedulerTaskStatus.Queued)
+                        {
+                            e.Abort();
+                        }
+                        else if (e.Resource != null) 
+                        { 
+                            e.Resource.Dispose(); 
+                        }
+                        
                     }
                     else
                     {
@@ -112,9 +121,9 @@ namespace FeralTic.DX11
 
         public void Dispose()
         {
-            foreach (FileTexturePoolElement elem in this.pool)
+            foreach (TElement elem in this.pool)
             {
-                elem.Texture.Dispose();
+                elem.Resource.Dispose();
             }
             this.pool.Clear();
         }

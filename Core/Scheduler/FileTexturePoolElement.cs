@@ -7,13 +7,28 @@ using System.Threading.Tasks;
 
 namespace FeralTic.DX11
 {
-    public delegate void FileTextureLoadedDelegate(FileTexturePoolElement element);
+    public delegate void FileTextureLoadedDelegate<TResource, TTask>(FileTexturePoolElement<TResource, TTask> element)
+        where TResource : IDxResource
+        where TTask : AbstractLoadTask<TResource>;
 
-    public class FileTexturePoolElement
+
+    public abstract class FileTexturePoolElement<TResource, TTask>
+        where TResource : IDxResource
+        where TTask : AbstractLoadTask<TResource>
     {
-        public event FileTextureLoadedDelegate OnLoadComplete;
+        public eShedulerTaskStatus Status { get; private set; }
 
-        private FileTexture2dLoadTask m_task;
+        public TResource Resource { get; private set; }
+        public string FileName { get; private set; }
+        public bool DoMips { get; private set; }
+
+        private int refcount = 0;
+
+        public event FileTextureLoadedDelegate<TResource, TTask> OnLoadComplete;
+
+        private TTask m_task;
+
+        protected abstract TTask CreateTask(RenderDevice device);
 
         public FileTexturePoolElement(RenderDevice device, string path, bool mips, bool async = false)
         {
@@ -24,7 +39,7 @@ namespace FeralTic.DX11
 
             if (async)
             {
-                this.m_task = new FileTexture2dLoadTask(device, path, mips);
+                this.m_task = this.CreateTask(device);
                 m_task.StatusChanged += task_StatusChanged;
 
                 device.ResourceScheduler.AddTask(m_task);
@@ -33,8 +48,14 @@ namespace FeralTic.DX11
             {
                 try
                 {
-                    this.Texture = TextureLoader.LoadFromFile(device, path, mips);
-                    this.Status = eShedulerTaskStatus.Completed;
+                    this.m_task = this.CreateTask(device);
+                    this.m_task.Process();
+
+                    if (this.m_task.Status == eShedulerTaskStatus.Completed)
+                    {
+                        this.Resource = this.m_task.Resource;
+                    }
+                    this.Status = this.m_task.Status;
                 }
                 catch
                 {
@@ -48,7 +69,7 @@ namespace FeralTic.DX11
             this.Status = task.Status;
             if (this.Status == eShedulerTaskStatus.Completed || this.Status == eShedulerTaskStatus.Error)
             {
-                this.Texture = m_task.Resource;
+                this.Resource = m_task.Resource;
 
                 if (this.OnLoadComplete != null)
                 {
@@ -56,14 +77,6 @@ namespace FeralTic.DX11
                 }
             }
         }
-
-        public eShedulerTaskStatus Status { get; private set; }
-
-        public IDxTexture2D Texture { get; private set; }
-        public string FileName { get; private set; }
-        public bool DoMips { get; private set; }
-
-        private int refcount = 0;
 
         public void IncrementCounter()
         {
@@ -73,6 +86,11 @@ namespace FeralTic.DX11
         public void DecrementCounter()
         {
             this.refcount--;
+        }
+
+        public void Abort()
+        {
+            this.m_task.MarkForAbort();
         }
 
         public int RefCount

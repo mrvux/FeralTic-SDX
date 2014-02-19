@@ -7,10 +7,22 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
+
 namespace FeralTic.DX11.Resources
 {
 
     public enum eImageFormat { Bmp = 1, Jpeg = 2, Png = 3, Tiff = 4, Gif = 5, Hdp = 6,Dds = 128, Tga = 129 }
+
+    public enum DdsBlockType
+    {
+        BC1 = SharpDX.DXGI.Format.BC1_UNorm,
+        BC2 = SharpDX.DXGI.Format.BC2_UNorm,
+        BC3 = SharpDX.DXGI.Format.BC3_UNorm,
+        BC7 = SharpDX.DXGI.Format.BC7_UNorm
+    }
+
 
     public class TextureLoader
     {
@@ -23,8 +35,9 @@ namespace FeralTic.DX11.Resources
             public static extern long SaveTextureToFile(IntPtr device,IntPtr context,IntPtr resource, string path,int format);
 
             [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
-            public static extern long SaveBC7TextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path);
+            public static extern long SaveCompressedTextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path, int blocktype);
         }
+
 
         public static DX11Texture2D LoadFromFile(DxDevice device, string path, bool mips = true)
         {
@@ -133,9 +146,10 @@ namespace FeralTic.DX11.Resources
             }
         }
 
-        public static void SaveToFileBC7(DxDevice device, RenderContext context, IDxTexture2D texture, string path)
+        public static void SaveToFileCompressed(DxDevice device, RenderContext context, IDxTexture2D texture, string path,DdsBlockType blockType)
         {
-            long retcode = NativeMethods.SaveBC7TextureToFile(device.Device.NativePointer, context.Context.NativePointer, texture.Texture.NativePointer, path);
+            long retcode = NativeMethods.SaveCompressedTextureToFile(device.Device.NativePointer, context.Context.NativePointer, 
+                texture.Texture.NativePointer, path, (int)blockType);
 
             if (retcode != 0)
             {
