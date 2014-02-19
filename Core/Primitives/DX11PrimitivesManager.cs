@@ -30,7 +30,7 @@ namespace FeralTic.DX11.Geometry
         public PrimitivesManager(RenderDevice device)
         {
             this.device = device;
-            //this.InitializeDelegates();
+            this.InitializeDelegates();
             Effect e = this.FullTriVS;
         }
 
@@ -92,22 +92,23 @@ namespace FeralTic.DX11.Geometry
         {
             get
             {
-                if (this.fulltrivs == null)
-                {
-                    /*ShaderBytecode comp = DX11ShaderCompiler.FromResource(Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "vs_4_0", "VSFullTri");
-
-                    ShaderReflection refl = new ShaderReflection(comp.Data);*/
-
-                    DX11Effect shader = DX11Effect.CompileFromResource(Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx");
-                    
-                    
-                    this.fulltrivs = new Effect(device.Device, shader.ByteCode);
-                    this.vsonlypass = this.fulltrivs.GetTechniqueByName("FullScreenTriangleVSOnly").GetPassByIndex(0);
-                    this.fullscreenpass = this.fulltrivs.GetTechniqueByName("FullScreenTriangle").GetPassByIndex(0);
-                }
+                this.PrepareFullTri();
                 return this.fulltrivs;
             }
         }
+
+        private void PrepareFullTri()
+        {
+            if (this.fulltrivs == null)
+            {
+                DX11Effect shader = DX11Effect.CompileFromResource(Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx");
+                this.fulltrivs = new Effect(device.Device, shader.ByteCode);
+                this.vsonlypass = this.fulltrivs.GetTechniqueByName("FullScreenTriangleVSOnly").GetPassByIndex(0);
+                this.fullscreenpass = this.fulltrivs.GetTechniqueByName("FullScreenTriangle").GetPassByIndex(0);
+            }
+        }
+
+
 
         public EffectPass FullTriVSPass
         {

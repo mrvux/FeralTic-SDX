@@ -28,6 +28,10 @@ float4 PS(vs2ps input): SV_Target
     return tex.Sample( linSamp, input.uv);
 }
 
+float4 PSGray(vs2ps input) : SV_Target
+{
+	return tex.Sample(linSamp, input.uv).rrrr;
+}
 
 technique10 FullScreenTriangleVSOnly
 {
@@ -44,5 +48,14 @@ technique10 FullScreenTriangle
 	{
 		SetVertexShader( CompileShader( vs_4_0, VSFullTri() ) );
 		SetPixelShader( CompileShader(ps_4_0, PS()));
+	}
+}
+
+technique10 FullScreenTriangleGray
+{
+	pass P0
+	{
+		SetVertexShader(CompileShader(vs_4_0, VSFullTri()));
+		SetPixelShader(CompileShader(ps_4_0, PSGray()));
 	}
 }
