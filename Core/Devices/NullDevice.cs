@@ -31,7 +31,7 @@ namespace FeralTic.DX11
             {
                 if (device == null)
                 {
-                    Device d = new Device(DriverType.Null, DeviceCreationFlags.None);
+                    device = new Device(DriverType.Null, DeviceCreationFlags.None);
                     #if DIRECTX11_1
                     device = d.QueryInterface<DirectXDevice>();
                     #endif               
