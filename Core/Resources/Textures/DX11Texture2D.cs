@@ -93,6 +93,16 @@ namespace FeralTic.DX11.Resources
             return db;
         }
 
+        public void ReadData(RenderContext context, IntPtr ptr, int len)
+        {
+            DataStream ds;
+            DataBox db = context.Context.MapSubresource(this.Texture, 0, 0, MapMode.Read, SharpDX.Direct3D11.MapFlags.None, out ds);
+
+            memcpy(ptr,db.DataPointer, len);
+
+            this.UnMap(context);
+        }
+
         public unsafe void WriteData<T>(RenderContext context, IntPtr ptr) where T : struct
         {
            int pixelsize = Marshal.SizeOf(typeof(T));

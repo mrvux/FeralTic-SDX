@@ -34,10 +34,19 @@ namespace FeralTic.DX11
 {
     public delegate void DeviceDelegate(DxDevice sender);
 
+    /// <summary>
+    /// DirectX device small wrapper
+    /// </summary>
     public class DxDevice : IDisposable
     {
+        /// <summary>
+        /// DirectX Device
+        /// </summary>
         public DirectXDevice Device { get; private set; }
 
+        /// <summary>
+        /// Adapter our device is running on
+        /// </summary>
         public DXGIAdapter Adapter { get; private set; }
 
         public DXGIFactory Factory { get; private set; }
@@ -56,6 +65,9 @@ namespace FeralTic.DX11
         private DeviceCreationFlags creationflags;
         private int adapterindex;
 
+        /// <summary>
+        /// Returns true if device is feature Level 11.1 (fully), false otherwise
+        /// </summary>
         public bool IsFeatureLevel11_1
         {
             get 

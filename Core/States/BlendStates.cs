@@ -10,7 +10,7 @@ namespace FeralTic.DX11
     public partial class BlendStates : RenderStates<BlendState>
     {
         private DxDevice device;
-
+         
         public BlendState Disabled { get; private set; }
         public BlendState Additive { get; private set; }
         public BlendState AlphaBlend { get; private set; }

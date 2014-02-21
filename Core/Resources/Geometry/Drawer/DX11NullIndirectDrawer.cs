@@ -13,7 +13,7 @@ namespace FeralTic.DX11.Resources
 
         public InstancedIndirectBuffer IndirectArgs { get { return this.indbuffer; } }
 
-        public void Update(RenderDevice device,int defaultvertexcount, int defaultinstancecount)
+        public void Update(DxDevice device,int defaultvertexcount, int defaultinstancecount)
         {
             if (this.indbuffer != null) { this.indbuffer.Dispose(); }
 

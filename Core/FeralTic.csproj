@@ -8,6 +8,10 @@
     <RootNamespace>FeralTic</RootNamespace>
     <AssemblyName>FeralTic</AssemblyName>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <DocumentationFile>$(OutputPath)\FeralTic.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DirectX11_2_Debug|x86'">
+    <DocumentationFile />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
