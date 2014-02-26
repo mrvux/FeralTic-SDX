@@ -42,9 +42,9 @@ namespace FeralTic.DX11.Resources
         {
             IntPtr resource;
             int levels = mips ? 0 : 1;
-            long retcode = NativeMethods.LoadTextureFromFile(device.Device.NativePointer, path, out resource, levels);
+            NativeMethods.LoadTextureFromFile(device.Device.NativePointer, path, out resource, levels);
 
-            if (retcode == 0)
+            if (resource != IntPtr.Zero)
             {
                 Texture2D texture = Texture2D.FromPointer<Texture2D>(resource);
                 ShaderResourceView srv = new ShaderResourceView(device,texture);
