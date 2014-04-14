@@ -12,6 +12,7 @@ using DXGIFactory = SharpDX.DXGI.Factory2;
 using WICFactory = SharpDX.WIC.ImagingFactory2;
 using DirectXDevice = SharpDX.Direct3D11.Device2;
 using D2DFactory = SharpDX.Direct2D1.Factory1;
+using DWriteFactory = SharpDX.DirectWrite.Factory1;
 #else
 #if DIRECTX11_1
 using DXGIDevice = SharpDX.DXGI.Device2;
@@ -49,17 +50,49 @@ namespace FeralTic.DX11
         /// </summary>
         public DXGIAdapter Adapter { get; private set; }
 
+        /// <summary>
+        /// DXGI Factory
+        /// </summary>
         public DXGIFactory Factory { get; private set; }
 
+        /// <summary>
+        /// Windows Imaging component factory
+        /// </summary>
         public WICFactory WICFactory { get; private set; }
 
+        /// <summary>
+        /// Direct2D Factory
+        /// </summary>
         public D2DFactory D2DFactory { get; private set; }
 
+        /// <summary>
+        /// DirectWrite factory
+        /// </summary>
+        public DWriteFactory DWriteFactory { get; private set; }
+
+        /// <summary>
+        /// Automatically recreates a device in case of device removed event
+        /// </summary>
         public bool AutoReset { get; set; }
 
+        /// <summary>
+        /// Raised when we receive a DXGI removed message
+        /// </summary>
         public event DeviceDelegate DeviceRemoved;
+
+        /// <summary>
+        /// Raised when we receive a DXGI reset message
+        /// </summary>
         public event DeviceDelegate DeviceReset;
+
+        /// <summary>
+        /// Raised just before the device gets disposed by the user
+        /// </summary>
         public event DeviceDelegate DeviceDisposing;
+
+        /// <summary>
+        /// Raised after the device has been disposed by user
+        /// </summary>
         public event DeviceDelegate DeviceDisposed;
 
         private DeviceCreationFlags creationflags;
@@ -80,22 +113,35 @@ namespace FeralTic.DX11
             }
         }
 
+        /// <summary>
+        /// Returns feature level for this device
+        /// </summary>
         public FeatureLevel FeatureLevel
         {
             get { return this.Device.FeatureLevel; }
         }
 
+        /// <summary>
+        /// Tells if device support shader model 5
+        /// </summary>
         public bool IsFeatureLevel11
         {
             get { return this.Device.FeatureLevel >= FeatureLevel.Level_11_0; }
         }
 
-
+        /// <summary>
+        /// Tells if device supports at least shader model 4.1
+        /// </summary>
         public bool IsFeatureLevel101
         {
             get { return this.Device.FeatureLevel >= FeatureLevel.Level_10_1; }
         }
 
+        /// <summary>
+        /// Returns the internal sharpdx device
+        /// </summary>
+        /// <param name="device">Wrapped device</param>
+        /// <returns>Native device</returns>
         public static implicit operator DirectXDevice(DxDevice device)
         {
             return device.Device;
@@ -105,6 +151,7 @@ namespace FeralTic.DX11
         {
             this.WICFactory = new WICFactory();
             this.D2DFactory = new D2DFactory();
+            this.DWriteFactory = new DWriteFactory(SharpDX.DirectWrite.FactoryType.Shared);
             this.creationflags = flags;
             this.adapterindex = adapterindex;
             this.Initialize();
