@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using System.Windows.Forms;
-
 using SharpDX;
 using SharpDX.DXGI;
 using SharpDX.Direct3D11;
@@ -17,7 +15,6 @@ namespace FeralTic.DX11.Resources
     public class DX11SwapChain : IDxRenderTarget , IDxTexture2D, IDxUnorderedResource
     {
         private DxDevice device;
-        private IntPtr handle;
         private SwapChain swapchain;
 
         public RenderTargetView RenderView { get; protected set; }
@@ -27,8 +24,6 @@ namespace FeralTic.DX11.Resources
         private Texture2D resource;
 
         public UnorderedAccessView UnorderedView { get; protected set; }
-
-        public IntPtr Handle { get { return this.handle; } }
 
         public int Width
         {
@@ -63,11 +58,9 @@ namespace FeralTic.DX11.Resources
 
         }
         
-
         public DX11SwapChain(DxDevice device, IntPtr handle, Format format, SampleDescription sampledesc)
         {
             this.device = device;
-            this.handle = handle;
 
             SwapChainDescription sd = new SwapChainDescription()
             {
@@ -85,7 +78,6 @@ namespace FeralTic.DX11.Resources
             {
                 sd.Usage |= Usage.UnorderedAccess;
             }
-
             this.swapchain = new SwapChain(device.Factory, device.Device, sd);
 
             this.resource = Texture2D.FromSwapChain<Texture2D>(this.swapchain, 0);

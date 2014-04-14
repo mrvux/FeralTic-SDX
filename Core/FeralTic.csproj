@@ -16,8 +16,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -108,11 +106,11 @@
     <Compile Include="Resources\Geometry\Drawer\DX11VertexIndirectDrawer.cs" />
     <Compile Include="Resources\Geometry\Drawer\IInstancedDrawer.cs" />
     <Compile Include="Resources\Geometry\DX11BaseGeometry.cs" />
+    <Compile Include="Resources\Geometry\IDxGeometry.cs" />
     <Compile Include="Resources\Geometry\Models\DX11Geometry.cs" />
     <Compile Include="Resources\Geometry\Models\DX11IndexedGeometry.cs" />
     <Compile Include="Resources\Geometry\Models\DX11NullGeometry.cs" />
     <Compile Include="Resources\Geometry\Models\DX11VertexGeometry.cs" />
-    <Compile Include="Resources\Geometry\IDX11Geometry.cs" />
     <Compile Include="Resources\Geometry\IDX11GeometryDrawer.cs" />
     <Compile Include="Resources\Loaders\FileTextureLoader.cs" />
     <Compile Include="Resources\Textures\DX11CubeDepthStencil.cs">

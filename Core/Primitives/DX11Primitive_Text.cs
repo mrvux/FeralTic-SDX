@@ -74,7 +74,7 @@ namespace FeralTic.DX11.Geometry
     {
         public DX11VertexGeometry Text(TextPrimitive settings)
         {
-            var path = new System.Drawing.Drawing2D.GraphicsPath();
+            /*var path = new System.Drawing.Drawing2D.GraphicsPath();
             var ftn = new System.Drawing.FontFamily("Arial");
             var str = settings.Text;
 
@@ -123,7 +123,8 @@ namespace FeralTic.DX11.Geometry
             geom.VerticesCount = tessel.Vertices.Count;
             geom.VertexBuffer = DX11VertexBuffer.CreateImmutable<Pos3Norm3Tex2Vertex>(this.device, tessel.Vertices.ToArray()).Buffer;
 
-            return geom;
+            return geom;*/
+            return null;
         }
     }
 }
