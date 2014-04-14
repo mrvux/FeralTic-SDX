@@ -50,17 +50,15 @@ namespace FeralTic.DX11.Resources
             get { return null; }
         }
 
-
-
-        public DX11SwapChain(DxDevice device, IntPtr handle)
-            : this(device, handle, Format.R8G8B8A8_UNorm, new SampleDescription(1,0))
+        public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle)
         {
-
+            return FromHandle(device, handle, Format.R8G8B8A8_UNorm, new SampleDescription(1, 0));
         }
         
-        public DX11SwapChain(DxDevice device, IntPtr handle, Format format, SampleDescription sampledesc)
+        public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle, Format format, SampleDescription sampledesc)
         {
-            this.device = device;
+            DX11SwapChain swapShain = new DX11SwapChain();
+            swapShain.device = device;
 
             SwapChainDescription sd = new SwapChainDescription()
             {
@@ -78,8 +76,37 @@ namespace FeralTic.DX11.Resources
             {
                 sd.Usage |= Usage.UnorderedAccess;
             }
-            this.swapchain = new SwapChain(device.Factory, device.Device, sd);
+            swapShain.swapchain = new SwapChain(device.Factory, device.Device, sd);
 
+            swapShain.Initialize();
+            return swapShain;
+        }
+
+        public static DX11SwapChain FromComposition(DxDevice dxDevice, int w, int h)
+        {
+            DX11SwapChain swapShain = new DX11SwapChain();
+            swapShain.device = dxDevice;
+            var desc = new SharpDX.DXGI.SwapChainDescription1()
+            {
+                Width = w,
+                Height = h,
+                Format = SharpDX.DXGI.Format.B8G8R8A8_UNorm,
+                Stereo = false,
+                SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),
+                Usage = SharpDX.DXGI.Usage.BackBuffer | SharpDX.DXGI.Usage.RenderTargetOutput | Usage.ShaderInput,
+                BufferCount = 2,
+                Scaling = SharpDX.DXGI.Scaling.None,
+                SwapEffect = SharpDX.DXGI.SwapEffect.FlipSequential,
+                AlphaMode = AlphaMode.Premultiplied
+            };
+
+            swapShain.swapchain = new SwapChain1(dxDevice.Factory, dxDevice.Device, ref desc);
+            swapShain.Initialize();
+            return swapShain;
+        }
+
+        private void Initialize()
+        {
             this.resource = Texture2D.FromSwapChain<Texture2D>(this.swapchain, 0);
             this.TextureDesc = this.resource.Description;
 
