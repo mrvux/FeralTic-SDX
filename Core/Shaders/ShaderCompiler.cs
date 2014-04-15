@@ -79,6 +79,13 @@ namespace FeralTic.DX11
             return GetShaderInstance<T>(device, sb);
         }
 
+        public static T CompileFromResource<T>(DxDevice device, Assembly assembly, string path, string entrypoint, out ShaderReflection reflectiondata) where T : class
+        {
+            ShaderBytecode sb = CompileFromResource(assembly, path, GetShaderProfile<T>(device), entrypoint);
+            reflectiondata = new ShaderReflection(sb);
+            return GetShaderInstance<T>(device, sb);
+        }
+
         private static string GetShaderProfile<T>(DxDevice device) where T : class
         {
             return GetProfileType<T>() + GetFeature(device);
