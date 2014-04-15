@@ -54,6 +54,10 @@
       <Project>{7cca78ab-5839-4cb6-a685-85bc3ea77c9d}</Project>
       <Name>FeralTic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FeralTic.Addons.Effects\FeralTic.Addons.Effects.csproj">
+      <Project>{18003809-1621-4c90-b776-22988ff263be}</Project>
+      <Name>FeralTic.Addons.Effects</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

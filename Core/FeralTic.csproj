@@ -13,6 +13,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DirectX11_2_Debug|x86'">
     <DocumentationFile />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DirectX11_2_Debug|AnyCPU'">
+    <DocumentationFile />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -145,10 +148,6 @@
     <Compile Include="Scheduler\FileTexturePoolElement.cs" />
     <Compile Include="Scheduler\ISchedulerTask.cs" />
     <Compile Include="Scheduler\Tasks\FileTextureTasks.cs" />
-    <Compile Include="Shaders\DX11Effect.cs" />
-    <Compile Include="Shaders\EffectInstance.cs" />
-    <Compile Include="Shaders\EffectInstance_Semantic.cs" />
-    <Compile Include="Shaders\EffectInstance_VarName.cs" />
     <Compile Include="Shaders\ShaderCompiler.cs" />
     <Compile Include="Shaders\FolderIncludeHandler.cs" />
     <Compile Include="States\BlendStates.cs" />

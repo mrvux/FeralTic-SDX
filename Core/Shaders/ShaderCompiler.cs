@@ -66,6 +66,75 @@ namespace FeralTic.DX11
             return GetShaderInstance<T>(device, sb);
         }
 
+        public static VertexShader CompileFromResource(DxDevice device, Assembly assembly, string path, string entrypoint, out ShaderSignature inputsignature)
+        {
+            ShaderBytecode sb = CompileFromResource(assembly, path, GetShaderProfile<VertexShader>(device), entrypoint);
+            inputsignature = ShaderSignature.GetInputSignature(sb);
+            return GetShaderInstance<VertexShader>(device, sb);
+        }
+
+        public static T CompileFromResource<T>(DxDevice device, Assembly assembly, string path, string entrypoint) where T : class
+        {
+            ShaderBytecode sb = CompileFromResource(assembly,path,GetShaderProfile<T>(device),entrypoint);
+            return GetShaderInstance<T>(device, sb);
+        }
+
+        private static string GetShaderProfile<T>(DxDevice device) where T : class
+        {
+            return GetProfileType<T>() + GetFeature(device);
+        }
+
+        private static string GetProfileType<T>() where T : class
+        {
+            if (typeof(T) == typeof(ComputeShader))
+            {
+                return "cs_";
+            }
+            else if (typeof(T) == typeof(VertexShader))
+            {
+                return "vs_";
+            }
+            else if (typeof(T) == typeof(PixelShader))
+            {
+                return "ps_";
+            }
+            else if (typeof(T) == typeof(DomainShader))
+            {
+                return "ds_";
+            }
+            else if (typeof(T) == typeof(HullShader))
+            {
+                return "hs_";
+            }
+            else if (typeof(T) == typeof(GeometryShader))
+            {
+                return "gs_";
+            }
+            throw new Exception("Invalid Shader type");
+        }
+
+        private static string GetFeature(DxDevice device)
+        {
+            switch (device.FeatureLevel)
+            {
+                case SharpDX.Direct3D.FeatureLevel.Level_10_0:
+                    return "4_0";
+                case SharpDX.Direct3D.FeatureLevel.Level_10_1:
+                    return "4_1";
+                case SharpDX.Direct3D.FeatureLevel.Level_11_0:
+                    return "5_0";
+                case SharpDX.Direct3D.FeatureLevel.Level_11_1:
+                    return "5_0";
+                case SharpDX.Direct3D.FeatureLevel.Level_9_3:
+                    return "";
+                case SharpDX.Direct3D.FeatureLevel.Level_9_2:
+                    return "";
+                case SharpDX.Direct3D.FeatureLevel.Level_9_1:
+                    return "";
+            }
+            throw new ArgumentException("Unknown feature level");
+        }
+
         public static T GetShaderInstance<T>(DxDevice device, ShaderBytecode sb) where T: class
         {
              if(typeof(T) == typeof(ComputeShader))
