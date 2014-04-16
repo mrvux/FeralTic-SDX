@@ -10,6 +10,9 @@
     <AssemblyName>FeralTic.Addons.Effects</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SharpDX.Direct3D11.Effects">
+      <HintPath>..\..\externals\sharpdx\DirectX11_2\SharpDX.Direct3D11.Effects.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
