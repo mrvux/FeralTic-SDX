@@ -32,5 +32,14 @@ namespace FeralTic.DX11.Geometry
             this.indices.Add(index.Y);
             this.indices.Add(index.Z);
         }
+
+        public void TransformVertices(Func<Pos4Norm3Tex2Vertex,Pos4Norm3Tex2Vertex> transformFunction)
+        {
+            for (int i = 0; i < this.vertices.Count; i++)
+            {
+                Pos4Norm3Tex2Vertex v = vertices[i];
+                vertices[i] = transformFunction(v);
+            }
+        }
     }
 }

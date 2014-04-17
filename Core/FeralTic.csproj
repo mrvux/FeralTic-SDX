@@ -33,6 +33,7 @@
     <Compile Include="Primitives\Appenders\MultiListGeometryAppender.cs" />
     <Compile Include="Primitives\Appenders\StreamGeometryAppender.cs" />
     <Compile Include="Primitives\Builders\CylinderBuilder.cs" />
+    <Compile Include="Primitives\Builders\IcoGridBuilder.cs" />
     <Compile Include="Primitives\Builders\GridBuilder.cs" />
     <Compile Include="Primitives\Builders\IcoSphereBuilder.cs" />
     <Compile Include="Primitives\Builders\SegmentBuilder.cs" />
