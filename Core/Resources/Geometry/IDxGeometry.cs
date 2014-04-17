@@ -27,7 +27,7 @@ namespace FeralTic.DX11
         /// <param name="pass">Effect pass to validate layout on</param>
         /// <param name="layout">Returns validate layout, or null if not valid</param>
         /// <returns>true if layout valid, false otherwise</returns>
-        bool ValidateLayout(ShaderSignature signature,out InputLayout layout);
+        bool ValidateLayout(ShaderBytecode signature, out InputLayout layout);
 
         void Bind(RenderContext ctx, InputLayout layout);
 

@@ -17,6 +17,8 @@ namespace FeralTic.DX11.Geometry
         public Vector3 Normals;
         public Vector2 TexCoords;
 
+
+
         private static InputElement[] layout;
 
         public static InputElement[] Layout

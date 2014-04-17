@@ -29,7 +29,12 @@
     <Compile Include="Devices\DxDevice.cs" />
     <Compile Include="Devices\RenderDevice.cs" />
     <Compile Include="Devices\NullDevice.cs" />
+    <Compile Include="Primitives\Appenders\ListGeometryAppender.cs" />
+    <Compile Include="Primitives\Appenders\StreamGeometryAppender.cs" />
+    <Compile Include="Primitives\Builders\CylinderBuilder.cs" />
+    <Compile Include="Primitives\Builders\SegmentBuilder.cs" />
     <Compile Include="Primitives\Descriptors\AbstractPrimitiveDescriptor.cs" />
+    <Compile Include="Primitives\Builders\IGeometryBuilder.cs" />
     <Compile Include="Primitives\Descriptors\Polygon2d.cs" />
     <Compile Include="Primitives\Descriptors\Text.cs" />
     <Compile Include="Primitives\Descriptors\Dispatcher.cs" />

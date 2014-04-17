@@ -15,104 +15,25 @@ namespace FeralTic.DX11.Geometry
     {
         public DX11IndexedGeometry Segment(Segment settings)
         {
-            float phase = settings.Phase;
-            float cycles = settings.Cycles; 
-            float inner = settings.InnerRadius; 
-            int res = settings.Resolution;
-            bool flat = settings.Flat;
+            SegmentBuilder builder = new SegmentBuilder();
+            ListGeometryAppender appender = new ListGeometryAppender();
+            PrimitiveInfo info = builder.GetPrimitiveInfo(settings);
+
+            Vector3 max = new Vector3(float.MinValue, float.MinValue, float.MinValue);
+            Vector3 min = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
+
+            builder.Construct(settings, (v, n, u) =>
+                { appender.AppendVertex(v, n, u); min = Vector3.Min(min, v); max = Vector3.Max(max, v); }, appender.AppendIndex);
 
             DX11IndexedGeometry geom = new DX11IndexedGeometry(device);
             geom.Tag = settings;
             geom.PrimitiveType = settings.PrimitiveType;
-            int vcount = res * 2;
-            int icount = (res - 1) * 6;
-
-            float inc = Convert.ToSingle((Math.PI * 2.0 * cycles) / (res - 1.0));
-            float phi = Convert.ToSingle(phase * (Math.PI * 2.0));
-
-            Pos4Norm3Tex2Vertex innerv = new Pos4Norm3Tex2Vertex();
-            innerv.Normals = new Vector3(0.0f, 0.0f, 1.0f);
-
-            Pos4Norm3Tex2Vertex outerv = new Pos4Norm3Tex2Vertex();
-            outerv.Normals = new Vector3(0.0f, 0.0f, 1.0f);
-
-            Pos4Norm3Tex2Vertex[] vertices = new Pos4Norm3Tex2Vertex[res * 2];
-
-            for (int i = 0; i < res; i++)
-            {
-                float x = Convert.ToSingle(0.5 * inner * Math.Cos(phi));
-                float y = Convert.ToSingle(0.5 * inner * Math.Sin(phi));
-
-                innerv.Position = new Vector4(x, y, 0.0f, 1.0f);
-
-                if (flat)
-                {
-                    innerv.TexCoords = new Vector2(0.5f - x, 0.5f - y);
-                }
-                else
-                {
-                    innerv.TexCoords = new Vector2((1.0f * (float)i) / ((float)res - 1.0f), 0.0f);
-                }
-
-                x = Convert.ToSingle(0.5 * Math.Cos(phi));
-                y = Convert.ToSingle(0.5 * Math.Sin(phi));
-
-                outerv.Position = new Vector4(x, y, 0.0f, 1.0f);
-
-                if (flat)
-                {
-                    outerv.TexCoords = new Vector2(0.5f - x, 0.5f - y);
-                }
-                else
-                {
-                    outerv.TexCoords = new Vector2((1.0f * (float)i) / ((float)res - 1.0f), 1.0f);
-                }
-
-                vertices[i] = innerv;
-                vertices[i + res] = outerv;
-                phi += inc;
-            }
-
-            float minx = float.MaxValue, miny = float.MaxValue, minz = float.MaxValue;
-            float maxx = float.MinValue, maxy = float.MinValue, maxz = float.MinValue;
-
-            foreach (Pos4Norm3Tex2Vertex v in vertices)
-            {
-                minx = v.Position.X < minx ? v.Position.X : minx;
-                miny = v.Position.Y < miny ? v.Position.Y : miny;
-                minz = v.Position.Z < minz ? v.Position.Z : minz;
-
-                maxx = v.Position.X > maxx ? v.Position.X : maxx;
-                maxy = v.Position.Y > maxy ? v.Position.Y : maxy;
-                maxz = v.Position.Z > maxz ? v.Position.Z : maxz;
-            }
-
-            int indstep = 0;
-            int[] indices = new int[icount];
-            for (int i = 0; i < res - 1; i++)
-            {
-                //Triangle from low to high
-                indices[indstep] = i;
-                indices[indstep + 2] = res + i;
-                indices[indstep + 1] = i + 1;
-                
-
-                //Triangle from high to low
-                indices[indstep + 3] = i + 1;
-                indices[indstep + 5] = res + i;
-                indices[indstep + 4] = res + i + 1;
-
-                indstep += 6;
-            }
-
-            geom.VertexBuffer = DX11VertexBuffer.CreateImmutable<Pos4Norm3Tex2Vertex>(device, vertices);
-            geom.IndexBuffer = DX11IndexBuffer.CreateImmutable(device, indices);
+            geom.VertexBuffer = DX11VertexBuffer.CreateImmutable(device, appender.Vertices.ToArray());
+            geom.IndexBuffer = DX11IndexBuffer.CreateImmutable(device, appender.Indices.ToArray());
             geom.InputLayout = Pos4Norm3Tex2Vertex.Layout;
             geom.Topology = PrimitiveTopology.TriangleList;
-
-            geom.BoundingBox = new BoundingBox(new Vector3(minx, miny, minz), new Vector3(maxx, maxy, maxz));
             geom.HasBoundingBox = true;
-
+            geom.BoundingBox = new BoundingBox(min, max);
             return geom;
         }
     }

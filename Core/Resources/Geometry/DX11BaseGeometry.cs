@@ -36,7 +36,7 @@ namespace FeralTic.DX11.Resources
             get; set;
         }
 
-        public bool ValidateLayout(ShaderSignature inputSignature, out InputLayout layout)
+        public bool ValidateLayout(ShaderBytecode inputSignature, out InputLayout layout)
         {
             layout = null;
             if (inputSignature == null)
