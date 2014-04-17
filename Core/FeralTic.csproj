@@ -30,6 +30,7 @@
     <Compile Include="Devices\RenderDevice.cs" />
     <Compile Include="Devices\NullDevice.cs" />
     <Compile Include="Primitives\Appenders\ListGeometryAppender.cs" />
+    <Compile Include="Primitives\Appenders\MultiListGeometryAppender.cs" />
     <Compile Include="Primitives\Appenders\StreamGeometryAppender.cs" />
     <Compile Include="Primitives\Builders\CylinderBuilder.cs" />
     <Compile Include="Primitives\Builders\GridBuilder.cs" />
