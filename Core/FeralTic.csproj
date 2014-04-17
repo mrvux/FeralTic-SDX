@@ -32,6 +32,8 @@
     <Compile Include="Primitives\Appenders\ListGeometryAppender.cs" />
     <Compile Include="Primitives\Appenders\StreamGeometryAppender.cs" />
     <Compile Include="Primitives\Builders\CylinderBuilder.cs" />
+    <Compile Include="Primitives\Builders\GridBuilder.cs" />
+    <Compile Include="Primitives\Builders\IcoSphereBuilder.cs" />
     <Compile Include="Primitives\Builders\SegmentBuilder.cs" />
     <Compile Include="Primitives\Descriptors\AbstractPrimitiveDescriptor.cs" />
     <Compile Include="Primitives\Builders\IGeometryBuilder.cs" />
