@@ -13,13 +13,13 @@ namespace FeralTic.DX11.Geometry
         private List<Vector3> normals = new List<Vector3>();
         private List<Vector2> uvs = new List<Vector2>();
 
-        private List<int> indices = new List<int>();
+        private List<Int3> indices = new List<Int3>();
 
         public List<Vector3> Positions { get { return this.positions; } }
         public List<Vector3> Normals { get { return this.normals; } }
         public List<Vector2> UVs { get { return this.uvs; } }
 
-        public List<int> Indices { get { return this.indices; } }
+        public List<Int3> Indices { get { return this.indices; } }
 
         public void AppendVertex(Vector3 position, Vector3 normal, Vector2 uv)
         {
@@ -30,9 +30,7 @@ namespace FeralTic.DX11.Geometry
 
         public void AppendIndex(Int3 index)
         {
-            this.indices.Add(index.X);
-            this.indices.Add(index.Y);
-            this.indices.Add(index.Z);
+            this.indices.Add(index);
         }
     }
 }

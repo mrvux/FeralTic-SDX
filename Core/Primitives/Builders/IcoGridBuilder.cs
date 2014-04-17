@@ -27,7 +27,6 @@ namespace FeralTic.DX11.Geometry
             get { return this.maxy; }
         }
 
-
         public void Construct(IcoGrid settings, Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex)
         {
             Vector2 size = settings.Size;
