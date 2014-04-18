@@ -16,54 +16,11 @@ namespace FeralTic.DX11.Geometry
     {
         public DX11IndexedGeometry QuadNormals(Quad settings)
         {
-            DX11IndexedGeometry geom = new DX11IndexedGeometry(device);
-            geom.Tag = settings;
-            geom.PrimitiveType = settings.PrimitiveType;
-
-            Vector2 size = settings.Size;
-
-            float sx = 0.5f * size.X;
-            float sy = 0.5f * size.Y;
-
-            Pos4Norm3Tex2Vertex[] vertices = new Pos4Norm3Tex2Vertex[]
-            {
-                new Pos4Norm3Tex2Vertex()
-                {
-                    Position = new Vector4(-sx, sy, 0.0f, 1.0f),
-                    Normals = new Vector3(0, 0, 1),
-                    TexCoords = new Vector2(0, 0)
-                },
-                new Pos4Norm3Tex2Vertex()
-                {
-                    Position = new Vector4(sx, sy, 0.0f, 1.0f),
-                    Normals = new Vector3(0, 0, 1),
-                    TexCoords = new Vector2(1, 0)
-                },
-                new Pos4Norm3Tex2Vertex()
-                {
-                    Position = new Vector4(-sx, -sy, 0.0f, 1.0f),
-                    Normals = new Vector3(0, 0, 1),
-                    TexCoords = new Vector2(0, 1)
-                },
-                new Pos4Norm3Tex2Vertex()
-                {
-                    Position = new Vector4(sx, -sy, 0.0f, 1.0f),
-                    Normals = new Vector3(0, 0, 1),
-                    TexCoords = new Vector2(1, 1)
-                },
-            };
-            int[] inds = new int[] { 0, 1, 3, 3, 2, 0 };
-
-
-            geom.VertexBuffer = DX11VertexBuffer.CreateImmutable(device, vertices);
-            geom.IndexBuffer = DX11IndexBuffer.CreateImmutable(device, inds);
-            geom.InputLayout = Pos4Norm3Tex2Vertex.Layout;
-            geom.VertexBuffer.InputLayout = geom.InputLayout;
-            geom.Topology = PrimitiveTopology.TriangleList;
-            geom.HasBoundingBox = true;
-            geom.BoundingBox = new BoundingBox(new Vector3(-sx, -sy, 0.0f), new Vector3(sx, sy, 0.0f));
-
-            return geom;
+            QuadBuilder builder = new QuadBuilder();
+            ListGeometryAppender appender = new ListGeometryAppender();
+            PrimitiveInfo info = builder.GetPrimitiveInfo(settings);
+            builder.Construct(settings, appender.AppendVertex, appender.AppendIndex);
+            return FromAppender(settings, appender, info);
         }
 
         private DX11IndexedGeometry QuadTextured()
