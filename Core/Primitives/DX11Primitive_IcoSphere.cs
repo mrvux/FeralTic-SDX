@@ -17,19 +17,11 @@ namespace FeralTic.DX11.Geometry
         public DX11IndexedGeometry IcoSphere(IcoSphere settings)
         {
             float radius = settings.Radius;
-
             IcoSphereBuilder builder = new IcoSphereBuilder();
+            PrimitiveInfo info = builder.GetPrimitiveInfo(settings);
             ListGeometryAppender appender = new ListGeometryAppender();
             builder.Construct(settings, appender.AppendVertex, appender.AppendIndex);
-
-            DX11IndexedGeometry geom = new DX11IndexedGeometry(device);
-            geom.Tag = settings;
-            geom.PrimitiveType = settings.PrimitiveType;
-            geom.VertexBuffer = DX11VertexBuffer.CreateImmutable(device, appender.Vertices.ToArray());
-            geom.IndexBuffer = DX11IndexBuffer.CreateImmutable(device, appender.Indices.ToArray());
-            geom.InputLayout = Pos4Norm3Tex2Vertex.Layout;
-            geom.Topology = PrimitiveTopology.TriangleList;
-            geom.HasBoundingBox = true;
+            DX11IndexedGeometry geom = FromAppender(settings, appender, info);
             geom.BoundingBox = new BoundingBox(new Vector3(-radius), new Vector3(radius));
             return geom;
         }

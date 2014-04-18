@@ -21,19 +21,5 @@ namespace FeralTic.DX11.Geometry
             builder.Construct(settings, appender.AppendVertex, appender.AppendIndex);
             return FromAppender(settings, appender, info);
         }
-
-        private DX11IndexedGeometry FromAppender(AbstractPrimitiveDescriptor descriptor, ListGeometryAppender appender, PrimitiveInfo info)
-        {
-            DX11IndexedGeometry geom = new DX11IndexedGeometry(device);
-            geom.Tag = descriptor;
-            geom.PrimitiveType = descriptor.PrimitiveType;
-            geom.VertexBuffer = DX11VertexBuffer.CreateImmutable(device, appender.Vertices.ToArray());
-            geom.IndexBuffer = DX11IndexBuffer.CreateImmutable(device, appender.Indices.ToArray());
-            geom.InputLayout = Pos4Norm3Tex2Vertex.Layout;
-            geom.Topology = PrimitiveTopology.TriangleList;
-            geom.HasBoundingBox = info.IsBoundingBoxKnown;
-            geom.BoundingBox = info.BoundingBox;
-            return geom;
-        }
     }
 }

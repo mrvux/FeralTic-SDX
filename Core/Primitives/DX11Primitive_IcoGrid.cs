@@ -17,6 +17,7 @@ namespace FeralTic.DX11.Geometry
         public DX11IndexedGeometry IcoGrid(IcoGrid settings)
         {
             IcoGridBuilder builder = new IcoGridBuilder();
+            PrimitiveInfo info = builder.GetPrimitiveInfo(settings);
             ListGeometryAppender appender = new ListGeometryAppender();
             builder.Construct(settings, appender.AppendVertex, appender.AppendIndex);
 
@@ -31,17 +32,7 @@ namespace FeralTic.DX11.Geometry
                     return v;
                 });
 
-            DX11IndexedGeometry geom = new DX11IndexedGeometry(device);
-            geom.Tag = settings;
-            geom.PrimitiveType = settings.PrimitiveType;
-            geom.VertexBuffer = DX11VertexBuffer.CreateImmutable<Pos4Norm3Tex2Vertex>(device, appender.Vertices.ToArray());
-            geom.IndexBuffer = DX11IndexBuffer.CreateImmutable(device, appender.Indices.ToArray());
-            geom.InputLayout = Pos4Norm3Tex2Vertex.Layout;
-            geom.Topology = PrimitiveTopology.TriangleList;
- 
-            geom.HasBoundingBox = false;
-
-            return geom;
+            return FromAppender(settings, appender, info);
         }
     }
 }

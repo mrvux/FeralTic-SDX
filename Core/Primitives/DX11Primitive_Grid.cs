@@ -18,19 +18,8 @@ namespace FeralTic.DX11.Geometry
             GridBuilder builder = new GridBuilder();
             ListGeometryAppender appender = new ListGeometryAppender();
             PrimitiveInfo info = builder.GetPrimitiveInfo(settings);
-
             builder.Construct(settings, appender.AppendVertex, appender.AppendIndex);
-
-            DX11IndexedGeometry geom = new DX11IndexedGeometry(device);
-            geom.Tag = settings;
-            geom.PrimitiveType = settings.PrimitiveType;
-            geom.VertexBuffer = DX11VertexBuffer.CreateImmutable(device, appender.Vertices.ToArray());
-            geom.IndexBuffer = DX11IndexBuffer.CreateImmutable(device, appender.Indices.ToArray());
-            geom.InputLayout = Pos4Norm3Tex2Vertex.Layout;
-            geom.Topology = PrimitiveTopology.TriangleList;
-            geom.HasBoundingBox = info.IsBoundingBoxKnown;
-            geom.BoundingBox = info.BoundingBox;
-            return geom;
+            return FromAppender(settings, appender, info);
         }
     }
 }
