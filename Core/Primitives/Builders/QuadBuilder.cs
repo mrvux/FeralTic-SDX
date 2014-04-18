@@ -15,7 +15,7 @@ namespace FeralTic.DX11.Geometry
 
             float sx = 0.5f * size.X;
             float sy = 0.5f * size.Y;
-            return new PrimitiveInfo(4, 6, new BoundingBox(new Vector3(-sx, -sy, 0.0f), new Vector3(sx, sy, 0.0f));
+            return new PrimitiveInfo(4, 6, new BoundingBox(new Vector3(-sx, -sy, 0.0f), new Vector3(sx, sy, 0.0f)));
         }
 
         public void Construct(Quad settings, Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex)

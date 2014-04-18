@@ -36,6 +36,7 @@
     <Compile Include="Primitives\Builders\IcoGridBuilder.cs" />
     <Compile Include="Primitives\Builders\GridBuilder.cs" />
     <Compile Include="Primitives\Builders\IcoSphereBuilder.cs" />
+    <Compile Include="Primitives\Builders\QuadBuilder.cs" />
     <Compile Include="Primitives\Builders\IsocahedronBuilder.cs" />
     <Compile Include="Primitives\Builders\OctahedronBuilder.cs" />
     <Compile Include="Primitives\Builders\SegmentBuilder.cs" />
