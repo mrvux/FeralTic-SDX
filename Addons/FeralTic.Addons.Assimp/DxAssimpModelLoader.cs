@@ -67,5 +67,33 @@ namespace FeralTic.Addons.AssetImport
             }
             return result;
         }
+
+        public void ConstructFirst(string path, Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex)
+        {
+            Assimp.AssimpImporter importer = new AssimpImporter();
+            Scene scene = importer.ImportFile(path, PostProcessPreset.ConvertToLeftHanded | PostProcessPreset.TargetRealTimeQuality);
+
+            Assimp.Mesh mesh = scene.Meshes[0];
+
+            if (mesh.HasFaces && mesh.HasVertices)
+            {
+                 for (int i= 0; i< mesh.VertexCount;i++)
+                 {
+                     Vector3D mp = mesh.Vertices[i];
+                     Vector3 p = new Vector3(mp.X,mp.Y,mp.Z);
+
+                     Vector3D mn = mesh.Normals[i];
+                     Vector3 n = new Vector3(mn.X,mn.Y,mn.Z);
+                     appendVertex(p, n, Vector2.Zero);
+                 }
+
+                int[] inds = mesh.GetIntIndices();
+                for(int i = 0; i < inds.Length / 3 ;i+=3)
+                {
+                    appendIndex(new Int3(inds[i * 3], inds[i * 3 + 1], inds[i * 3 + 2]));
+                }
+                 
+            }
+        }
     }
 }
