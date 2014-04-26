@@ -38,6 +38,7 @@ namespace FeralTic.DX11.Resources
             [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
             public static extern long SaveCompressedTextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path, int blocktype);
         }
+
         public static DX11Texture2D LoadFromFile(DxDevice device, string path, bool mips = true)
         {
             IntPtr resource;
@@ -49,6 +50,59 @@ namespace FeralTic.DX11.Resources
                 Texture2D texture = Texture2D.FromPointer<Texture2D>(resource);
                 ShaderResourceView srv = new ShaderResourceView(device,texture);
                 return DX11Texture2D.FromReference(device, texture, srv);
+            }
+            else
+            {
+                throw new Exception("Failed to load texture");
+            }
+        }
+
+        public static DX11TextureCube LoadCubeTextureFromFile(DxDevice device, string path, bool mips = true)
+        {
+            IntPtr resource;
+            int levels = mips ? 0 : 1;
+            NativeMethods.LoadTextureFromFile(device.Device.NativePointer, path, out resource, levels);
+
+            if (resource != IntPtr.Zero)
+            {
+                Texture2D texture = Texture2D.FromPointer<Texture2D>(resource);
+                
+                if (texture.Description.ArraySize == 6 && texture.Description.OptionFlags.HasFlag(ResourceOptionFlags.TextureCube))
+                {
+                    return new DX11TextureCube(device, texture);
+                }
+                else
+                {
+                    texture.Dispose();
+                    throw new Exception("This texture is not a cube texture");
+                }
+            }
+            else
+            {
+                throw new Exception("Failed to load texture");
+            }
+        }
+
+
+        public static DX11TextureArray2D LoadTextureArrayFromFile(DxDevice device, string path, bool mips = true)
+        {
+            IntPtr resource;
+            int levels = mips ? 0 : 1;
+            NativeMethods.LoadTextureFromFile(device.Device.NativePointer, path, out resource, levels);
+
+            if (resource != IntPtr.Zero)
+            {
+                Texture2D texture = Texture2D.FromPointer<Texture2D>(resource);
+
+                if (texture.Description.ArraySize > 1)
+                {
+                    return new DX11TextureArray2D(device, texture);
+                }
+                else
+                {
+                    texture.Dispose();
+                    throw new Exception("This texture is not a texture array");
+                }
             }
             else
             {

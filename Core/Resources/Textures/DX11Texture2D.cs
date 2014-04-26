@@ -20,9 +20,9 @@ namespace FeralTic.DX11.Resources
         [DllImport("msvcrt.dll", SetLastError = false)]
         static extern IntPtr memcpybyte(byte* dest, byte* src, int count);
 
-        public Texture2D Texture { get; private set; }
-        public ShaderResourceView ShaderView { get; private set; }
-        private Texture2DDescription description;
+        public Texture2D Texture { get; protected set; }
+        public ShaderResourceView ShaderView { get; protected set; }
+        protected Texture2DDescription description;
 
         public int Width 
         { 

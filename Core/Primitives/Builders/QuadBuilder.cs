@@ -30,7 +30,7 @@ namespace FeralTic.DX11.Geometry
             appendVertex(new Vector3(-sx, sy, 0.0f), n, new Vector2(0, 0));
             appendVertex(new Vector3(sx, sy, 0.0f), n, new Vector2(1, 0));
             appendVertex(new Vector3(-sx, -sy, 0.0f), n, new Vector2(0, 1));
-            appendVertex(new Vector3(sx, sy, 0.0f), n, new Vector2(1,1));
+            appendVertex(new Vector3(sx, -sy, 0.0f), n, new Vector2(1,1));
                    
             appendIndex(new Int3(0, 1, 3));
             appendIndex(new Int3(3,2,0));
