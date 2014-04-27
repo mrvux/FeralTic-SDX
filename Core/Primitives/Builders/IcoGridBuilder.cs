@@ -77,6 +77,9 @@ namespace FeralTic.DX11.Geometry
                             maxy = p.Y;
                         }
                     }
+
+                    p.X *= size.X;
+                    p.Y *= size.Y;
                     appendVertex(p, n, uv);
                 }
                 y += fdispy;

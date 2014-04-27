@@ -117,7 +117,7 @@ namespace FeralTic.DX11
                 //Search for uav slot, if found, reapply with counter value
                 for (i = 0; i < 8 && !found; i++)
                 {
-                    if (uavs[i].NativePointer == ru.UAV.NativePointer)
+                    if (uavs[i] != null && uavs[i].NativePointer == ru.UAV.NativePointer)
                     {
                         found = true;
                     }
