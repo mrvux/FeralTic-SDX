@@ -32,5 +32,17 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.Grid(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Grid))
+            {
+                return false;
+            }
+            Grid o = (Grid)obj;
+            return this.Size == o.Size
+                && this.ResolutionX == o.ResolutionX
+                && this.ResolutionY == o.ResolutionY;
+        }
     }
 }

@@ -36,5 +36,18 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.RoundRect(this);
         }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is RoundRect))
+            {
+                return false;
+            }
+            RoundRect o = (RoundRect)obj;
+            return this.CornerResolution == o.CornerResolution
+                && this.EnableCenter == o.EnableCenter
+                && this.InnerRadius == o.InnerRadius
+                && this.OuterRadius == o.OuterRadius;
+        }
+
     }
 }

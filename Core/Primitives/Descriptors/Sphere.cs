@@ -38,6 +38,20 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.Sphere(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Sphere))
+            {
+                return false;
+            }
+            Sphere o = (Sphere)obj;
+            return this.CyclesX == o.CyclesX
+                && this.CyclesY == o.CyclesY
+                && this.Radius == o.Radius
+                && this.ResX == o.ResX
+                && this.ResY == o.ResY;
+        }
     }
 
 }

@@ -29,6 +29,17 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.IcoSphere(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is IcoSphere))
+            {
+                return false;
+            }
+            IcoSphere o = (IcoSphere)obj;
+            return this.Radius == o.Radius
+                && this.SubDivisions == o.SubDivisions;
+        }
     }
 
 }

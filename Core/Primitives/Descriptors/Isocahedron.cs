@@ -26,5 +26,15 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.Isocahedron(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Isocahedron))
+            {
+                return false;
+            }
+            Isocahedron o = (Isocahedron)obj;
+            return this.Size == o.Size;
+        }
     }
 }

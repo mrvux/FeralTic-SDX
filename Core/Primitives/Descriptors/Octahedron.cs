@@ -26,6 +26,16 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.Octahedron(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Octahedron))
+            {
+                return false;
+            }
+            Octahedron o = (Octahedron)obj;
+            return this.Size == o.Size;
+        }
     }
 
 }

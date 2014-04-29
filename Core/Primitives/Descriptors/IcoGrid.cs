@@ -32,6 +32,18 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.IcoGrid(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is IcoGrid))
+            {
+                return false;
+            }
+            IcoGrid o = (IcoGrid)obj;
+            return this.Size == o.Size
+                && this.ResolutionX == o.ResolutionX
+                && this.ResolutionY == o.ResolutionY;
+        }
     }
 
 }
