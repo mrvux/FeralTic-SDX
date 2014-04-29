@@ -26,6 +26,16 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.Box(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Box))
+            {
+                return false;
+            }
+            Box box = (Box)obj;
+            return this.Size == box.Size;
+        }
     }
 
     public class BoxLine : Box
@@ -35,6 +45,16 @@ namespace FeralTic.DX11.Geometry
         public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.BoxLine(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is BoxLine))
+            {
+                return false;
+            }
+            BoxLine box = (BoxLine)obj;
+            return this.Size == box.Size;
         }
     }
 }

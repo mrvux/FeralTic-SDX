@@ -38,5 +38,19 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.Segment(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Segment))
+            {
+                return false;
+            }
+            Segment o = (Segment)obj;
+            return this.Cycles == o.Cycles
+                && this.Flat == o.Flat
+                && this.InnerRadius == o.InnerRadius
+                && this.Phase == o.Phase
+                && this.Resolution == o.Resolution;
+        }
     }
 }

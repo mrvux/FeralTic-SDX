@@ -44,6 +44,23 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.Cylinder(this);
         }
+
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Cylinder))
+            {
+                return false;
+            }
+            Cylinder o = (Cylinder)obj;
+            return this.Caps == o.Caps
+                && this.Cycles == o.Cycles
+                && this.Length == o.Length
+                && this.Radius1 == o.Radius1
+                && this.Radius2 == o.Radius2
+                && this.ResolutionX == o.ResolutionX
+                && this.ResolutionY == o.ResolutionY;
+        }
     }
 
 

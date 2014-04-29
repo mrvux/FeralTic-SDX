@@ -36,12 +36,14 @@
     <Compile Include="Primitives\Builders\IcoGridBuilder.cs" />
     <Compile Include="Primitives\Builders\GridBuilder.cs" />
     <Compile Include="Primitives\Builders\IcoSphereBuilder.cs" />
+    <Compile Include="Primitives\Builders\DodecahedronBuilder.cs" />
     <Compile Include="Primitives\Builders\QuadBuilder.cs" />
     <Compile Include="Primitives\Builders\IsocahedronBuilder.cs" />
     <Compile Include="Primitives\Builders\OctahedronBuilder.cs" />
     <Compile Include="Primitives\Builders\SegmentBuilder.cs" />
     <Compile Include="Primitives\Descriptors\AbstractPrimitiveDescriptor.cs" />
     <Compile Include="Primitives\Builders\IGeometryBuilder.cs" />
+    <Compile Include="Primitives\Descriptors\Dodecahedron.cs" />
     <Compile Include="Primitives\Descriptors\Polygon2d.cs" />
     <Compile Include="Primitives\Descriptors\Text.cs" />
     <Compile Include="Primitives\Descriptors\Dispatcher.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="Primitives\Descriptors\Box.cs" />
     <Compile Include="Primitives\DX11PrimitivesManager.cs" />
     <Compile Include="Primitives\DX11Primitives_RoundRect.cs" />
+    <Compile Include="Primitives\DX11Primitive_Dodecahederon.cs" />
     <Compile Include="Primitives\DX11Primitive_Polygon2d.cs" />
     <Compile Include="Primitives\DX11Primitive_Null.cs" />
     <Compile Include="Primitives\DX11Primitive_Box.cs" />

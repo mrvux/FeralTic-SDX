@@ -26,6 +26,16 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.QuadNormals(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Quad))
+            {
+                return false;
+            }
+            Quad o = (Quad)obj;
+            return this.Size == o.Size;
+        }
     }
 
     public class QuadLine : Quad

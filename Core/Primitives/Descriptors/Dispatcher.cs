@@ -29,5 +29,17 @@ namespace FeralTic.DX11.Geometry
         {
             return device.Primitives.Dispatcher(this);
         }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Dispatcher))
+            {
+                return false;
+            }
+            Dispatcher o = (Dispatcher)obj;
+            return this.ThreadCountX == o.ThreadCountX
+                && this.ThreadCountY == o.ThreadCountY
+                && this.ThreadCountZ == o.ThreadCountZ;
+        }
     }
 }
