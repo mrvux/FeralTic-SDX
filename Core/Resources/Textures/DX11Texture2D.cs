@@ -78,6 +78,7 @@ namespace FeralTic.DX11.Resources
             desc.BindFlags = BindFlags.None;
             desc.CpuAccessFlags = CpuAccessFlags.Read;
             desc.Usage = ResourceUsage.Staging;
+            desc.OptionFlags = ResourceOptionFlags.None;
 
             DX11Texture2D texture = new DX11Texture2D();
             texture.Texture = new Texture2D(device.Device, desc);

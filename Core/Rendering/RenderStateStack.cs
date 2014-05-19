@@ -21,7 +21,7 @@ namespace FeralTic.DX11
         public RenderStateStack(RenderContext context)
         {
             this.context = context;
-            this.defaultstate = new RenderState(context.Device);
+            this.defaultstate = new RenderState();
             stack = new Stack<RenderState>();
         }
 

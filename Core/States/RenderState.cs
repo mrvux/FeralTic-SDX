@@ -9,8 +9,6 @@ namespace FeralTic.DX11
 {
     public class RenderState : IDxResource
     {
-        private DxDevice device;
-
         public RasterizerState Rasterizer { get; set; }
 
         public DepthStencilState DepthStencil { get; set; }
@@ -23,9 +21,9 @@ namespace FeralTic.DX11
 
         public int BlendSampleMask { get; set; }
 
-        public RenderState(DxDevice device)
+        public RenderState()
         {
-            this.device = device;
+
             this.BlendFactor = new Color4(0, 0, 0, 0);
             this.DepthStencilReference = 0;
             this.BlendSampleMask = int.MaxValue;
@@ -33,7 +31,7 @@ namespace FeralTic.DX11
 
         public RenderState Clone()
         {
-            RenderState result = new RenderState(this.device);
+            RenderState result = new RenderState();
             result.Blend = this.Blend;
             result.DepthStencil = this.DepthStencil;
             result.Rasterizer = this.Rasterizer;

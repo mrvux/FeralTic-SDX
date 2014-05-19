@@ -13,6 +13,7 @@ using WICFactory = SharpDX.WIC.ImagingFactory2;
 using DirectXDevice = SharpDX.Direct3D11.Device2;
 using D2DFactory = SharpDX.Direct2D1.Factory1;
 using DWriteFactory = SharpDX.DirectWrite.Factory1;
+using SharpDX.MediaFoundation;
 #else
 #if DIRECTX11_1
 using DXGIDevice = SharpDX.DXGI.Device2;
@@ -69,6 +70,11 @@ namespace FeralTic.DX11
         /// DirectWrite factory
         /// </summary>
         public DWriteFactory DWriteFactory { get; private set; }
+
+        /// <summary>
+        /// DXGI Device Manager, used for video support
+        /// </summary>
+        public DXGIDeviceManager DXGIManager { get; private set; }
 
         /// <summary>
         /// Automatically recreates a device in case of device removed event
@@ -192,7 +198,17 @@ namespace FeralTic.DX11
             #else
             this.Device = dev;
             #endif
-            
+
+            // Make sure to reset device asap, to avoid any resource to invalidate
+            if (this.Device.CreationFlags.HasFlag(DeviceCreationFlags.VideoSupport))
+            {
+                DeviceMultithread mt = this.Device.QueryInterface<DeviceMultithread>();
+                mt.SetMultithreadProtected(true);
+
+                this.DXGIManager = new DXGIDeviceManager();
+                this.DXGIManager.ResetDevice(this.Device);
+            }
+           
             DXGIDevice dxgidevice = this.Device.QueryInterface<DXGIDevice>();
             
             this.Adapter = dxgidevice.Adapter.QueryInterface<DXGIAdapter>();
