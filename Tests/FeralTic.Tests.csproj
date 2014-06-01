@@ -78,6 +78,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Device\DeviceTestBase.cs" />
+    <Compile Include="GeometryTests\GridTests.cs" />
+    <Compile Include="GeometryTests\PlatonicTests.cs" />
+    <Compile Include="GeometryTests\BoxTests.cs" />
+    <Compile Include="GeometryTests\CylinderTests.cs" />
+    <Compile Include="GeometryTests\SphereTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Device\DeviceTest.cs" />
     <Compile Include="QueryTest\QueryTest.cs" />
