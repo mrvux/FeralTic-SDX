@@ -54,6 +54,12 @@ namespace FeralTic.DX11.Geometry
         }
     }
 
+
+    public interface IGeometryBuilder
+    {
+        void Construct(Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex);
+    }
+
     public interface IGeometryBuilder<T> where T : AbstractPrimitiveDescriptor
     {
         PrimitiveInfo GetPrimitiveInfo(T settings);

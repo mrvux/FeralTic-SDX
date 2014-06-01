@@ -26,8 +26,59 @@ namespace FeralTic.DX11.Resources
 
     public class TextureLoader
     {
-        //TODO: DllImport to load 64 bits version
         private class NativeMethods
+        {
+            public static long LoadTextureFromFile(IntPtr device, string path,out IntPtr resource, int miplevels)
+            {
+                if (IntPtr.Size == 8)
+                {
+                    return NativeMethods64.LoadTextureFromFile(device, path, out resource, miplevels);
+                }
+                else
+                {
+                    return NativeMethods32.LoadTextureFromFile(device, path, out resource, miplevels);
+                }
+            }
+
+            public static long SaveTextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path, int format)
+            {
+                if (IntPtr.Size == 8)
+                {
+                    return NativeMethods64.SaveTextureToFile(device, context,resource, path, format);
+                }
+                else
+                {
+                    return NativeMethods32.SaveTextureToFile(device, context, resource, path, format);
+                }
+            }
+
+            public static long SaveCompressedTextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path, int blocktype)
+            {
+                if (IntPtr.Size == 8)
+                {
+                    return NativeMethods64.SaveCompressedTextureToFile(device, context, resource, path, blocktype);
+                }
+                else
+                {
+                    return NativeMethods32.SaveCompressedTextureToFile(device, context, resource, path, blocktype);
+                }
+            }
+        }
+
+        private class NativeMethods64
+        {
+            [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
+            public static extern long LoadTextureFromFile(IntPtr device, string path, out IntPtr resource, int miplevels);
+
+            [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
+            public static extern long SaveTextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path, int format);
+
+            [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
+            public static extern long SaveCompressedTextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path, int blocktype);
+        }
+
+
+        private class NativeMethods32
         {
             [DllImport("DirectXTexLib_x86",CharSet=CharSet.Unicode)]
             public static extern long LoadTextureFromFile(IntPtr device, string path,out IntPtr resource, int miplevels);
