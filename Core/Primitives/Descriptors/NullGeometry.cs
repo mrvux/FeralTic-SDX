@@ -9,6 +9,58 @@ namespace FeralTic.DX11.Geometry
 {
     public class NullGeometry : AbstractPrimitiveDescriptor
     {
+        private int vertexCount;
+        private int instanceCount;
+        private PrimitiveTopology topology;
+
+        public int VertexCount
+        {
+            get { return this.vertexCount; }
+            set
+            {
+                if (vertexCount != value)
+                {
+                    if (value < 0)
+                    {
+                        throw new ArgumentException("Vertex Count must be positive or 0", "VertexCount");
+                    }
+                    this.vertexCount = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int InstanceCount
+        {
+            get { return this.instanceCount; }
+            set
+            {
+                if (instanceCount != value)
+                {
+                    if (value < 0)
+                    {
+                        throw new ArgumentException("Instance Count must be positive or 0", "InstanceCount");
+                    }
+                    this.instanceCount = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public PrimitiveTopology Topology
+        {
+            get { return this.topology; }
+            set
+            {
+                if (this.topology != value)
+                {
+                    this.topology = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+
+        }
+
         public NullGeometry()
         {
             this.VertexCount = 1;
@@ -16,9 +68,7 @@ namespace FeralTic.DX11.Geometry
             this.Topology = PrimitiveTopology.PointList;
         }
 
-        public int VertexCount { get; set; }
-        public int InstanceCount { get; set; }
-        public PrimitiveTopology Topology { get; set; }
+
 
         public override string PrimitiveType { get { return "Null"; } }
 
