@@ -8,12 +8,25 @@ namespace FeralTic.DX11.Geometry
 {
     public class Box : AbstractPrimitiveDescriptor
     {
+        private Vector3 size;
+
         public Box()
         {
-            this.Size = new Vector3(1, 1, 1);
+            this.size = new Vector3(1, 1, 1);
         }
 
-        public Vector3 Size { get; set; }
+        public Vector3 Size
+        {
+            get { return this.size; }
+            set
+            {
+                if (this.size != value)
+                {
+                    this.size = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
 
         public override string PrimitiveType { get { return "Box"; } }
 
