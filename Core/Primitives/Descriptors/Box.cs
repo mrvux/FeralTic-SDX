@@ -10,11 +10,6 @@ namespace FeralTic.DX11.Geometry
     {
         private Vector3 size;
 
-        public Box()
-        {
-            this.size = new Vector3(1, 1, 1);
-        }
-
         public Vector3 Size
         {
             get { return this.size; }
@@ -26,6 +21,11 @@ namespace FeralTic.DX11.Geometry
                     this.RaisePropertyChanged();
                 }
             }
+        }
+        
+        public Box()
+        {
+            this.size = new Vector3(1, 1, 1);
         }
 
         public override string PrimitiveType { get { return "Box"; } }
