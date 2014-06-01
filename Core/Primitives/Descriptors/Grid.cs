@@ -51,7 +51,7 @@ namespace FeralTic.DX11.Geometry
             {
                 if (this.resY != value)
                 {
-                    if (tvalue <= 0)
+                    if (value <= 0)
                     {
                         throw new ArgumentException("Resolution should be greater than 0", "ResolutionY");
                     }

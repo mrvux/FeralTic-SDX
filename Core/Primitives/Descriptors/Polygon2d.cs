@@ -10,6 +10,8 @@ namespace FeralTic.DX11.Geometry
 {
     public class Polygon2d : AbstractPrimitiveDescriptor
     {
+        private Vector2[] vertices;
+
         public Polygon2d()
         {
             this.Vertices = new Vector2[]
@@ -18,7 +20,18 @@ namespace FeralTic.DX11.Geometry
             };
         }
 
-        public Vector2[] Vertices { get; set; }
+        public Vector2[] Vertices
+        {
+            get { return this.vertices; }
+            set
+            {
+                if (value.Length < 3)
+                {
+                    throw new ArgumentException("Polygon needs at least 3 vertices", "Vertices");
+                }
+                this.vertices = value;           
+            }
+        }
 
         public override string PrimitiveType { get { return "Polygon2d"; } }
 

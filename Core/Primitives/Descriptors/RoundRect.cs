@@ -8,6 +8,63 @@ namespace FeralTic.DX11.Geometry
 {
     public class RoundRect : AbstractPrimitiveDescriptor
     {
+        private Vector2 innerRadius;
+        private float outerRadius;
+        private int cornerResolution;
+        private bool enableCenter;
+
+        public Vector2 InnerRadius
+        {
+            get { return this.innerRadius; }
+            set
+            {
+                if (this.innerRadius != value)
+                {
+                    this.innerRadius = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public float OuterRadius
+        {
+            get { return this.outerRadius; }
+            set
+            {
+                if (this.outerRadius != value)
+                {
+                    this.outerRadius = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int CornerResolution
+        {
+            get { return this.cornerResolution; }
+            set
+            {
+                if (this.cornerResolution != value)
+                {
+                    this.cornerResolution = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool EnableCenter
+        {
+            get { return this.enableCenter; }
+            set
+            {
+                if (this.enableCenter != value)
+                {
+                    this.enableCenter = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
         public RoundRect()
         {
             this.InnerRadius = new Vector2(0.35f, 0.35f);
@@ -15,11 +72,6 @@ namespace FeralTic.DX11.Geometry
             this.EnableCenter = true;
             this.CornerResolution = 20;
         }
-
-        public Vector2 InnerRadius { get; set; }
-        public float OuterRadius { get; set; }
-        public int CornerResolution { get; set; }
-        public bool EnableCenter { get; set; }
 
         public override string PrimitiveType { get { return "RoundRect"; } }
 
