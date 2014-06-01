@@ -8,12 +8,25 @@ namespace FeralTic.DX11.Geometry
 {
     public class TextPrimitive : AbstractPrimitiveDescriptor
     {
+        private string text;
+
         public TextPrimitive()
         {
             this.Text = "DX11";
         }
 
-        public string Text { get; set; }
+        public string Text
+        {
+            get { return this.text; }
+            set 
+            {
+                if (this.text != value)
+                {
+                    this.text = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
 
         public override string PrimitiveType { get { return "Text"; } }
 
