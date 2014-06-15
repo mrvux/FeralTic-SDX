@@ -63,12 +63,27 @@ namespace FeralTic.DX11.Resources
                     return NativeMethods32.SaveCompressedTextureToFile(device, context, resource, path, blocktype);
                 }
             }
+
+            public static long LoadTextureFromMemory(IntPtr device, IntPtr dataPointer, int dataLength, out IntPtr resource)
+            {
+                if (IntPtr.Size == 8)
+                {
+                    return NativeMethods64.LoadTextureFromMemory(device, dataPointer, dataLength, out resource);
+                }
+                else
+                {
+                    return NativeMethods32.LoadTextureFromMemory(device, dataPointer, dataLength, out resource);
+                }
+            }
         }
 
         private class NativeMethods64
         {
             [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
             public static extern long LoadTextureFromFile(IntPtr device, string path, out IntPtr resource, int miplevels);
+
+            [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
+            public static extern long LoadTextureFromMemory(IntPtr device, IntPtr dataPointer, int dataLength, out IntPtr resource);
 
             [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
             public static extern long SaveTextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path, int format);
@@ -87,6 +102,9 @@ namespace FeralTic.DX11.Resources
             public static extern long SaveTextureToFile(IntPtr device,IntPtr context,IntPtr resource, string path,int format);
 
             [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
+            public static extern long LoadTextureFromMemory(IntPtr device, IntPtr dataPointer, int dataLength, out IntPtr resource);
+
+            [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
             public static extern long SaveCompressedTextureToFile(IntPtr device, IntPtr context, IntPtr resource, string path, int blocktype);
         }
 
@@ -100,6 +118,23 @@ namespace FeralTic.DX11.Resources
             {
                 Texture2D texture = Texture2D.FromPointer<Texture2D>(resource);
                 ShaderResourceView srv = new ShaderResourceView(device,texture);
+                return DX11Texture2D.FromReference(device, texture, srv);
+            }
+            else
+            {
+                throw new Exception("Failed to load texture");
+            }
+        }
+
+        public static DX11Texture2D LoadFromMemory(DxDevice device, IntPtr dataPointer, int dataLength)
+        {
+            IntPtr resource;
+            NativeMethods.LoadTextureFromMemory(device.Device.NativePointer, dataPointer, dataLength, out resource);
+
+            if (resource != IntPtr.Zero)
+            {
+                Texture2D texture = Texture2D.FromPointer<Texture2D>(resource);
+                ShaderResourceView srv = new ShaderResourceView(device, texture);
                 return DX11Texture2D.FromReference(device, texture, srv);
             }
             else
