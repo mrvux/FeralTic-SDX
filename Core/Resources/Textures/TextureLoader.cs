@@ -23,11 +23,49 @@ namespace FeralTic.DX11.Resources
         BC7 = SharpDX.DXGI.Format.BC7_UNorm
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ImageMetadata
+    {
+        public long Width;
+        public long Height;
+        public long Depth;
+        public long ArraySize;
+        public long MipLevels;
+        public int MiscFlags;
+        public int MiscFlags2;
+        public SharpDX.DXGI.Format Format;
+        public SharpDX.Direct3D11.ResourceDimension Dimension;
+    }
+
 
     public class TextureLoader
     {
         private class NativeMethods
         {
+            public static ImageMetadata LoadMetadataFromFile(string path)
+            {
+                if (IntPtr.Size == 8)
+                {
+                    return NativeMethods64.LoadMetadataFromFile(path);
+                }
+                else
+                {
+                    return NativeMethods32.LoadMetadataFromFile(path);
+                }
+            }
+
+            public static ImageMetadata LoadMetadataFromMemory(IntPtr dataPointer, int dataLength)
+            {
+                if (IntPtr.Size == 8)
+                {
+                    return NativeMethods64.LoadMetadataFromMemory(dataPointer, dataLength);
+                }
+                else
+                {
+                    return NativeMethods32.LoadMetadataFromMemory(dataPointer, dataLength);
+                }
+            }
+
             public static long LoadTextureFromFile(IntPtr device, string path,out IntPtr resource, int miplevels)
             {
                 if (IntPtr.Size == 8)
@@ -80,6 +118,12 @@ namespace FeralTic.DX11.Resources
         private class NativeMethods64
         {
             [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
+            public static extern ImageMetadata LoadMetadataFromFile(string path);
+
+            [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
+            public static extern ImageMetadata LoadMetadataFromMemory(IntPtr dataPointer, int dataLength);
+
+            [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
             public static extern long LoadTextureFromFile(IntPtr device, string path, out IntPtr resource, int miplevels);
 
             [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
@@ -95,6 +139,12 @@ namespace FeralTic.DX11.Resources
 
         private class NativeMethods32
         {
+            [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
+            public static extern ImageMetadata LoadMetadataFromFile(string path);
+
+            [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
+            public static extern ImageMetadata LoadMetadataFromMemory(IntPtr dataPointer, int dataLength);
+
             [DllImport("DirectXTexLib_x86",CharSet=CharSet.Unicode)]
             public static extern long LoadTextureFromFile(IntPtr device, string path,out IntPtr resource, int miplevels);
 
