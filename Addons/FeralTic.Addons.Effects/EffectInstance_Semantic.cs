@@ -78,11 +78,6 @@ namespace FeralTic.DX11
         {
             this.effect.GetVariableBySemantic(name).AsMatrix().SetMatrix(value);
         }
-
-        /*public void SetBySemantic(string name, Matrix[] value)
-        {
-            this.effect.GetVariableBySemantic(name).AsMatrix().se(value);
-        }*/
         #endregion
 
         #region Resources
@@ -98,8 +93,7 @@ namespace FeralTic.DX11
 
         public void SetBySemantic(string name, UnorderedAccessView value, int counter = -1)
         {
-            this.effect.GetVariableBySemantic(name).AsUnorderedAccessView().Set(value);
-            this.resetuavs.Add(new CounterResetUAV(value, counter));
+            this.effect.GetVariableBySemantic(name).AsUnorderedAccessView().Set(value, counter);
         }
         #endregion
     }
