@@ -12,27 +12,10 @@ namespace FeralTic.DX11
 
     public partial class EffectInstance : IDisposable
     {
-        public class CounterResetUAV
-        {
-            public CounterResetUAV(UnorderedAccessView uav, int counter)
-            {
-                this.UAV = uav;
-                this.Counter = counter;
-            }
-
-            public UnorderedAccessView UAV;
-            public int Counter;
-        }
-
         private Effect effect;
         private DxDevice device;
 
         private EffectTechnique currenttechnique;
-
-        private ShaderResourceView[] nullsrvs = new ShaderResourceView[128];
-        private UnorderedAccessView[] nulluavs = new UnorderedAccessView[8];
-
-        private List<CounterResetUAV> resetuavs = new List<CounterResetUAV>();
 
         public Effect Effect { get { return this.effect; } }
 
