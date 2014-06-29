@@ -68,32 +68,54 @@ namespace FeralTic.Addons.AssetImport
             return result;
         }
 
-        public void ConstructFirst(string path, Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex)
+        private void Construct(Assimp.Mesh mesh, Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex, ref int offset)
+        {
+
+            if (mesh.HasFaces && mesh.HasVertices)
+            {
+                for (int i = 0; i < mesh.VertexCount; i++)
+                {
+                    Vector3D mp = mesh.Vertices[i];
+                    Vector3 p = new Vector3(mp.X, mp.Y, mp.Z);
+
+                    Vector3D mn = mesh.Normals[i];
+                    Vector3 n = new Vector3(mn.X, mn.Y, mn.Z);
+                    appendVertex(p, n, Vector2.Zero);
+                }
+
+                int[] inds = mesh.GetIntIndices();
+                for (int i = 0; i < inds.Length / 3; i += 3)
+                {
+                    appendIndex(new Int3(inds[i * 3 + offset], inds[i * 3 + offset + 1], inds[i * 3 + offset + 2]));
+                }
+
+                offset += mesh.VertexCount;
+            }
+        }
+ 
+
+        public void Construct(string path, Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex, int index)
         {
             Assimp.AssimpImporter importer = new AssimpImporter();
             Scene scene = importer.ImportFile(path, PostProcessPreset.ConvertToLeftHanded | PostProcessPreset.TargetRealTimeQuality);
 
-            Assimp.Mesh mesh = scene.Meshes[0];
+            Assimp.Mesh mesh = scene.Meshes[index % scene.MeshCount];
+            int offset = 0;
+            Construct(mesh, appendVertex, appendIndex, ref offset);
+        }
 
-            if (mesh.HasFaces && mesh.HasVertices)
+
+        public void ConstructAll(string path, Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex)
+        {
+            Assimp.AssimpImporter importer = new AssimpImporter();
+            Scene scene = importer.ImportFile(path, PostProcessPreset.ConvertToLeftHanded | PostProcessPreset.TargetRealTimeQuality);
+
+            int offset = 0;        
+            foreach (Assimp.Mesh m in scene.Meshes)
             {
-                 for (int i= 0; i< mesh.VertexCount;i++)
-                 {
-                     Vector3D mp = mesh.Vertices[i];
-                     Vector3 p = new Vector3(mp.X,mp.Y,mp.Z);
-
-                     Vector3D mn = mesh.Normals[i];
-                     Vector3 n = new Vector3(mn.X,mn.Y,mn.Z);
-                     appendVertex(p, n, Vector2.Zero);
-                 }
-
-                int[] inds = mesh.GetIntIndices();
-                for(int i = 0; i < inds.Length / 3 ;i+=3)
-                {
-                    appendIndex(new Int3(inds[i * 3], inds[i * 3 + 1], inds[i * 3 + 2]));
-                }
-                 
+                Construct(m, appendVertex, appendIndex, ref offset);
             }
         }
+
     }
 }
