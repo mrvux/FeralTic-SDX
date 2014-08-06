@@ -84,7 +84,7 @@ namespace FeralTic.Addons.AssetImport
                 }
 
                 int[] inds = mesh.GetIntIndices();
-                for (int i = 0; i < inds.Length / 3; i += 3)
+                for (int i = 0; i < inds.Length / 3; i ++)
                 {
                     appendIndex(new Int3(inds[i * 3 + offset], inds[i * 3 + offset + 1], inds[i * 3 + offset + 2]));
                 }
