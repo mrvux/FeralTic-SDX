@@ -41,10 +41,13 @@
     <Compile Include="Primitives\Builders\GridBuilder.cs" />
     <Compile Include="Primitives\Builders\IcoSphereBuilder.cs" />
     <Compile Include="Primitives\Builders\DodecahedronBuilder.cs" />
+    <Compile Include="Primitives\Builders\SphereBuilder.cs" />
     <Compile Include="Primitives\Builders\QuadBuilder.cs" />
     <Compile Include="Primitives\Builders\IsocahedronBuilder.cs" />
     <Compile Include="Primitives\Builders\OctahedronBuilder.cs" />
     <Compile Include="Primitives\Builders\SegmentBuilder.cs" />
+    <Compile Include="Primitives\Builders\Text\TextExtrudingSink.cs" />
+    <Compile Include="Primitives\Builders\Text\TextOutlineRenderer.cs" />
     <Compile Include="Primitives\Descriptors\AbstractPrimitiveDescriptor.cs" />
     <Compile Include="Primitives\Builders\IGeometryBuilder.cs" />
     <Compile Include="Primitives\Descriptors\Dodecahedron.cs" />
@@ -52,6 +55,7 @@
     <Compile Include="Primitives\Descriptors\Text.cs" />
     <Compile Include="Primitives\Descriptors\Dispatcher.cs" />
     <Compile Include="Primitives\Descriptors\NullGeometry.cs" />
+    <Compile Include="Primitives\Descriptors\Text3d.cs" />
     <Compile Include="Primitives\Descriptors\Torus.cs" />
     <Compile Include="Primitives\Descriptors\Tetrahedron.cs" />
     <Compile Include="Primitives\Descriptors\Sphere.cs" />

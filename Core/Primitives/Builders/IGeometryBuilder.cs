@@ -37,7 +37,16 @@ namespace FeralTic.DX11.Geometry
             this.VerticesCount = verticescount;
             this.IndicesCount = indicescount;
             this.IsBoundingBoxKnown = true;
-            this.BoundingBox = BoundingBox;
+            this.BoundingBox = box;
+        }
+
+        public PrimitiveInfo(BoundingBox box)
+        {
+            this.PrimitivesKnown = false;
+            this.VerticesCount = 0;
+            this.IndicesCount = 0;
+            this.IsBoundingBoxKnown = true;
+            this.BoundingBox = box;
         }
 
         public static PrimitiveInfo UnKnown
