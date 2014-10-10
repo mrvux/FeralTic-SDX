@@ -22,31 +22,31 @@ namespace FeralTic.DX11.Geometry
             Pos3Norm3Tex2Vertex v = new Pos3Norm3Tex2Vertex();
 
             v.Position = Vector3.Normalize(new Vector3(-1, t, 0)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
             v.Position = Vector3.Normalize(new Vector3(1, t, 0)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
             v.Position = Vector3.Normalize(new Vector3(-1, -t, 0)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
             v.Position = Vector3.Normalize(new Vector3(1, -t, 0)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
 
             v.Position = Vector3.Normalize(new Vector3(0, -1, t)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
             v.Position = Vector3.Normalize(new Vector3(0, 1, t)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
             v.Position = Vector3.Normalize(new Vector3(0, -1, -t)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
             v.Position = Vector3.Normalize(new Vector3(0, 1, -t)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
 
             v.Position = Vector3.Normalize(new Vector3(t, 0, -1)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
             v.Position = Vector3.Normalize(new Vector3(t, 0, 1)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
             v.Position = Vector3.Normalize(new Vector3(-t, 0, -1)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
             v.Position = Vector3.Normalize(new Vector3(-t, 0, 1)) * 0.5f; v.Normals = v.Position * 2.0f; v.TexCoords = new Vector2(0, 0);
-            appendVertex(v.Position, v.Normals, v.TexCoords);
+            appendVertex(v.Position * settings.Size, v.Normals, v.TexCoords);
 
             appendIndex(new Int3(0, 11, 5));
             appendIndex(new Int3(0, 5, 1));
