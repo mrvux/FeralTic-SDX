@@ -15,6 +15,7 @@ namespace FeralTic.DX11.Geometry
         private int resX;
         private int resY;
         private bool caps;
+        private bool center;
 
         public Cylinder()
         {
@@ -25,6 +26,7 @@ namespace FeralTic.DX11.Geometry
             this.Caps = true;
             this.ResolutionX = 15;
             this.ResolutionY = 1;
+            this.Center = true;
         }
 
         public float Radius1
@@ -127,6 +129,19 @@ namespace FeralTic.DX11.Geometry
             }
         }
 
+        public bool Center
+        {
+            get { return this.center; }
+            set
+            {
+                if (this.center != value)
+                {
+                    this.center = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
         public override string PrimitiveType { get { return "Cylinder"; } }
 
         public override void Initialize(Dictionary<string, object> properties)
@@ -138,6 +153,7 @@ namespace FeralTic.DX11.Geometry
             this.ResolutionX = (int)properties["ResolutionX"];
             this.ResolutionY = (int)properties["ResolutionY"];
             this.Caps = (bool)properties["Caps"];
+            this.Center = (bool)properties["Center"];
         }
 
         public override IDxGeometry GetGeometry(RenderDevice device)
@@ -159,7 +175,8 @@ namespace FeralTic.DX11.Geometry
                 && this.Radius1 == o.Radius1
                 && this.Radius2 == o.Radius2
                 && this.ResolutionX == o.ResolutionX
-                && this.ResolutionY == o.ResolutionY;
+                && this.ResolutionY == o.ResolutionY
+                && this.Center == o.Center;
         }
     }
 

@@ -14,6 +14,7 @@ namespace FeralTic.DX11.Resources
 
         public RenderTargetView RenderView { get; protected set; }
         public ShaderResourceView ShaderView { get; protected set; }
+        public UnorderedAccessView UnorderedView { get; protected set; }
 
         public int Width { get; protected set; }
         public int Height { get; protected set; }
@@ -47,8 +48,19 @@ namespace FeralTic.DX11.Resources
                 }
             };
 
+            UnorderedAccessViewDescription uavd = new UnorderedAccessViewDescription()
+            {
+                Dimension = UnorderedAccessViewDimension.Texture3D,
+                Format = texture.Format,
+                Texture2D = new UnorderedAccessViewDescription.Texture2DResource()
+                {
+                    MipSlice = mipindex
+                }
+            };
+
             this.RenderView = new RenderTargetView(device, texture.Texture, rtd);
             this.ShaderView = new ShaderResourceView(device, texture.Texture, srvd);
+            this.UnorderedView = new UnorderedAccessView(device, texture.Texture, uavd);
             
         }
 
@@ -77,8 +89,21 @@ namespace FeralTic.DX11.Resources
                 }
             };
 
+            UnorderedAccessViewDescription uavd = new UnorderedAccessViewDescription()
+            {
+                Dimension = UnorderedAccessViewDimension.Texture3D,
+                Format = texture.Format,
+                Texture3D = new UnorderedAccessViewDescription.Texture3DResource()
+                {
+                    FirstWSlice = 0,
+                    MipSlice = mipindex,
+                    WSize = d
+                }
+            };
+
             this.RenderView = new RenderTargetView(device.Device, texture.Texture, rtd);
             this.ShaderView = new ShaderResourceView(device.Device, texture.Texture, srvd);
+            this.UnorderedView = new UnorderedAccessView(device.Device, texture.Texture, uavd);
 
             this.Width = w;
             this.Height = h;
@@ -89,6 +114,7 @@ namespace FeralTic.DX11.Resources
         {
             this.RenderView.Dispose();
             this.ShaderView.Dispose();
+            this.UnorderedView.Dispose();
         }
     }
 }

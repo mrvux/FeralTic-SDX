@@ -57,6 +57,15 @@ namespace FeralTic.DX11.Resources
             this.Unmap(context);
         }
 
+        public T[] ReadDataDebug<T>(RenderContext context) where T : struct
+        {
+            var staging = CreateStaging<T>(this.device, this.ElementCount);
+            context.Context.CopyResource(this.Buffer, staging.Buffer);
+            T[] data = staging.ReadData<T>(context);
+            staging.Dispose();
+            return data;
+        }
+
         public T[] ReadData<T>(RenderContext context) where T : struct
         {
             DataStream ds = this.MapForRead(context);

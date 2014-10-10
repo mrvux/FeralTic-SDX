@@ -50,7 +50,7 @@ namespace FeralTic.DX11.Geometry
             int resY = settings.ResolutionY;
             bool caps = settings.Caps;
 
-            float lenstart = -length * 0.5f; //Start at half bottom
+            float lenstart = settings.Center ? -length * 0.5f : 0.0f; //Start at half bottom
             float lenstep = (float)length / (float)resY;
 
             float y = lenstart;
