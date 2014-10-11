@@ -34,6 +34,11 @@ namespace FeralTic.DX11
         {
         }
 
+        public void DebugTargets()
+        {
+            this.targetpool.DebugTargets();
+        }
+
         public ResourcePoolEntry<DX11RenderTarget2D> LockRenderTarget(int w, int h, Format format, bool genMM = false, int mmLevels = 1)
         {
             return this.targetpool.Lock(w, h, format, new SampleDescription(1, 0), genMM, mmLevels);
