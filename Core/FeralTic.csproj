@@ -117,6 +117,7 @@
     <Compile Include="Resources\Buffers\Indirect\InstancedIndirectBuffer.cs" />
     <Compile Include="Resources\Buffers\RawBuffer.cs" />
     <Compile Include="Resources\Buffers\StructuredBuffer.cs" />
+    <Compile Include="Resources\Buffers\StructuredBufferRegion.cs" />
     <Compile Include="Resources\Buffers\VertexBuffer.cs" />
     <Compile Include="Resources\Geometry\Drawer\DX11DefaultIndexedDrawer.cs" />
     <Compile Include="Resources\Geometry\Drawer\DX11DefaultVertexDrawer.cs" />
