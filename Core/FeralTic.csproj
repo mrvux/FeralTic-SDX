@@ -177,6 +177,7 @@
     <Compile Include="Scheduler\Tasks\FileTextureTasks.cs" />
     <Compile Include="Shaders\ShaderCompiler.cs" />
     <Compile Include="Shaders\FolderIncludeHandler.cs" />
+    <Compile Include="Shaders\ShaderCompilerErrorParser.cs" />
     <Compile Include="States\BlendStates.cs" />
     <Compile Include="States\BlendStates_Logical.cs" />
     <Compile Include="States\DepthStencilStates.cs" />

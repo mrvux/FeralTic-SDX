@@ -68,10 +68,15 @@ namespace FeralTic.DX11
             pass.Apply(context.Context);
         }
 
+        public EffectVariable GetVariableBySemantic(string semantic)
+        {
+            return this.effect.GetVariableBySemantic(semantic);
+        }
+
         public EffectPass GetPass(int index)
         {
             return this.currenttechnique.GetPassByIndex(index);
-       } 
+        }
 
         public void Dispose()
         {

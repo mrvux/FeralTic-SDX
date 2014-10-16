@@ -19,7 +19,7 @@ namespace FeralTic.DX11
         {
             try
             {
-                ShaderFlags flags = ShaderFlags.PackMatrixRowMajor | ShaderFlags.OptimizationLevel1;
+                ShaderFlags flags = ShaderFlags.OptimizationLevel1;
 
                 if (isfile)
                 {
@@ -86,7 +86,7 @@ namespace FeralTic.DX11
             return GetShaderInstance<T>(device, sb);
         }
 
-        private static string GetShaderProfile<T>(DxDevice device) where T : class
+        public static string GetShaderProfile<T>(DxDevice device) where T : class
         {
             return GetProfileType<T>() + GetFeature(device);
         }
