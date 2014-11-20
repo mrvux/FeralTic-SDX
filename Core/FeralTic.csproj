@@ -175,9 +175,15 @@
     <Compile Include="Scheduler\FileTexturePoolElement.cs" />
     <Compile Include="Scheduler\ISchedulerTask.cs" />
     <Compile Include="Scheduler\Tasks\FileTextureTasks.cs" />
+    <Compile Include="Shaders\CompositeIncludeHandler.cs" />
+    <Compile Include="Shaders\FolderInclude.cs" />
+    <Compile Include="Shaders\IIncludeHandler.cs" />
     <Compile Include="Shaders\ShaderCompiler.cs" />
     <Compile Include="Shaders\FolderIncludeHandler.cs" />
     <Compile Include="Shaders\ShaderCompilerErrorParser.cs" />
+    <Compile Include="Shaders\ShaderIncludeFlags.cs" />
+    <Compile Include="Shaders\ShaderStage.cs" />
+    <Compile Include="Shaders\SingleIncludeHandler.cs" />
     <Compile Include="States\BlendStates.cs" />
     <Compile Include="States\BlendStates_Logical.cs" />
     <Compile Include="States\DepthStencilStates.cs" />
