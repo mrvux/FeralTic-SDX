@@ -20,11 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IShaderMaterial.cs" />
-    <Compile Include="Pixel\Deferred\ConstantColor.cs" />
     <Compile Include="Pixel\Forward\ConstantColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Pixel\Deferred\" />
     <Folder Include="shaders\" />
   </ItemGroup>
   <ItemGroup>
