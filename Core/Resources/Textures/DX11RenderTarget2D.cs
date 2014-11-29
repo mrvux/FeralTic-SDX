@@ -43,6 +43,10 @@ namespace FeralTic.DX11.Resources
         public DX11RenderTarget2D(DxDevice device, int w, int h, SampleDescription sd, Format format) :
             this(device, w, h, sd, format, false, 1) { }
 
+        public DX11RenderTarget2D(DxDevice device, DX11RenderTarget2D renderTarget) :
+            this(device, renderTarget.Width,renderTarget.Height,renderTarget.resourceDesc.SampleDescription, renderTarget.Format)
+        { }
+
 
         public DX11RenderTarget2D(DxDevice device, int w, int h, SampleDescription sd, Format format, bool genMipMaps, int mmLevels, bool allowUAV)
         {

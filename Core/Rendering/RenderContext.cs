@@ -52,6 +52,16 @@ namespace FeralTic.DX11
             this.RenderStateStack = new RenderStateStack(this);
         }
 
+        public void BindConstantBufferToAllStages(SharpDX.Direct3D11.Buffer cbuffer, int slot)
+        {
+            this.Context.VertexShader.SetConstantBuffer(slot, cbuffer);
+            this.Context.HullShader.SetConstantBuffer(slot, cbuffer);
+            this.Context.DomainShader.SetConstantBuffer(slot, cbuffer);
+            this.Context.GeometryShader.SetConstantBuffer(slot, cbuffer);
+            this.Context.PixelShader.SetConstantBuffer(slot, cbuffer);
+            this.Context.ComputeShader.SetConstantBuffer(slot, cbuffer);
+        }
+
         public void ClearShaderStages()
         {
             Context.VertexShader.Set(null);

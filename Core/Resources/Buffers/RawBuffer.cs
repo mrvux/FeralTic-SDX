@@ -98,6 +98,20 @@ namespace FeralTic.DX11.Resources
             return new DX11RawBuffer(device, bd, initial.DataPointer, false);
         }
 
+        public static DX11RawBuffer CreateDynamic(DxDevice device, int size)
+        {
+            BufferDescription bd = new BufferDescription()
+            {
+                BindFlags = BindFlags.ShaderResource,
+                CpuAccessFlags = CpuAccessFlags.Write,
+                OptionFlags = ResourceOptionFlags.BufferAllowRawViews,
+                SizeInBytes = size,
+                Usage = ResourceUsage.Dynamic
+            };
+
+            return new DX11RawBuffer(device, bd, IntPtr.Zero, false);
+        }
+
         public static DX11RawBuffer CreateWriteable(DxDevice device, int size, RawBufferBindings binding)
         {
             BufferDescription bd = new BufferDescription()
