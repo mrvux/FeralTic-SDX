@@ -10,8 +10,11 @@ using FeralTic.DX11.Resources;
 using SharpDX.Direct3D;
 using SharpDX.Direct2D1;
 
+
 namespace FeralTic.DX11.Geometry
 {
+    using Tri = SharpDX.Direct2D1.Triangle;
+
     internal class TextTesselator : TessellationSink
     {
         private List<Pos3Norm3Tex2Vertex> verts = new List<Pos3Norm3Tex2Vertex>();
@@ -38,9 +41,9 @@ namespace FeralTic.DX11.Geometry
         }
 
 
-        public void AddTriangles(Triangle[] triangles)
+        public void AddTriangles(Tri[] triangles)
         {
-            foreach (Triangle tri in triangles)
+            foreach (Tri tri in triangles)
             {
                 vertex.Position = new Vector3(tri.Point1.X,tri.Point1.Y,0.0f);
                 verts.Add(vertex);

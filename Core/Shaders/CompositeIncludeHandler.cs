@@ -14,11 +14,12 @@ namespace FeralTic.DX11
 
         private IIncludeHandler selectedHandler;
 
-        public CompositeIncludeHandler(IIncludeHandler handlers)
+        public CompositeIncludeHandler(IEnumerable<IIncludeHandler> handlers)
         {
             if (handlers == null)
                 throw new ArgumentNullException("handlers");
 
+            this.handlers = handlers;
         }
 
         public void Close(Stream stream)

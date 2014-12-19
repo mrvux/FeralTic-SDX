@@ -9,26 +9,27 @@ using System.Reflection;
 using SharpDX;
 using SharpDX.Direct3D11;
 using SharpDX.D3DCompiler;
+using SharpDX.Direct3D;
 
 namespace FeralTic.DX11
 {
     public class ShaderCompiler
     {
         #region Compile (from string)
-        private static ShaderBytecode Compile(string content, bool isfile, Include include,string profile,string entrypoint)
+        private static ShaderBytecode Compile(string content, bool isfile, Include include, string profile, string entrypoint, ShaderMacro[] macros = null)
         {
             try
             {
-                ShaderFlags flags = ShaderFlags.OptimizationLevel1;
+                ShaderFlags flags = ShaderFlags.OptimizationLevel3;
 
                 if (isfile)
                 {
-                    CompilationResult result = ShaderBytecode.CompileFromFile(content, entrypoint, profile, flags, EffectFlags.None, null, include);
+                    CompilationResult result = ShaderBytecode.CompileFromFile(content, entrypoint, profile, flags, EffectFlags.None, macros, include);
                     return result.Bytecode;
                 }
                 else
                 {
-                    CompilationResult result = ShaderBytecode.Compile(content, entrypoint, profile, flags, EffectFlags.None, null, include);
+                    CompilationResult result = ShaderBytecode.Compile(content, entrypoint, profile, flags, EffectFlags.None, macros, include);
                     return result.Bytecode;
                 }
             }
@@ -37,7 +38,36 @@ namespace FeralTic.DX11
                 throw;
             }
         }
+
+        private static CompilationResult TryCompile(string content, bool isfile, Include include, string profile, string entrypoint)
+        {
+            try
+            {
+                ShaderFlags flags = ShaderFlags.OptimizationLevel1;
+
+                if (isfile)
+                {
+                    CompilationResult result = ShaderBytecode.CompileFromFile(content, entrypoint, profile, flags, EffectFlags.None, null, include);
+                    return result;
+                }
+                else
+                {
+                    CompilationResult result = ShaderBytecode.Compile(content, entrypoint, profile, flags, EffectFlags.None, null, include);
+                    return result;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
         #endregion
+
+        public static ShaderBytecode CompileFromFile(string path, string profile, string entrypoint, Include include, ShaderMacro[] macros = null)
+        {
+            var code = File.ReadAllText(path);
+            return Compile(code, false, include, profile, entrypoint,macros);
+        }
 
         public static ShaderBytecode CompileFromString(string code, string profile, string entrypoint)
         {

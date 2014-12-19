@@ -9,6 +9,14 @@ using SharpDX;
 
 namespace FeralTic.DX11.Resources
 {
+    public struct MsaaRenderTargetProperties
+    {
+        public int Width;
+        public int Height;
+        public SharpDX.DXGI.Format Format;
+        public int SampleCount;
+    }
+
     public class DX11RenderTarget2D : IDxTexture2D, IDxRenderTarget, IDxUnorderedResource
     {
         private DxDevice device;
@@ -37,6 +45,16 @@ namespace FeralTic.DX11.Resources
             get { return this.resourceDesc.Format; }
         }
 
+        public static DX11RenderTarget2D CreateMsaa(DxDevice device, MsaaRenderTargetProperties properties)
+        {
+            return new DX11RenderTarget2D(device, properties.Width, properties.Height, new SampleDescription(properties.SampleCount, 0), properties.Format, false, 1,false);
+        }
+
+        public static DX11RenderTarget2D CreateMsaaResolve(DxDevice device, MsaaRenderTargetProperties properties)
+        {
+            return new DX11RenderTarget2D(device, properties.Width, properties.Height, new SampleDescription(1, 0), properties.Format, false, 1, false);
+        }
+
         public DX11RenderTarget2D(DxDevice device, int w, int h, SampleDescription sd, Format format, bool genMipMaps, int mmLevels) :
             this(device,w,h,sd,format,genMipMaps,mmLevels,true) {}
 
@@ -46,7 +64,6 @@ namespace FeralTic.DX11.Resources
         public DX11RenderTarget2D(DxDevice device, DX11RenderTarget2D renderTarget) :
             this(device, renderTarget.Width,renderTarget.Height,renderTarget.resourceDesc.SampleDescription, renderTarget.Format)
         { }
-
 
         public DX11RenderTarget2D(DxDevice device, int w, int h, SampleDescription sd, Format format, bool genMipMaps, int mmLevels, bool allowUAV)
         {

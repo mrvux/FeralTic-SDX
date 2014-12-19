@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Triangle = SharpDX.Direct2D1.Triangle;
 
 namespace FeralTic.Primitives.Builders.Text
 {
