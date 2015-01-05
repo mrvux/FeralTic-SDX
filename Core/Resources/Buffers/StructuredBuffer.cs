@@ -57,6 +57,13 @@ namespace FeralTic.DX11.Resources
             this.Unmap(context);
         }
 
+        public void WriteData<T>(RenderContext context, T[] data, int elementCount) where T : struct
+        {
+            DataStream ds = this.MapForWrite(context);
+            ds.WriteRange<T>(data,0, elementCount);
+            this.Unmap(context);
+        }
+
         public T[] ReadDataDebug<T>(RenderContext context) where T : struct
         {
             var staging = CreateStaging<T>(this.device, this.ElementCount);
