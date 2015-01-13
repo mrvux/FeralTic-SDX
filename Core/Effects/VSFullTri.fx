@@ -1,5 +1,10 @@
 ﻿Texture2D tex : TEXTURE; 
 
+cbuffer cbLuma : register(b0)
+{
+	float luma;
+};
+
 SamplerState linSamp
 {
     Filter = MIN_MAG_MIP_LINEAR;
@@ -33,6 +38,11 @@ float4 PSGray(vs2ps input) : SV_Target
 	return tex.Sample(linSamp, input.uv).rrrr;
 }
 
+float4 PSLuma(vs2ps input) : SV_Target
+{
+	return tex.Sample(linSamp, input.uv) * luma;
+}
+
 technique10 FullScreenTriangleVSOnly
 {
 	pass P0
@@ -57,5 +67,14 @@ technique10 FullScreenTriangleGray
 	{
 		SetVertexShader(CompileShader(vs_4_0, VSFullTri()));
 		SetPixelShader(CompileShader(ps_4_0, PSGray()));
+	}
+}
+
+technique10 FullScreenTriangleLuma
+{
+	pass P0
+	{
+		SetVertexShader(CompileShader(vs_4_0, VSFullTri()));
+		SetPixelShader(CompileShader(ps_4_0, PSLuma()));
 	}
 }

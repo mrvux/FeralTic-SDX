@@ -9,6 +9,7 @@ using SharpDX.Direct3D11;
 using FeralTic.DX11.Resources;
 using SharpDX.Direct3D;
 using SharpDX.D3DCompiler;
+using SharpDX;
 
 namespace FeralTic.DX11.Geometry
 {
@@ -26,6 +27,8 @@ namespace FeralTic.DX11.Geometry
 
         private PixelShader PSPass;
         private PixelShader PSGray;
+        private PixelShader PSLuma;
+        private ConstantBuffer<float> cbLuma;
 
         private SamplerState LinearSampler;
 
@@ -37,6 +40,7 @@ namespace FeralTic.DX11.Geometry
             this.fulltri = new DX11NullGeometry(device, 3);
             this.fulltri.Topology = PrimitiveTopology.TriangleList;
             this.LinearSampler = device.SamplerStates.LinearClamp;
+            this.cbLuma = new ConstantBuffer<float>(device, true);
 
             this.InitializeDelegates();
             this.PrepareBasicShaders();
@@ -81,7 +85,7 @@ namespace FeralTic.DX11.Geometry
             this.VSTri = ShaderCompiler.CompileFromResource<VertexShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "VSFullTri");
             this.PSPass = ShaderCompiler.CompileFromResource<PixelShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "PS");
             this.PSGray = ShaderCompiler.CompileFromResource<PixelShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "PSGray");
-
+            this.PSLuma = ShaderCompiler.CompileFromResource<PixelShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "PSLuma");
 
             ShaderSignature quadsignature;
             this.VSQuad = ShaderCompiler.CompileFromResource(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.DefaultVS.fx", "VS", out quadsignature);
@@ -111,6 +115,17 @@ namespace FeralTic.DX11.Geometry
             context.Context.PixelShader.Set(this.PSGray);
             context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
             context.Context.PixelShader.SetSampler(0, this.LinearSampler);
+        }
+
+        public void ApplyFullTriLuma(RenderContext context, IDxTexture2D texture, float luma)
+        {
+            this.cbLuma.Update(context, ref luma);
+            this.FullScreenTriangle.Bind(context, null);
+            context.Context.VertexShader.Set(this.VSTri);
+            context.Context.PixelShader.Set(this.PSLuma);
+            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetSampler(0, this.LinearSampler);
+            context.Context.PixelShader.SetConstantBuffer(0, this.cbLuma.Buffer);
         }
 
         private DX11IndexedGeometry FromAppender(AbstractPrimitiveDescriptor descriptor, ListGeometryAppender appender, PrimitiveInfo info)
