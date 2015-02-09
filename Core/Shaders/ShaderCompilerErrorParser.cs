@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,124 +10,101 @@ namespace FeralTic.DX11
 {
     public static class ShaderCompilerErrorParser
     {
-        private static void ParseLine(this CompilerResults result, string line, string locaPath, string exePath)
-        {
-            var eItems = line.Split(new string[1] { ": " }, StringSplitOptions.None);
+        private const string iGNORE_DEPRECATE = "warning X4717: Effects deprecated for D3DCompiler_47";
 
-            string filePath = locaPath;
-            string eCoords = string.Empty;
-            int eLine = 0;
-            int eChar = 0;
-            string eNumber = string.Empty;
-            string eText = string.Empty;
-            bool isWarning = false;
-
-            if (eItems.Length == 2)
-            {
-                eLine = 0;
-                eChar = 0;
-                isWarning = eItems[0].Contains("warning");
-                eNumber = eItems[0].Replace("wanring", "").Trim();
-                eText = eItems[1];
-            }
-            else
-            {
-                //extract line/char substring
-                int start = eItems[0].LastIndexOf('(');
-                int end = eItems[0].LastIndexOf(')');
-
-                if (start > 0)
-                {
-                    string relativePath = eItems[0].Substring(0, start);
-
-                    //if this is a path to an include..
-                    if (relativePath != Path.Combine(FHDEHost.ExePath, "memory"))
-                    {
-                        // we need to guess here. shader compiler outputs relative paths.
-                        // we don't know if the include was "local" or <global>
-
-                        filePath = Path.Combine(Path.GetDirectoryName(project.LocalPath), relativePath);
-                        if (!File.Exists(filePath))
-                        {
-                            string fileName = Path.GetFileName(relativePath);
-
-                            foreach (var reference in project.References)
-                            {
-                                var referenceFileName = Path.GetFileName((reference as FXReference).ReferencedDocument.LocalPath);
-                                if (referenceFileName.ToLower() == fileName.ToLower())
-                                {
-                                    filePath = reference.AssemblyLocation;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (start > -1 && end > 0)
-                {
-                    eCoords = eItems[0].Substring(start + 1, end - start - 1);
-                    var eLineChar = eCoords.Split(new char[1] { ',' });
-                    eLine = Convert.ToInt32(eLineChar[0]);
-
-                    if (eLineChar[1].Contains("-"))
-                    {
-                        string[] spl = eLineChar[1].Split("-".ToCharArray());
-                        eChar = Convert.ToInt32(spl[0]);
-                    }
-                    else
-                    {
-                        eChar = Convert.ToInt32(eLineChar[1]);
-
-                    }
-
-                    if (eItems[1].StartsWith("warning"))
-                    {
-                        isWarning = true;
-                        eNumber = eItems[1].Substring(8, 5);
-                    }
-                    else
-                        eNumber = eItems[1].Substring(6, 5);
-
-                    if (eItems.Length == 2)
-                    {
-                        isWarning = false;
-                        eNumber = "-1";
-                        eText = eItems[1];
-                    }
-                    else
-                    {
-                        eText = eItems[2];
-                        if (eItems.Length > 3)
-                            eText += ": " + eItems[3];
-                    }
-                }
-                else
-                {
-                    eText = line;
-                }
-            }
-
-            var error = new CompilerError(filePath, eLine, eChar, eNumber, eText);
-            error.IsWarning = isWarning;
-            result.Errors.Add(error);
-        }
-
-        public static CompilerResults ParseCompilerResult(string ErrorMessage, string localPath)
+        public static CompilerResults ParseCompilerResult(string ErrorMessage, string shaderName = "")
         {
             CompilerResults compilerResults = new CompilerResults(null);
 
-            var errorlines = ErrorMessage.Split(new char[1] { '\n' });
-
-            foreach (var line in errorlines)
+            string[] errors = ErrorMessage.Split("\n".ToCharArray());
+            foreach (string s2 in errors)
             {
-                if (!string.IsNullOrEmpty(line))
+                if (!string.IsNullOrEmpty(s2))
                 {
-                    compilerResults.ParseLine(line,localPath);
+                    string s = s2;
+                    if (s.Length > 0 && s != iGNORE_DEPRECATE)
+                    {
+                        var error = ParseLine(s,shaderName);
+                        if (error != null)
+                        {
+                            compilerResults.Errors.Add(error);
+                        }
+                    }
                 }
             }
 
 
             return compilerResults;
+        }
+
+        private static CompilerError ParseLine(string line, string shaderName = "")
+        {
+            CompilerError ce = new CompilerError();
+
+            var elements = line.Split(new string[1] { ": " }, StringSplitOptions.None);
+
+
+            //First items contains filename + line/char
+            var fileLine = elements[0].Split("(".ToCharArray());
+
+            if (shaderName.Length == 0)
+            {
+                try
+                {
+                    ce.FileName = Path.GetFileName(fileLine[0]);
+                }
+                catch
+                {
+                    ce.FileName = fileLine[0];
+                }
+            }
+            else
+            {
+                ce.FileName = shaderName;
+            }
+
+
+            try
+            {
+                var lineChar = fileLine[1].Replace(")", "").Split(",".ToCharArray());
+                ce.Line = int.Parse(lineChar[0]);
+
+                if (lineChar[1].Contains("-"))
+                {
+                    var startEnd = lineChar[1].Split('-');
+                    ce.Column = int.Parse(startEnd[1]);
+                }
+                else
+                {
+                    ce.Column = int.Parse(lineChar[1]);
+                }
+
+                
+            }
+            catch
+            {
+                ce.Line = -1;
+                ce.Column = -1;
+            }
+
+            if (elements.Length == 2)
+            {
+                //No error provided
+                ce.ErrorNumber = "-1";
+                ce.ErrorText = elements[1];
+                ce.IsWarning = false;
+            }
+            else
+            {
+                var errCode = elements[1].Split(" ".ToCharArray());
+                ce.IsWarning = errCode[0] == "warning";
+                ce.ErrorNumber = errCode[1];
+
+                ce.ErrorText = elements[2];
+            }
+            
+
+            return ce;
         }
 
 

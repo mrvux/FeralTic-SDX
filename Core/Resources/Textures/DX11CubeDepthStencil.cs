@@ -11,7 +11,7 @@ using SharpDX.Direct3D;
 
 namespace FeralTic.DX11.Resources
 {
-    public class DX11CubeDepthStencil : DX11Texture2D, IDxDepthStencil
+    public class DX11CubeDepthStencil : IDxTexture2D, IDxDepthStencil
     {
         private DxDevice device;
 

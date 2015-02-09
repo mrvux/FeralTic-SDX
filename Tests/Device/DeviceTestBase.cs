@@ -15,14 +15,14 @@ namespace FeralTic.Tests
         protected RenderContext RenderContext { get; set; }
 
         [TestInitialize()]
-        public void Initialize()
+        public virtual void Initialize()
         {
             this.Device = new RenderDevice();
             this.RenderContext = new RenderContext(this.Device);
         }
 
         [TestCleanup()]
-        public void CleanUp()
+        public virtual void CleanUp()
         {
             if (RenderContext != null) { RenderContext.Dispose(); }
             if (Device != null) { Device.Dispose(); }

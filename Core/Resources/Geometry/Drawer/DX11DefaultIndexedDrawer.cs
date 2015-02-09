@@ -29,6 +29,31 @@ namespace FeralTic.DX11.Resources
         }
     }
 
+    public class DX11CustomIndexedDrawer : IDX11GeometryDrawer<DX11IndexedGeometry>
+    {
+        protected DX11IndexedGeometry geom;
+
+        public void Assign(DX11IndexedGeometry geometry)
+        {
+            this.geom = geometry;
+        }
+
+        public void PrepareInputAssembler(RenderContext ctx, InputLayout layout)
+        {
+            ctx.Context.InputAssembler.InputLayout = layout;
+            ctx.Context.InputAssembler.SetVertexBuffers(0, new VertexBufferBinding(this.geom.VertexBuffer.Buffer, this.geom.VertexBuffer.VertexSize, 0));
+            geom.IndexBuffer.Bind(ctx);
+        }
+
+        public int IndicesCount { get; set; }
+        public int StartIndex { get; set; }
+ 
+        public virtual void Draw(RenderContext ctx)
+        {
+            ctx.Context.DrawIndexed(this.IndicesCount, this.StartIndex, 0);
+        }
+    }
+
     /*public class DX11DefaultIndexOnlyDrawer : IDX11GeometryDrawer<DX11IndexOnlyGeometry>
     {
         protected DX11IndexOnlyGeometry geom;

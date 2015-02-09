@@ -12,21 +12,21 @@ namespace FeralTic.DX11
 {
     public class RenderTargetStackElement
     {
-        private IDxRenderTarget[] rendertargets;
+        public IDxRenderTarget[] RenderTargets { get; private set; }
+
         private RenderTargetView[] rtvs;
 
-        private IDxDepthStencil depth;
+        public IDxDepthStencil DepthStencil { get; private set; }
 
         private ViewportF vp;
         private Rectangle scissor;
         private bool hasscissor;
         private bool rodsv = false;
 
-
         public RenderTargetStackElement(ViewportF vp, Rectangle scissor, IDxDepthStencil dsv, bool rodsv = false, params IDxRenderTarget[] rts)
         {
-            this.depth = dsv;
-            this.rendertargets = rts;
+            this.DepthStencil = dsv;
+            this.RenderTargets = rts;
             this.rodsv = rodsv;
 
             this.vp = vp;
@@ -39,8 +39,8 @@ namespace FeralTic.DX11
 
         public RenderTargetStackElement(ViewportF vp, IDxDepthStencil dsv, bool rodsv = false, params IDxRenderTarget[] rts)
         {
-            this.depth = dsv;
-            this.rendertargets = rts;
+            this.DepthStencil = dsv;
+            this.RenderTargets = rts;
             this.rodsv = rodsv;
 
             this.vp = vp;
@@ -52,8 +52,8 @@ namespace FeralTic.DX11
 
         public RenderTargetStackElement(IDxDepthStencil dsv, bool rodsv = false, params IDxRenderTarget[] rts)
         {
-            this.depth = dsv;
-            this.rendertargets = rts;
+            this.DepthStencil = dsv;
+            this.RenderTargets = rts;
             this.rodsv = rodsv;
 
             this.vp.X = 0;
@@ -63,10 +63,10 @@ namespace FeralTic.DX11
 
             this.hasscissor = false;
 
-            if (this.depth != null)
+            if (this.DepthStencil != null)
             {
-                this.vp.Width = this.depth.Width;
-                this.vp.Height = this.depth.Height;
+                this.vp.Width = this.DepthStencil.Width;
+                this.vp.Height = this.DepthStencil.Height;
             }
             else
             {
@@ -80,15 +80,15 @@ namespace FeralTic.DX11
 
         public void Apply(DeviceContext ctx)
         {
-            if (depth != null)
+            if (DepthStencil != null)
             {
                 if (rodsv)
                 {
-                    ctx.OutputMerger.SetTargets(depth.ReadOnlyView, this.rtvs);
+                    ctx.OutputMerger.SetTargets(DepthStencil.ReadOnlyView, this.rtvs);
                 }
                 else
                 {
-                    ctx.OutputMerger.SetTargets(depth.DepthView, this.rtvs);
+                    ctx.OutputMerger.SetTargets(DepthStencil.DepthView, this.rtvs);
                 }
             }
             else

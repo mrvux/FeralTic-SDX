@@ -8,12 +8,21 @@
     <RootNamespace>FeralTic</RootNamespace>
     <AssemblyName>FeralTic</AssemblyName>
     <AppDesignerFolder>Properties</AppDesignerFolder>
+    <DocumentationFile>$(OutputPath)\FeralTic.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DirectX11_2_Debug|x86'">
+    <DocumentationFile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DirectX11_2_Debug|AnyCPU'">
+    <DocumentationFile />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SharpDX.MediaFoundation, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\FlareTic-NG\externals\sharpdx\DirectX11_2\SharpDX.MediaFoundation.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -24,11 +33,32 @@
     <Compile Include="Devices\DxDevice.cs" />
     <Compile Include="Devices\RenderDevice.cs" />
     <Compile Include="Devices\NullDevice.cs" />
+    <Compile Include="Primitives\Appenders\ListGeometryAppender.cs" />
+    <Compile Include="Primitives\Appenders\MultiListGeometryAppender.cs" />
+    <Compile Include="Primitives\Appenders\StreamGeometryAppender.cs" />
+    <Compile Include="Primitives\Builders\CylinderBuilder.cs" />
+    <Compile Include="Primitives\Builders\IcoGridBuilder.cs" />
+    <Compile Include="Primitives\Builders\GridBuilder.cs" />
+    <Compile Include="Primitives\Builders\IcoSphereBuilder.cs" />
+    <Compile Include="Primitives\Builders\DodecahedronBuilder.cs" />
+    <Compile Include="Primitives\Builders\TriangleBuilder.cs" />
+    <Compile Include="Primitives\Builders\TetrahedronBuilder.cs" />
+    <Compile Include="Primitives\Builders\SphereBuilder.cs" />
+    <Compile Include="Primitives\Builders\QuadBuilder.cs" />
+    <Compile Include="Primitives\Builders\IsocahedronBuilder.cs" />
+    <Compile Include="Primitives\Builders\OctahedronBuilder.cs" />
+    <Compile Include="Primitives\Builders\SegmentBuilder.cs" />
+    <Compile Include="Primitives\Builders\Text\TextExtrudingSink.cs" />
+    <Compile Include="Primitives\Builders\Text\TextOutlineRenderer.cs" />
     <Compile Include="Primitives\Descriptors\AbstractPrimitiveDescriptor.cs" />
+    <Compile Include="Primitives\Builders\IGeometryBuilder.cs" />
+    <Compile Include="Primitives\Descriptors\Triangle.cs" />
+    <Compile Include="Primitives\Descriptors\Dodecahedron.cs" />
     <Compile Include="Primitives\Descriptors\Polygon2d.cs" />
     <Compile Include="Primitives\Descriptors\Text.cs" />
     <Compile Include="Primitives\Descriptors\Dispatcher.cs" />
     <Compile Include="Primitives\Descriptors\NullGeometry.cs" />
+    <Compile Include="Primitives\Descriptors\Text3d.cs" />
     <Compile Include="Primitives\Descriptors\Torus.cs" />
     <Compile Include="Primitives\Descriptors\Tetrahedron.cs" />
     <Compile Include="Primitives\Descriptors\Sphere.cs" />
@@ -45,6 +75,8 @@
     <Compile Include="Primitives\Descriptors\Box.cs" />
     <Compile Include="Primitives\DX11PrimitivesManager.cs" />
     <Compile Include="Primitives\DX11Primitives_RoundRect.cs" />
+    <Compile Include="Primitives\DX11Primitive_Triangle.cs" />
+    <Compile Include="Primitives\DX11Primitive_Dodecahederon.cs" />
     <Compile Include="Primitives\DX11Primitive_Polygon2d.cs" />
     <Compile Include="Primitives\DX11Primitive_Null.cs" />
     <Compile Include="Primitives\DX11Primitive_Box.cs" />
@@ -88,6 +120,7 @@
     <Compile Include="Resources\Buffers\Indirect\InstancedIndirectBuffer.cs" />
     <Compile Include="Resources\Buffers\RawBuffer.cs" />
     <Compile Include="Resources\Buffers\StructuredBuffer.cs" />
+    <Compile Include="Resources\Buffers\StructuredBufferRegion.cs" />
     <Compile Include="Resources\Buffers\VertexBuffer.cs" />
     <Compile Include="Resources\Geometry\Drawer\DX11DefaultIndexedDrawer.cs" />
     <Compile Include="Resources\Geometry\Drawer\DX11DefaultVertexDrawer.cs" />
@@ -104,11 +137,11 @@
     <Compile Include="Resources\Geometry\Drawer\DX11VertexIndirectDrawer.cs" />
     <Compile Include="Resources\Geometry\Drawer\IInstancedDrawer.cs" />
     <Compile Include="Resources\Geometry\DX11BaseGeometry.cs" />
+    <Compile Include="Resources\Geometry\IDxGeometry.cs" />
     <Compile Include="Resources\Geometry\Models\DX11Geometry.cs" />
     <Compile Include="Resources\Geometry\Models\DX11IndexedGeometry.cs" />
     <Compile Include="Resources\Geometry\Models\DX11NullGeometry.cs" />
     <Compile Include="Resources\Geometry\Models\DX11VertexGeometry.cs" />
-    <Compile Include="Resources\Geometry\IDX11Geometry.cs" />
     <Compile Include="Resources\Geometry\IDX11GeometryDrawer.cs" />
     <Compile Include="Resources\Loaders\FileTextureLoader.cs" />
     <Compile Include="Resources\Textures\DX11CubeDepthStencil.cs">
@@ -135,6 +168,8 @@
     <Compile Include="Resources\Textures\DX11Texture3D.cs" />
     <Compile Include="Resources\Textures\DX11Texture2D.cs" />
     <Compile Include="Resources\IDxResource.cs" />
+    <Compile Include="Resources\Textures\DX11TextureArray2D.cs" />
+    <Compile Include="Resources\Textures\DX11TextureCube.cs" />
     <Compile Include="Resources\Textures\TextureLoader.cs" />
     <Compile Include="Scheduler\FileTexturePools.cs" />
     <Compile Include="Scheduler\ResourceScheduler.cs" />
@@ -143,12 +178,15 @@
     <Compile Include="Scheduler\FileTexturePoolElement.cs" />
     <Compile Include="Scheduler\ISchedulerTask.cs" />
     <Compile Include="Scheduler\Tasks\FileTextureTasks.cs" />
-    <Compile Include="Shaders\DX11Effect.cs" />
-    <Compile Include="Shaders\EffectInstance.cs" />
-    <Compile Include="Shaders\EffectInstance_Semantic.cs" />
-    <Compile Include="Shaders\EffectInstance_VarName.cs" />
+    <Compile Include="Shaders\CompositeIncludeHandler.cs" />
+    <Compile Include="Shaders\FolderInclude.cs" />
+    <Compile Include="Shaders\IIncludeHandler.cs" />
     <Compile Include="Shaders\ShaderCompiler.cs" />
     <Compile Include="Shaders\FolderIncludeHandler.cs" />
+    <Compile Include="Shaders\ShaderCompilerErrorParser.cs" />
+    <Compile Include="Shaders\ShaderIncludeFlags.cs" />
+    <Compile Include="Shaders\ShaderStage.cs" />
+    <Compile Include="Shaders\SingleIncludeHandler.cs" />
     <Compile Include="States\BlendStates.cs" />
     <Compile Include="States\BlendStates_Logical.cs" />
     <Compile Include="States\DepthStencilStates.cs" />
@@ -172,6 +210,8 @@
     <Compile Include="Utils\VertexLayouts\Pos4Col4Vertex.cs" />
     <Compile Include="Utils\VertexLayouts\Pos4Norm3Tex2Vertex.cs" />
     <Compile Include="Utils\VertexLayouts\Pos4Tex2Vertex.cs" />
+    <Compile Include="Utils\VertexLayouts\Pos3Vertex.cs" />
+    <Compile Include="Utils\VertexLayouts\UV2Vertex.cs" />
     <Compile Include="Utils\VertexLayouts\Pos4Vertex.cs" />
   </ItemGroup>
   <ItemGroup>

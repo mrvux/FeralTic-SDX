@@ -46,6 +46,7 @@ namespace FeralTic.DX11
             }       
         }
 
+
         public bool IsSupported(FormatSupport usage, Format format)
         {
             FormatSupport support = this.Device.CheckFormatSupport(format);
@@ -78,6 +79,7 @@ namespace FeralTic.DX11
             this.DefaultTextures.Dispose();
 
             this.ResourcePool.Dispose();
+            this.ResourceScheduler.Dispose();
         }
 
     }

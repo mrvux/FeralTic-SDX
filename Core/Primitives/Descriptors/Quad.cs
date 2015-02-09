@@ -8,12 +8,23 @@ namespace FeralTic.DX11.Geometry
 {
     public class Quad : AbstractPrimitiveDescriptor
     {
+        private Vector2 size;
+
         public Quad()
         {
-            this.Size = new Vector2(1, 1);
+            this.size = new Vector2(1, 1);
         }
 
-        public Vector2 Size { get; set; }
+        public Vector2 Size
+        {
+            get { return this.size; }
+            set
+            {
+                bool changed = this.size != value;
+                this.size = value;
+                if (changed) { this.RaisePropertyChanged(); }
+            }
+        }
 
         public override string PrimitiveType { get { return "Quad"; } }
 
@@ -25,6 +36,16 @@ namespace FeralTic.DX11.Geometry
         public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.QuadNormals(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Quad))
+            {
+                return false;
+            }
+            Quad o = (Quad)obj;
+            return this.Size == o.Size;
         }
     }
 

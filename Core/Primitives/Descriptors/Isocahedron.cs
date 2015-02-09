@@ -8,12 +8,25 @@ namespace FeralTic.DX11.Geometry
 {
     public class Isocahedron : AbstractPrimitiveDescriptor
     {
+        private Vector3 size;
+
+        public Vector3 Size
+        {
+            get { return this.size; }
+            set
+            {
+                if (this.size != value)
+                {
+                    this.size = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
         public Isocahedron()
         {
             this.Size = new Vector3(1, 1, 1);
         }
-
-        public Vector3 Size { get; set; }
 
         public override string PrimitiveType { get { return "Isocahedron"; } }
 
@@ -25,6 +38,16 @@ namespace FeralTic.DX11.Geometry
         public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Isocahedron(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Isocahedron))
+            {
+                return false;
+            }
+            Isocahedron o = (Isocahedron)obj;
+            return this.Size == o.Size;
         }
     }
 }

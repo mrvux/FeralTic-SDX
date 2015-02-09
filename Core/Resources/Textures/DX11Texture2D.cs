@@ -20,9 +20,9 @@ namespace FeralTic.DX11.Resources
         [DllImport("msvcrt.dll", SetLastError = false)]
         static extern IntPtr memcpybyte(byte* dest, byte* src, int count);
 
-        public Texture2D Texture { get; private set; }
-        public ShaderResourceView ShaderView { get; private set; }
-        private Texture2DDescription description;
+        public Texture2D Texture { get; protected set; }
+        public ShaderResourceView ShaderView { get; protected set; }
+        protected Texture2DDescription description;
 
         public int Width 
         { 
@@ -78,6 +78,7 @@ namespace FeralTic.DX11.Resources
             desc.BindFlags = BindFlags.None;
             desc.CpuAccessFlags = CpuAccessFlags.Read;
             desc.Usage = ResourceUsage.Staging;
+            desc.OptionFlags = ResourceOptionFlags.None;
 
             DX11Texture2D texture = new DX11Texture2D();
             texture.Texture = new Texture2D(device.Device, desc);
@@ -91,6 +92,16 @@ namespace FeralTic.DX11.Resources
             DataStream ds;
             DataBox db = context.Context.MapSubresource(this.Texture,0,0, MapMode.Read, SharpDX.Direct3D11.MapFlags.None,out ds);
             return db;
+        }
+
+        public void ReadData(RenderContext context, IntPtr ptr, int len)
+        {
+            DataStream ds;
+            DataBox db = context.Context.MapSubresource(this.Texture, 0, 0, MapMode.Read, SharpDX.Direct3D11.MapFlags.None, out ds);
+
+            memcpy(ptr,db.DataPointer, len);
+
+            this.UnMap(context);
         }
 
         public unsafe void WriteData<T>(RenderContext context, IntPtr ptr) where T : struct

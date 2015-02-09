@@ -10,6 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SharpDX.Direct3D11.Effects, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\externals\sharpdx\DirectX11_2\SharpDX.Direct3D11.Effects.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -38,6 +42,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderActions\GeometryConvolution.cs" />
     <Compile Include="RenderActions\Geometry\GeometryConvolutionTasks.cs" />
+    <Compile Include="RenderActions\Layer\LayerActions_Targets.cs" />
     <Compile Include="RenderActions\Layer\LayerActions_Geometry.cs" />
     <Compile Include="RenderActions\Layer\LayerActions_RenderSpace.cs" />
     <Compile Include="RenderActions\Layer\LayerShaderActions.cs" />
@@ -52,6 +57,10 @@
     <ProjectReference Include="..\..\Core\FeralTic.csproj">
       <Project>{7cca78ab-5839-4cb6-a685-85bc3ea77c9d}</Project>
       <Name>FeralTic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FeralTic.Addons.Effects\FeralTic.Addons.Effects.csproj">
+      <Project>{18003809-1621-4c90-b776-22988ff263be}</Project>
+      <Name>FeralTic.Addons.Effects</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

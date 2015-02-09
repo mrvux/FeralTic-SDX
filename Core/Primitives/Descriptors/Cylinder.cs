@@ -8,6 +8,15 @@ namespace FeralTic.DX11.Geometry
 {
     public class Cylinder : AbstractPrimitiveDescriptor
     {
+        private float radius1;
+        private float radius2;
+        private float cycles;
+        private float length;
+        private int resX;
+        private int resY;
+        private bool caps;
+        private bool center;
+
         public Cylinder()
         {
             this.Radius1 = 0.5f;
@@ -17,15 +26,121 @@ namespace FeralTic.DX11.Geometry
             this.Caps = true;
             this.ResolutionX = 15;
             this.ResolutionY = 1;
+            this.Center = true;
         }
 
-        public float Radius1 { get; set; }
-        public float Radius2 { get; set; }
-        public float Cycles { get; set; }
-        public float Length { get; set; }
-        public int ResolutionX { get; set; }
-        public int ResolutionY { get; set; }
-        public bool Caps { get; set; }
+        public float Radius1
+        {
+            get { return this.radius1; }
+            set
+            {
+                if (this.radius1 != value)
+                {
+                    this.radius1 = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public float Radius2
+        {
+            get { return this.radius2; }
+            set
+            {
+                if (this.radius2 != value)
+                {
+                    this.radius2 = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public float Cycles
+        {
+            get { return this.cycles; }
+            set
+            {
+                if (this.cycles != value)
+                {
+                    this.cycles = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public float Length
+        {
+            get { return this.length; }
+            set
+            {
+                if (this.length != value)
+                {
+                    this.length = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int ResolutionX
+        {
+            get { return this.resX; }
+            set
+            {
+                if (this.resX != value)
+                {
+                    if (value <= 0)
+                    {
+                        throw new ArgumentException("Resolution should be greater than 0", "ResolutionX");
+                    }
+                    this.resX = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int ResolutionY
+        {
+            get { return this.resY; }
+            set
+            {
+                if (this.resY != value)
+                {
+                    if (value <= 0)
+                    {
+                        throw new ArgumentException("Resolution should be greater than 0", "ResolutionY");
+                    }
+                    this.resY = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+
+        public bool Caps
+        {
+            get { return this.caps; }
+            set
+            {
+                if (this.caps != value)
+                {
+                    this.caps = value;
+                    this.RaisePropertyChanged();
+                }             
+            }
+        }
+
+        public bool Center
+        {
+            get { return this.center; }
+            set
+            {
+                if (this.center != value)
+                {
+                    this.center = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
 
         public override string PrimitiveType { get { return "Cylinder"; } }
 
@@ -38,11 +153,30 @@ namespace FeralTic.DX11.Geometry
             this.ResolutionX = (int)properties["ResolutionX"];
             this.ResolutionY = (int)properties["ResolutionY"];
             this.Caps = (bool)properties["Caps"];
+            this.Center = (bool)properties["Center"];
         }
 
         public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Cylinder(this);
+        }
+
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Cylinder))
+            {
+                return false;
+            }
+            Cylinder o = (Cylinder)obj;
+            return this.Caps == o.Caps
+                && this.Cycles == o.Cycles
+                && this.Length == o.Length
+                && this.Radius1 == o.Radius1
+                && this.Radius2 == o.Radius2
+                && this.ResolutionX == o.ResolutionX
+                && this.ResolutionY == o.ResolutionY
+                && this.Center == o.Center;
         }
     }
 

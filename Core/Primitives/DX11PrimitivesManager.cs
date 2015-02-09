@@ -9,6 +9,7 @@ using SharpDX.Direct3D11;
 using FeralTic.DX11.Resources;
 using SharpDX.Direct3D;
 using SharpDX.D3DCompiler;
+using SharpDX;
 
 namespace FeralTic.DX11.Geometry
 {
@@ -17,21 +18,32 @@ namespace FeralTic.DX11.Geometry
         private RenderDevice device;
 
         private DX11NullGeometry fulltri;
-        private Effect fulltrivs;
-
-        private EffectPass vsonlypass;
-        private EffectPass fullscreenpass;
-
         private DX11IndexedGeometry quad;
-        private Effect passtroughVS;
+        
         private InputLayout quadlayout;
+
+        private VertexShader VSQuad;
+        private VertexShader VSTri;
+
+        private PixelShader PSPass;
+        private PixelShader PSGray;
+        private PixelShader PSLuma;
+        private ConstantBuffer<float> cbLuma;
+
+        private SamplerState LinearSampler;
 
 
         public PrimitivesManager(RenderDevice device)
         {
             this.device = device;
-            //this.InitializeDelegates();
-            Effect e = this.FullTriVS;
+            this.quad = this.QuadTextured();
+            this.fulltri = new DX11NullGeometry(device, 3);
+            this.fulltri.Topology = PrimitiveTopology.TriangleList;
+            this.LinearSampler = device.SamplerStates.LinearClamp;
+            this.cbLuma = new ConstantBuffer<float>(device, true);
+
+            this.InitializeDelegates();
+            this.PrepareBasicShaders();
         }
 
         private float Map(float Input, float InMin, float InMax, float OutMin, float OutMax)
@@ -48,11 +60,6 @@ namespace FeralTic.DX11.Geometry
         {
             get
             {
-                if (this.fulltri == null)
-                {
-                    this.fulltri = new DX11NullGeometry(this.device, 3);
-                    this.fulltri.Topology = PrimitiveTopology.TriangleList;
-                }
                 return this.fulltri;
             }
         }
@@ -61,95 +68,82 @@ namespace FeralTic.DX11.Geometry
         {
             get
             {
-                if (this.quad == null)
-                {
-                    this.quad = this.QuadTextured();
-                }
-
                 return this.quad;
             }
         }
 
         public InputLayout QuadLayout
         {
-
             get
             {
-
-                if (this.quadlayout == null)
-                {
-
-                    this.quadlayout = new InputLayout(device.Device, this.PasstroughVS.GetTechniqueByIndex(0).GetPassByIndex(0).Description.Signature, this.FullScreenQuad.InputLayout);
-
-                }
-
                 return this.quadlayout;
-
             }
         }
 
-        public Effect FullTriVS
+        private void PrepareBasicShaders()
         {
-            get
-            {
-                if (this.fulltrivs == null)
-                {
-                    /*ShaderBytecode comp = DX11ShaderCompiler.FromResource(Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "vs_4_0", "VSFullTri");
+            this.VSTri = ShaderCompiler.CompileFromResource<VertexShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "VSFullTri");
+            this.PSPass = ShaderCompiler.CompileFromResource<PixelShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "PS");
+            this.PSGray = ShaderCompiler.CompileFromResource<PixelShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "PSGray");
+            this.PSLuma = ShaderCompiler.CompileFromResource<PixelShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "PSLuma");
 
-                    ShaderReflection refl = new ShaderReflection(comp.Data);*/
-
-                    DX11Effect shader = DX11Effect.CompileFromResource(Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx");
-                    
-                    
-                    this.fulltrivs = new Effect(device.Device, shader.ByteCode);
-                    this.vsonlypass = this.fulltrivs.GetTechniqueByName("FullScreenTriangleVSOnly").GetPassByIndex(0);
-                    this.fullscreenpass = this.fulltrivs.GetTechniqueByName("FullScreenTriangle").GetPassByIndex(0);
-                }
-                return this.fulltrivs;
-            }
+            ShaderSignature quadsignature;
+            this.VSQuad = ShaderCompiler.CompileFromResource(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.DefaultVS.fx", "VS", out quadsignature);
+            this.quadlayout = new InputLayout(device, quadsignature, this.quad.InputLayout);
         }
-
-        public EffectPass FullTriVSPass
-        {
-            get 
-            { 
-                return this.vsonlypass; 
-            }
-        }
-
-        public Effect PasstroughVS
-        {
-            get
-            {
-
-                if (this.passtroughVS == null)
-                {
-
-                    DX11Effect shader = DX11Effect.CompileFromResource(Assembly.GetExecutingAssembly(), "FeralTic.Effects.DefaultVS.fx");
-                    this.passtroughVS = new Effect(device.Device, shader.ByteCode);
-                }
-                return this.passtroughVS;
-            }
-        }
-
-                
-
 
         public void ApplyFullTriVS(RenderContext context)
         {
             this.FullScreenTriangle.Bind(context,null);
-            this.vsonlypass.Apply(context.Context);
+            context.Context.VertexShader.Set(this.VSTri);
         }
 
-        public void ApplyFullTri(RenderContext context)
+        public void ApplyFullTri(RenderContext context, IDxTexture2D texture)
         {
             this.FullScreenTriangle.Bind(context,null);
-            this.fullscreenpass.Apply(context.Context);
+
+            context.Context.VertexShader.Set(this.VSTri);
+            context.Context.PixelShader.Set(this.PSPass);
+            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetSampler(0, this.LinearSampler);
+        }
+
+        public void ApplyFullTriGray(RenderContext context, IDxTexture2D texture)
+        {
+            this.FullScreenTriangle.Bind(context, null);
+            context.Context.VertexShader.Set(this.VSTri);
+            context.Context.PixelShader.Set(this.PSGray);
+            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetSampler(0, this.LinearSampler);
+        }
+
+        public void ApplyFullTriLuma(RenderContext context, IDxTexture2D texture, float luma)
+        {
+            this.cbLuma.Update(context, ref luma);
+            this.FullScreenTriangle.Bind(context, null);
+            context.Context.VertexShader.Set(this.VSTri);
+            context.Context.PixelShader.Set(this.PSLuma);
+            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetSampler(0, this.LinearSampler);
+            context.Context.PixelShader.SetConstantBuffer(0, this.cbLuma.Buffer);
+        }
+
+        private DX11IndexedGeometry FromAppender(AbstractPrimitiveDescriptor descriptor, ListGeometryAppender appender, PrimitiveInfo info)
+        {
+            DX11IndexedGeometry geom = new DX11IndexedGeometry(device);
+            geom.Tag = descriptor;
+            geom.PrimitiveType = descriptor.PrimitiveType;
+            geom.VertexBuffer = DX11VertexBuffer.CreateImmutable(device, appender.Vertices.ToArray());
+            geom.IndexBuffer = DX11IndexBuffer.CreateImmutable(device, appender.Indices.ToArray());
+            geom.InputLayout = Pos4Norm3Tex2Vertex.Layout;
+            geom.Topology = PrimitiveTopology.TriangleList;
+            geom.HasBoundingBox = info.IsBoundingBoxKnown;
+            geom.BoundingBox = info.BoundingBox;
+            return geom;
         }
 
         public void Dispose()
         {
-            if (this.fulltrivs != null) { this.fulltrivs.Dispose(); }
         }
 
     }

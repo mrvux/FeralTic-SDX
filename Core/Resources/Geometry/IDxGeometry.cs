@@ -5,6 +5,7 @@ using System.Text;
 using SharpDX.Direct3D11;
 using SharpDX;
 using SharpDX.Direct3D;
+using SharpDX.D3DCompiler;
 
 namespace FeralTic.DX11
 {
@@ -26,7 +27,7 @@ namespace FeralTic.DX11
         /// <param name="pass">Effect pass to validate layout on</param>
         /// <param name="layout">Returns validate layout, or null if not valid</param>
         /// <returns>true if layout valid, false otherwise</returns>
-        bool ValidateLayout(EffectPass pass,out InputLayout layout);
+        bool ValidateLayout(ShaderBytecode signature, out InputLayout layout);
 
         void Bind(RenderContext ctx, InputLayout layout);
 

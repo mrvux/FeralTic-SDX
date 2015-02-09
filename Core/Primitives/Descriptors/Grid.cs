@@ -8,16 +8,65 @@ namespace FeralTic.DX11.Geometry
 {
     public class Grid : AbstractPrimitiveDescriptor
     {
+        private Vector2 size;
+        private int resX;
+        private int resY;
+
+
+        public Vector2 Size
+        {
+            get { return this.size; }
+            set
+            {
+                if (this.size != value)
+                {
+                    this.size = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+
+        public int ResolutionX
+        {
+            get { return this.resX; }
+            set
+            {
+                if (this.resX != value)
+                {
+                    if (value <= 0)
+                    {
+                        throw new ArgumentException("Resolution should be greater than 0", "ResolutionX");
+                    }
+                    this.resX = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int ResolutionY
+        {
+            get { return this.resY; }
+            set
+            {
+                if (this.resY != value)
+                {
+                    if (value <= 0)
+                    {
+                        throw new ArgumentException("Resolution should be greater than 0", "ResolutionY");
+                    }
+                    this.resY = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
         public Grid()
         {
             this.Size = new Vector2(1, 1);
             this.ResolutionX = 2;
             this.ResolutionY = 2;
         }
-
-        public Vector2 Size { get; set; }
-        public int ResolutionX { get; set; }
-        public int ResolutionY { get; set; }
 
         public override string PrimitiveType { get { return "Grid"; } }
 
@@ -31,6 +80,18 @@ namespace FeralTic.DX11.Geometry
         public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.Grid(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Grid))
+            {
+                return false;
+            }
+            Grid o = (Grid)obj;
+            return this.Size == o.Size
+                && this.ResolutionX == o.ResolutionX
+                && this.ResolutionY == o.ResolutionY;
         }
     }
 }

@@ -41,6 +41,7 @@ namespace FeralTic.DX11
         protected List<ResourcePoolEntry<T>> pool = new List<ResourcePoolEntry<T>>();
         protected DxDevice device;
 
+        protected object lockObject = new object();
 
         public ResourcePool(DxDevice device)
         {
@@ -54,20 +55,26 @@ namespace FeralTic.DX11
 
         public void UnlockAll()
         {
-            foreach (ResourcePoolEntry<T> entry in this.pool)
+            lock (lockObject)
             {
-                if (entry.IsLocked) { entry.UnLock(); }
+                foreach (ResourcePoolEntry<T> entry in this.pool)
+                {
+                    if (entry.IsLocked) { entry.UnLock(); }
+                }
             }
         }
 
         public bool UnLock(T resource)
         {
-            foreach (ResourcePoolEntry<T> entry in this.pool)
+            lock (lockObject)
             {
-                if (entry.Element == resource && entry.IsLocked)
+                foreach (ResourcePoolEntry<T> entry in this.pool)
                 {
-                    entry.UnLock();
-                    return true;
+                    if (entry.Element == resource && entry.IsLocked)
+                    {
+                        entry.UnLock();
+                        return true;
+                    }
                 }
             }
             return false;
@@ -75,26 +82,33 @@ namespace FeralTic.DX11
 
         public void ClearUnlocked()
         {
-            List<ResourcePoolEntry<T>> todelete = new List<ResourcePoolEntry<T>>();
-            foreach (ResourcePoolEntry<T> entry in this.pool)
+            lock (lockObject)
             {
-                if (!entry.IsLocked) { todelete.Add(entry); }
+                List<ResourcePoolEntry<T>> todelete = new List<ResourcePoolEntry<T>>();
+                foreach (ResourcePoolEntry<T> entry in this.pool)
+                {
+                    if (!entry.IsLocked) { todelete.Add(entry); }
+                }
+
+                foreach (ResourcePoolEntry<T> entry in todelete)
+                {
+                    this.pool.Remove(entry);
+                    entry.Element.Dispose();
+                }
+            }
             }
 
-            foreach (ResourcePoolEntry<T> entry in todelete)
-            {
-                this.pool.Remove(entry);
-                entry.Element.Dispose();
-            }
-        }
 
         public void Dispose()
         {
-            foreach (ResourcePoolEntry<T> entry in this.pool)
+            lock (lockObject)
             {
-                entry.Element.Dispose();
+                foreach (ResourcePoolEntry<T> entry in this.pool)
+                {
+                    entry.Element.Dispose();
+                }
+                this.pool.Clear();
             }
-            this.pool.Clear();
         }
     }
 }

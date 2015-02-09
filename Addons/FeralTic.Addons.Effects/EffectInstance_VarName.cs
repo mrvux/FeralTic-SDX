@@ -98,7 +98,6 @@ namespace FeralTic.DX11
             this.effect.GetVariableByName(name).AsShaderResource().SetResourceArray(value);
         }
 
-
         public void SetByName(string name, UnorderedAccessView value)
         {
             this.effect.GetVariableByName(name).AsUnorderedAccessView().Set(value);
@@ -106,8 +105,7 @@ namespace FeralTic.DX11
 
         public void SetByName(string name, UnorderedAccessView value, int counter = -1)
         {
-            this.effect.GetVariableByName(name).AsUnorderedAccessView().Set(value);
-            this.resetuavs.Add(new CounterResetUAV(value, counter));
+            this.effect.GetVariableByName(name).AsUnorderedAccessView().Set(value,counter);
         }
         #endregion
 

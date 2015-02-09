@@ -52,6 +52,16 @@ namespace FeralTic.DX11
             this.RenderStateStack = new RenderStateStack(this);
         }
 
+        public void BindConstantBufferToAllStages(SharpDX.Direct3D11.Buffer cbuffer, int slot)
+        {
+            this.Context.VertexShader.SetConstantBuffer(slot, cbuffer);
+            this.Context.HullShader.SetConstantBuffer(slot, cbuffer);
+            this.Context.DomainShader.SetConstantBuffer(slot, cbuffer);
+            this.Context.GeometryShader.SetConstantBuffer(slot, cbuffer);
+            this.Context.PixelShader.SetConstantBuffer(slot, cbuffer);
+            this.Context.ComputeShader.SetConstantBuffer(slot, cbuffer);
+        }
+
         public void ClearShaderStages()
         {
             Context.VertexShader.Set(null);
@@ -69,6 +79,15 @@ namespace FeralTic.DX11
             Context.DomainShader.Set(null);
             Context.GeometryShader.Set(null);
             Context.PixelShader.Set(null);
+        }
+
+        public void CleanUpPipelineResources()
+        {
+            Context.VertexShader.SetShaderResources(0, nullsrvs);
+            Context.GeometryShader.SetShaderResources(0, nullsrvs);
+            Context.DomainShader.SetShaderResources(0, nullsrvs);
+            Context.HullShader.SetShaderResources(0, nullsrvs);
+            Context.PixelShader.SetShaderResources(0, nullsrvs);
         }
 
         public void CleanUpPS()

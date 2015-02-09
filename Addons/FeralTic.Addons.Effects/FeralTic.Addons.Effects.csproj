@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="..\..\Build.targets" />
+  <PropertyGroup>
+    <ProjectGuid>{18003809-1621-4C90-B776-22988FF263BE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FeralTic.Addons.Effects</RootNamespace>
+    <AssemblyName>FeralTic.Addons.Effects</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SharpDX.Direct3D11.Effects">
+      <HintPath>..\..\externals\sharpdx\DirectX11_2\SharpDX.Direct3D11.Effects.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DX11Effect.cs" />
+    <Compile Include="EffectInstance.cs" />
+    <Compile Include="EffectInstance_Semantic.cs" />
+    <Compile Include="EffectInstance_VarName.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\FeralTic.csproj">
+      <Project>{7cca78ab-5839-4cb6-a685-85bc3ea77c9d}</Project>
+      <Name>FeralTic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

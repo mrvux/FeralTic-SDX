@@ -13,7 +13,7 @@ namespace FeralTic.DX11.Resources
 
         public bool HasIndexBuffer { get; protected set; }
 
-        private List<DX11VertexBuffer> VertexBuffers { get; set; }
+        private List<DX11VertexBuffer> vertexBuffers;
 
         private VertexBufferBinding[] binding;
 
@@ -21,11 +21,12 @@ namespace FeralTic.DX11.Resources
         {
             this.device = device;
             this.binding = new VertexBufferBinding[0];
+            this.vertexBuffers = new List<DX11VertexBuffer>();
         }
 
         public void AddVertexBuffer(DX11VertexBuffer buffer)
         {
-            this.VertexBuffers.Add(buffer);
+            this.vertexBuffers.Add(buffer);
         }
 
         private void UpdateVertexLayouts()
@@ -33,9 +34,9 @@ namespace FeralTic.DX11.Resources
             List<VertexBufferBinding> newbinding = new List<VertexBufferBinding>();
             List<InputElement> newlayout = new List<InputElement>();
 
-            for (int i = 0; i < VertexBuffers.Count; i++)
+            for (int i = 0; i < vertexBuffers.Count; i++)
             {
-                DX11VertexBuffer vb = VertexBuffers[i];
+                DX11VertexBuffer vb = vertexBuffers[i];
                 VertexBufferBinding vbind = new VertexBufferBinding(vb.Buffer, vb.VertexSize, 0);
                 newbinding.Add(vbind);
 
@@ -59,13 +60,13 @@ namespace FeralTic.DX11.Resources
             }
             else
             {
-                if (this.VertexBuffers.Count == 0)
+                if (this.vertexBuffers.Count == 0)
                 {
                     throw new InvalidOperationException("Standard geometry must have either an indexbuffer or at least one vertexbuffer");
                 }
                 else
                 {
-                    context.Context.Draw(this.VertexBuffers[0].VerticesCount, 0);
+                    context.Context.Draw(this.vertexBuffers[0].VerticesCount, 0);
                 }
             }
         }
@@ -82,7 +83,7 @@ namespace FeralTic.DX11.Resources
 
         public override void Dispose()
         {
-            foreach (DX11VertexBuffer vbo in VertexBuffers) { vbo.Dispose(); }
+            foreach (DX11VertexBuffer vbo in vertexBuffers) { vbo.Dispose(); }
             if (this.IndexBuffer != null) { this.IndexBuffer.Dispose(); this.IndexBuffer = null; }
         }
 

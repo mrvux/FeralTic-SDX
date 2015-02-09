@@ -8,14 +8,40 @@ namespace FeralTic.DX11.Geometry
 {
     public class IcoSphere : AbstractPrimitiveDescriptor
     {
+        private float radius;
+        private int subdiv;
+
+        public float Radius
+        {
+            get { return this.radius; }
+            set
+            {
+                if (this.radius != value)
+                {
+                    this.radius = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int SubDivisions
+        {
+            get { return this.subdiv; }
+            set
+            {
+                if (this.subdiv != value)
+                {
+                    this.subdiv = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
         public IcoSphere()
         {
             this.Radius = 0.5f;
             this.SubDivisions = 1;
         }
-
-        public float Radius { get; set; }
-        public int SubDivisions { get; set; }
 
         public override string PrimitiveType { get { return "IcoSphere"; } }
 
@@ -28,6 +54,17 @@ namespace FeralTic.DX11.Geometry
         public override IDxGeometry GetGeometry(RenderDevice device)
         {
             return device.Primitives.IcoSphere(this);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is IcoSphere))
+            {
+                return false;
+            }
+            IcoSphere o = (IcoSphere)obj;
+            return this.Radius == o.Radius
+                && this.SubDivisions == o.SubDivisions;
         }
     }
 

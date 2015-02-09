@@ -6,6 +6,7 @@ using System.Text;
 using SharpDX.Direct3D11;
 using SharpDX;
 using SharpDX.Direct3D;
+using SharpDX.D3DCompiler;
 
 
 namespace FeralTic.DX11.Resources
@@ -35,12 +36,17 @@ namespace FeralTic.DX11.Resources
             get; set;
         }
 
-        public bool ValidateLayout(EffectPass pass, out InputLayout layout)
+        public bool ValidateLayout(ShaderBytecode inputSignature, out InputLayout layout)
         {
             layout = null;
+            if (inputSignature == null)
+            {
+                return true;
+            }
             try
             {
-                bool allownull = true;
+                
+                /*bool allownull = true;
                 if (pass.VertexShaderDescription.Variable != null)
                 {
                     EffectShaderVariable shader = pass.VertexShaderDescription.Variable;
@@ -71,8 +77,8 @@ namespace FeralTic.DX11.Resources
                 {
                     layout = null;
                     return true;
-                }
-                layout = new InputLayout(device.Device, pass.Description.Signature, this.InputLayout);
+                }*/
+                layout = new InputLayout(device.Device, inputSignature, this.InputLayout);
                 return true;
             }
             catch

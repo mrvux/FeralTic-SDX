@@ -31,10 +31,12 @@ namespace FeralTic.DX11
             {
                 if (device == null)
                 {
-                    Device d = new Device(DriverType.Null, DeviceCreationFlags.None);
+                    var d = new Device(DriverType.Null, DeviceCreationFlags.None);
                     #if DIRECTX11_1
                     device = d.QueryInterface<DirectXDevice>();
-                    #endif               
+                    #else
+                    device = d;
+                    #endif
                 }
                 return device;
             }

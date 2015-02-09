@@ -8,12 +8,25 @@ namespace FeralTic.DX11.Geometry
 {
     public class Tetrahedron : AbstractPrimitiveDescriptor
     {
+        private Vector3 size;
+
+        public Vector3 Size
+        {
+            get { return this.size; }
+            set
+            {
+                if (this.size != value)
+                {
+                    this.size = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+
         public Tetrahedron()
         {
             this.Size = new Vector3(1.0f, 1.0f, 1.0f);
         }
-
-        public Vector3 Size { get; set; }
 
         public override string PrimitiveType { get { return "Tetrahedron"; } }
 
