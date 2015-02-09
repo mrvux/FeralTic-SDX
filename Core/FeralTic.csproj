@@ -210,6 +210,8 @@
     <Compile Include="Utils\VertexLayouts\Pos4Col4Vertex.cs" />
     <Compile Include="Utils\VertexLayouts\Pos4Norm3Tex2Vertex.cs" />
     <Compile Include="Utils\VertexLayouts\Pos4Tex2Vertex.cs" />
+    <Compile Include="Utils\VertexLayouts\Pos3Vertex.cs" />
+    <Compile Include="Utils\VertexLayouts\UV2Vertex.cs" />
     <Compile Include="Utils\VertexLayouts\Pos4Vertex.cs" />
   </ItemGroup>
   <ItemGroup>

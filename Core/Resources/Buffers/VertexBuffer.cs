@@ -179,6 +179,24 @@ namespace FeralTic.DX11.Resources
             return new DX11VertexBuffer(device, verticesCount, vertexSize, bd, initial);
         }
 
+        public static DX11VertexBuffer CreateStaging(DxDevice device, int elemenCount, int stride)
+        {
+            BufferDescription bd = new BufferDescription()
+            {
+                BindFlags = BindFlags.None,
+                CpuAccessFlags = CpuAccessFlags.Read | CpuAccessFlags.Write,
+                OptionFlags = ResourceOptionFlags.None,
+                SizeInBytes = stride * elemenCount,
+                Usage = ResourceUsage.Staging
+            };
+            return new DX11VertexBuffer(device, elemenCount, stride, bd, null);
+        }
+
+        public static DX11VertexBuffer CreateStaging<T>(DxDevice device, int elemenCount) where T : struct
+        {
+            return CreateStaging(device, elemenCount, Marshal.SizeOf(typeof(T)));
+        }
+
         public static DX11VertexBuffer CreateDynamic<T>(DxDevice device, int verticesCount, DataStream initial) where T : struct
         {
             return CreateDynamic(device, verticesCount, Marshal.SizeOf(typeof(T)), initial);
@@ -216,6 +234,15 @@ namespace FeralTic.DX11.Resources
             T[] result = ds.ReadRange<T>(this.VerticesCount);
             this.Unmap(context);
             return result;
+        }
+
+        public T[] ReadDataDebug<T>(RenderContext context) where T : struct
+        {
+            var staging = CreateStaging<T>(this.device, this.VerticesCount);
+            context.Context.CopyResource(this.Buffer, staging.Buffer);
+            T[] data = staging.ReadData<T>(context);
+            staging.Dispose();
+            return data;
         }
 
         public void Bind(RenderContext context, InputLayout layout, int slot = 0)

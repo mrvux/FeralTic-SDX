@@ -48,7 +48,7 @@ namespace FeralTic.DX11.Geometry
                     uv.X = Map((float)j, 0.0f, resX - 1, 0.0f, 1.0f);
                     uv.Y = Map((float)i, 0.0f, resY - 1, 1.0f, 0.0f);
                     appendVertex(new Vector3(x, y, 0.0f), n, uv);
-
+                    x += ix;
                 }
                 y += iy;
             }

@@ -40,7 +40,7 @@ namespace FeralTic.DX11.Resources
 
     public class TextureLoader
     {
-        private class NativeMethods
+        public class NativeMethods
         {
             public static ImageMetadata LoadMetadataFromFile(string path)
             {
@@ -273,6 +273,55 @@ namespace FeralTic.DX11.Resources
             }
         }
 
+        public static DX11TextureCube LoadCubeTextureFromMemory(DxDevice device, IntPtr dataPointer, int dataLength)
+        {
+            IntPtr resource;
+            NativeMethods.LoadTextureFromMemory(device.Device.NativePointer, dataPointer, dataLength, out resource);
+
+            if (resource != IntPtr.Zero)
+            {
+                Texture2D texture = Texture2D.FromPointer<Texture2D>(resource);
+
+                if (texture.Description.ArraySize == 6 && texture.Description.OptionFlags.HasFlag(ResourceOptionFlags.TextureCube))
+                {
+                    return new DX11TextureCube(device, texture);
+                }
+                else
+                {
+                    texture.Dispose();
+                    throw new Exception("This texture is not a cube texture");
+                }
+            }
+            else
+            {
+                throw new Exception("Failed to load texture");
+            }
+        }
+
+        public static DX11Texture1D LoadTexture1DFromMemory(DxDevice device, IntPtr dataPointer, int dataLength)
+        {
+            IntPtr resource;
+            long retcode = NativeMethods.LoadTextureFromMemory(device.Device.NativePointer, dataPointer, dataLength, out resource);
+
+            if (retcode >= 0)
+            {
+                Resource r = Resource.FromPointer<Resource>(resource);
+                if (r.Dimension != ResourceDimension.Texture1D)
+                {
+                    r.Dispose();
+                    throw new Exception("Texture is not a 1D Texture");
+                }
+
+                Texture1D texture = Texture1D.FromPointer<Texture1D>(resource);
+                ShaderResourceView srv = new ShaderResourceView(device, texture);
+                return DX11Texture1D.FromReference(device, texture, srv);
+            }
+            else
+            {
+                throw new Exception("Failed to load texture");
+            }
+        }
+
 
         public static DX11TextureArray2D LoadTextureArrayFromFile(DxDevice device, string path, bool mips = true)
         {
@@ -329,7 +378,7 @@ namespace FeralTic.DX11.Resources
             IntPtr resource;
             long retcode = NativeMethods.LoadTextureFromFile(device.Device.NativePointer, path, out resource, 1);
 
-            if (retcode == 0)
+            if (retcode >= 0)
             {
                 Resource r = Resource.FromPointer<Resource>(resource);
                 if (r.Dimension != ResourceDimension.Texture1D)
