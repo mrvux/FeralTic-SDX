@@ -4,6 +4,7 @@ using FeralTic.DX11.Resources;
 using SharpDX;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,7 +54,27 @@ namespace FeralTic.Addons.AssetImport
         public List<DX11IndexedGeometry> LoadModelsFromFile(string path, AssimpLoadInformation loadInfo)
         {
             Assimp.AssimpImporter importer = new AssimpImporter();
-            Scene scene = importer.ImportFile(path, PostProcessPreset.TargetRealTimeQuality | PostProcessPreset.TargetRealTimeQuality);
+            Scene scene = importer.ImportFile(path, PostProcessPreset.ConvertToLeftHanded | PostProcessPreset.TargetRealTimeQuality);
+
+            List<DX11IndexedGeometry> result = new List<DX11IndexedGeometry>();
+            for (int j = 0; j < scene.MeshCount; j++)
+            {
+                Assimp.Mesh mesh = scene.Meshes[j];
+
+                if (mesh.HasFaces && mesh.HasVertices)
+                {
+                    result.Add(this.LoadFromMesh(mesh, loadInfo));
+                }
+            }
+            return result;
+        }
+
+
+        public List<DX11IndexedGeometry> LoadModelsFromStream(Stream stream, AssimpLoadInformation loadInfo, string formatHint)
+        {
+            Assimp.AssimpImporter importer = new AssimpImporter();
+            stream.Position = 0;
+            Scene scene = importer.ImportFileFromStream(stream, PostProcessPreset.ConvertToLeftHanded | PostProcessPreset.TargetRealTimeQuality, formatHint);
 
             List<DX11IndexedGeometry> result = new List<DX11IndexedGeometry>();
             for (int j = 0; j < scene.MeshCount; j++)
@@ -104,6 +125,15 @@ namespace FeralTic.Addons.AssetImport
             Construct(mesh, appendVertex, appendIndex, ref offset);
         }
 
+        public void Construct(Stream stream, Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex, int index, string formatHint)
+        {
+            Assimp.AssimpImporter importer = new AssimpImporter();
+            Scene scene = importer.ImportFileFromStream(stream, PostProcessPreset.ConvertToLeftHanded | PostProcessPreset.TargetRealTimeQuality, formatHint);
+
+            Assimp.Mesh mesh = scene.Meshes[index % scene.MeshCount];
+            int offset = 0;
+            Construct(mesh, appendVertex, appendIndex, ref offset);
+        }
 
         public void ConstructAll(string path, Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex)
         {
@@ -111,6 +141,18 @@ namespace FeralTic.Addons.AssetImport
             Scene scene = importer.ImportFile(path, PostProcessPreset.ConvertToLeftHanded | PostProcessPreset.TargetRealTimeQuality);
 
             int offset = 0;        
+            foreach (Assimp.Mesh m in scene.Meshes)
+            {
+                Construct(m, appendVertex, appendIndex, ref offset);
+            }
+        }
+
+        public void ConstructAll(Stream stream, Action<Vector3, Vector3, Vector2> appendVertex, Action<Int3> appendIndex, string formatHint)
+        {
+            Assimp.AssimpImporter importer = new AssimpImporter();
+            Scene scene = importer.ImportFileFromStream(stream, PostProcessPreset.ConvertToLeftHanded | PostProcessPreset.TargetRealTimeQuality, formatHint);
+
+            int offset = 0;
             foreach (Assimp.Mesh m in scene.Meshes)
             {
                 Construct(m, appendVertex, appendIndex, ref offset);
