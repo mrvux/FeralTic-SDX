@@ -50,6 +50,11 @@ namespace FeralTic.DX11.Resources
             get { return null; }
         }
 
+        public SwapChain SwapChain
+        {
+            get { return this.swapchain; }
+        }
+
         public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle)
         {
             return FromHandle(device, handle, Format.R8G8B8A8_UNorm, new SampleDescription(1, 0));
@@ -131,7 +136,6 @@ namespace FeralTic.DX11.Resources
             this.resource.Dispose();
 
             this.swapchain.ResizeBuffers(1,w, h, SharpDX.DXGI.Format.Unknown, SwapChainFlags.AllowModeSwitch);
-
             this.resource = Texture2D.FromSwapChain<Texture2D>(this.swapchain, 0);
 
             this.TextureDesc = this.resource.Description;
