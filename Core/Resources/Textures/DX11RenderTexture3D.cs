@@ -53,6 +53,32 @@ namespace FeralTic.DX11.Resources
             context.Context.ClearRenderTargetView(this.RenderView, color);
         }
 
+        private Texture3D AsStaging()
+        {
+            Texture3DDescription bd = this.Texture.Description;
+            bd.CpuAccessFlags = CpuAccessFlags.Read | CpuAccessFlags.Write;
+            bd.OptionFlags = ResourceOptionFlags.None;
+            bd.Usage = ResourceUsage.Staging;
+            bd.BindFlags = BindFlags.None;
+
+            Texture3D result = new Texture3D(this.device, bd);
+            return result;
+        }
+
+        public T[] ReadDataDebug<T>(RenderContext context) where T : struct
+        {
+            var staging = this.AsStaging();
+            context.Context.CopyResource(this.Texture, staging);
+
+            DataStream ds;
+            context.Context.MapSubresource(staging, 0, MapMode.Read, SharpDX.Direct3D11.MapFlags.None, out ds);
+            T[] data = ds.ReadRange<T>(this.Width * this.Height * this.Depth);
+            context.Context.UnmapSubresource(staging, 0);
+
+            staging.Dispose();
+            return data;
+        }
+
         public void  Dispose()
         {
             if (this.ShaderView != null) { this.ShaderView.Dispose(); }
