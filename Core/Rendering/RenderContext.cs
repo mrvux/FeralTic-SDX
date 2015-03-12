@@ -62,6 +62,12 @@ namespace FeralTic.DX11
             this.Context.ComputeShader.SetConstantBuffer(slot, cbuffer);
         }
 
+        public void DispatchX(int ElementCount, int ThreadCount)
+        {
+            int tm1 = ThreadCount - 1;
+            this.Context.Dispatch((ElementCount + tm1) / ThreadCount, 1, 1);
+        }
+
         public void ClearShaderStages()
         {
             Context.VertexShader.Set(null);

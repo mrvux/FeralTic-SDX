@@ -59,6 +59,17 @@ namespace FeralTic.DX11.Resources
         {
             return FromHandle(device, handle, Format.R8G8B8A8_UNorm, new SampleDescription(1, 0));
         }
+
+        public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle,Format format, int SampleCount)
+        {
+            return FromHandle(device, handle, format, new SampleDescription(SampleCount, 0));
+        }
+
+
+        public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle, int SampleCount)
+        {
+            return FromHandle(device, handle, Format.R8G8B8A8_UNorm, new SampleDescription(SampleCount, 0));
+        }
         
         public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle, Format format, SampleDescription sampledesc)
         {
@@ -67,7 +78,7 @@ namespace FeralTic.DX11.Resources
 
             SwapChainDescription sd = new SwapChainDescription()
             {
-                BufferCount = 1,
+                BufferCount = 2,
                 ModeDescription = new ModeDescription(0, 0, new Rational(60, 1), format),
                 IsWindowed = true,
                 OutputHandle = handle,
