@@ -22,6 +22,7 @@ namespace FeralTic.DX11
         public DepthStencilState StencilDepthLessRW { get; private set; }
         public DepthStencilState StencilLess { get; private set; }
         public DepthStencilState StencilGreater { get; private set; }
+        public DepthStencilState StencilLessEqual { get; private set; }
         public DepthStencilState StencilIncrement { get; private set; }
         public DepthStencilState StencilInvert { get; private set; }
         public DepthStencilState StencilZero { get; private set; }
@@ -352,8 +353,15 @@ namespace FeralTic.DX11
             };
 
             this.StencilGreater = new DepthStencilState(device.Device, ds);
+
+            ds.FrontFace.Comparison = Comparison.LessEqual;
+            ds.BackFace.Comparison = Comparison.LessEqual;
+
+            this.StencilLessEqual = new DepthStencilState(device.Device, ds);
+
             this.AddState("StencilGreater", this.StencilGreater);
         }
+
 
         private void CreateStencilIncrement()
         {
@@ -414,5 +422,64 @@ namespace FeralTic.DX11
             this.StencilInvert = new DepthStencilState(device.Device, ds);
             this.AddState("StencilInvert", this.StencilInvert);
         }
+
+        public DepthStencilState LessWriteMask(byte mask)
+        {
+            DepthStencilStateDescription ds = new DepthStencilStateDescription()
+            {
+                IsDepthEnabled = true,
+                IsStencilEnabled = true,
+                DepthWriteMask = DepthWriteMask.All,
+                DepthComparison = Comparison.Less,
+                StencilReadMask = 0,
+                StencilWriteMask = mask,
+                FrontFace = new DepthStencilOperationDescription()
+                {
+                    Comparison = Comparison.Always,
+                    DepthFailOperation = StencilOperation.Keep,
+                    FailOperation = StencilOperation.Keep,
+                    PassOperation = StencilOperation.Replace
+                },
+                BackFace = new DepthStencilOperationDescription()
+                {
+                    Comparison = Comparison.Always,
+                    DepthFailOperation = StencilOperation.Keep,
+                    FailOperation = StencilOperation.Keep,
+                    PassOperation = StencilOperation.Replace
+                }
+            };
+
+            return new DepthStencilState(device.Device, ds);
+        }
+
+        public DepthStencilState ReadMask(byte mask)
+        {
+            DepthStencilStateDescription ds = new DepthStencilStateDescription()
+            {
+                IsDepthEnabled = false,
+                IsStencilEnabled = true,
+                DepthWriteMask = DepthWriteMask.Zero,
+                DepthComparison = Comparison.Always,
+                StencilReadMask = mask,
+                StencilWriteMask = 0,
+                FrontFace = new DepthStencilOperationDescription()
+                {
+                    Comparison = Comparison.Equal,
+                    DepthFailOperation = StencilOperation.Keep,
+                    FailOperation = StencilOperation.Keep,
+                    PassOperation = StencilOperation.Keep
+                },
+                BackFace = new DepthStencilOperationDescription()
+                {
+                    Comparison = Comparison.Equal,
+                    DepthFailOperation = StencilOperation.Keep,
+                    FailOperation = StencilOperation.Keep,
+                    PassOperation = StencilOperation.Keep
+                }
+            };
+
+            return new DepthStencilState(device.Device, ds);
+        }
+
     }
 }

@@ -108,6 +108,16 @@ namespace FeralTic.DX11.Geometry
             context.Context.PixelShader.SetSampler(0, this.LinearSampler);
         }
 
+        public void ApplyFullTri(RenderContext context, ShaderResourceView resourceView)
+        {
+            this.FullScreenTriangle.Bind(context, null);
+
+            context.Context.VertexShader.Set(this.VSTri);
+            context.Context.PixelShader.Set(this.PSPass);
+            context.Context.PixelShader.SetShaderResource(0, resourceView);
+            context.Context.PixelShader.SetSampler(0, this.LinearSampler);
+        }
+
         public void ApplyFullTriGray(RenderContext context, IDxTexture2D texture)
         {
             this.FullScreenTriangle.Bind(context, null);
