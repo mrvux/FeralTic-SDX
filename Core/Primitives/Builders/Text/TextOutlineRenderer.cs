@@ -42,7 +42,7 @@ namespace FeralTic.Primitives.Builders.Text
             return SharpDX.Result.Ok;
         }
 
-        public override SharpDX.Matrix3x2 GetCurrentTransform(object clientDrawingContext)
+        public override SharpDX.Mathematics.Interop.RawMatrix3x2 GetCurrentTransform(object clientDrawingContext)
         {
             return SharpDX.Matrix3x2.Identity;
         }

@@ -174,7 +174,7 @@ namespace FeralTic.DX11
             Device dev;
             if (adapterindex > 0)
             {
-                SharpDX.DXGI.Factory f = new SharpDX.DXGI.Factory();
+                SharpDX.DXGI.Factory f = new SharpDX.DXGI.Factory1();
                 SharpDX.DXGI.Adapter a = f.GetAdapter(adapterindex);
 
                 dev = new Device(a, this.creationflags, levels);
