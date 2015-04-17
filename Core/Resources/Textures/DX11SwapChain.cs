@@ -50,9 +50,25 @@ namespace FeralTic.DX11.Resources
             get { return null; }
         }
 
+        public SwapChain SwapChain
+        {
+            get { return this.swapchain; }
+        }
+
         public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle)
         {
             return FromHandle(device, handle, Format.R8G8B8A8_UNorm, new SampleDescription(1, 0));
+        }
+
+        public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle,Format format, int SampleCount)
+        {
+            return FromHandle(device, handle, format, new SampleDescription(SampleCount, 0));
+        }
+
+
+        public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle, int SampleCount)
+        {
+            return FromHandle(device, handle, Format.R8G8B8A8_UNorm, new SampleDescription(SampleCount, 0));
         }
         
         public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle, Format format, SampleDescription sampledesc)
@@ -62,7 +78,7 @@ namespace FeralTic.DX11.Resources
 
             SwapChainDescription sd = new SwapChainDescription()
             {
-                BufferCount = 1,
+                BufferCount = 2,
                 ModeDescription = new ModeDescription(0, 0, new Rational(60, 1), format),
                 IsWindowed = true,
                 OutputHandle = handle,
@@ -131,7 +147,6 @@ namespace FeralTic.DX11.Resources
             this.resource.Dispose();
 
             this.swapchain.ResizeBuffers(1,w, h, SharpDX.DXGI.Format.Unknown, SwapChainFlags.AllowModeSwitch);
-
             this.resource = Texture2D.FromSwapChain<Texture2D>(this.swapchain, 0);
 
             this.TextureDesc = this.resource.Description;

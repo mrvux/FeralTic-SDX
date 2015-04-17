@@ -48,6 +48,31 @@ namespace FeralTic.DX11.Resources
 
         }
 
+        private DX11DepthStencil()
+        {
+
+        }
+
+        public static DX11DepthStencil FromView(DxDevice device, DepthStencilView view)
+        {
+            var tex = view.Resource.QueryInterface<Texture2D>();
+
+            DX11DepthStencil ds = new DX11DepthStencil();
+            ds.device = device;
+            ds.DepthFormat = eDepthFormat.d24s8;
+            ds.DepthView = view;
+            ds.resourceDesc = tex.Description;
+            ds.Texture = tex;
+
+            ShaderResourceViewDescription srvd = new ShaderResourceViewDescription()
+            {
+                Format = ds.DepthFormat.GetSRVFormat(),
+                Dimension = ShaderResourceViewDimension.Texture2D,
+            };
+            ds.ShaderView = new ShaderResourceView(device, tex, srvd);
+            return ds;
+        }
+
         public DX11DepthStencil(DxDevice device, int w, int h, SampleDescription sd, eDepthFormat depthformat = eDepthFormat.d24s8)
         {
             this.device = device;

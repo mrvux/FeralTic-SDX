@@ -64,6 +64,25 @@ namespace FeralTic.DX11
             this.AddState("NoCullWireframe", this.WireFrame);
         }
 
+        public RasterizerState CreateNoCullSimple(int bias, float biasClamp)
+        {
+            RasterizerStateDescription rsd = new RasterizerStateDescription()
+            {
+                CullMode = CullMode.None,
+                DepthBias = bias,
+                DepthBiasClamp = biasClamp,
+                FillMode = FillMode.Solid,
+                IsAntialiasedLineEnabled = false,
+                IsDepthClipEnabled = true,
+                IsFrontCounterClockwise = false,
+                IsMultisampleEnabled = false,
+                IsScissorEnabled = false,
+                SlopeScaledDepthBias = 0.0f
+            };
+
+            return new RasterizerState(device.Device, rsd);
+        }
+
         private void CreateBackCullSimple()
         {
             RasterizerStateDescription rsd = new RasterizerStateDescription()
