@@ -36,7 +36,7 @@ namespace FeralTic.DX11
             }
             else
             {
-                context.Context.Rasterizer.SetScissorRectangles(null);
+                context.Context.Rasterizer.SetScissorRectangles(new Rectangle[0]);
             }
         }
 

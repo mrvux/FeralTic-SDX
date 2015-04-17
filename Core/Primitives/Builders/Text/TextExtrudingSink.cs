@@ -51,7 +51,7 @@ namespace FeralTic.Primitives.Builders.Text
 
         }
 
-        public void AddLines(SharpDX.Vector2[] pointsRef)
+        public void AddLines(SharpDX.Mathematics.Interop.RawVector2[] pointsRef)
         {
             for (int i = 0; i < pointsRef.Length; i++)
             {
@@ -62,7 +62,7 @@ namespace FeralTic.Primitives.Builders.Text
             }
         }
 
-        public void BeginFigure(SharpDX.Vector2 startPoint, FigureBegin figureBegin)
+        public void BeginFigure(SharpDX.Mathematics.Interop.RawVector2 startPoint, FigureBegin figureBegin)
         {
             this.m_figureVertices.Clear();
 
@@ -198,7 +198,7 @@ namespace FeralTic.Primitives.Builders.Text
 
         }
 
-        public void AddLine(Vector2 point)
+        public void AddLine(SharpDX.Mathematics.Interop.RawVector2 point)
         {
 
         }

@@ -97,7 +97,7 @@ namespace FeralTic.DX11
             }
             ctx.Rasterizer.SetViewport(vp);
             if (this.hasscissor) { ctx.Rasterizer.SetScissorRectangles(scissor); }
-            else { ctx.Rasterizer.SetScissorRectangles(null); }
+            else { ctx.Rasterizer.SetScissorRectangles(new Rectangle[0]); }
         }
 
     }
