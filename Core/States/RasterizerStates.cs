@@ -16,6 +16,7 @@ namespace FeralTic.DX11
         public RasterizerState WireFrame { get; private set; }
         public RasterizerState LineAlpha { get; private set; }
         public RasterizerState LineQuadrilateral { get; private set; }
+        public RasterizerState ScissorClip { get; private set; }
 
         public RasterizerStates(DxDevice device)
         {
@@ -103,6 +104,13 @@ namespace FeralTic.DX11
 
             rsd.FillMode = FillMode.Wireframe;
             this.AddState("BackCullWireframe", new RasterizerState(device.Device, rsd));
+
+            rsd.FillMode = FillMode.Solid;
+            rsd.IsScissorEnabled = true;
+            rsd.IsDepthClipEnabled = false;
+            rsd.CullMode = CullMode.None;
+            this.ScissorClip = new RasterizerState(device.Device, rsd);
+            this.AddState("ScissorClip", this.ScissorClip);
         }
 
         private void CreateFrontCullSimple()

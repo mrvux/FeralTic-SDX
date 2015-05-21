@@ -47,7 +47,7 @@ namespace FeralTic.DX11.Resources
 
         public ShaderResourceView ShaderView
         {
-            get { return null; }
+            get;protected set;
         }
 
         public SwapChain SwapChain
@@ -129,6 +129,8 @@ namespace FeralTic.DX11.Resources
             this.RenderView = new RenderTargetView(device.Device, this.resource);
             this.RenderViewDesc = this.RenderView.Description;
 
+            this.ShaderView = new ShaderResourceView(device, this.resource);
+
             if (device.IsFeatureLevel11 && this.TextureDesc.SampleDescription.Count == 1)
             {
                 this.UnorderedView = new UnorderedAccessView(device, this.resource);
@@ -144,6 +146,7 @@ namespace FeralTic.DX11.Resources
         {
             if (this.UnorderedView != null) { this.UnorderedView.Dispose(); }
             if (this.RenderView != null) { this.RenderView.Dispose(); }
+            if (this.ShaderView != null) { this.ShaderView.Dispose(); }
             this.resource.Dispose();
 
             this.swapchain.ResizeBuffers(1,w, h, SharpDX.DXGI.Format.Unknown, SwapChainFlags.AllowModeSwitch);
@@ -180,6 +183,7 @@ namespace FeralTic.DX11.Resources
 
         public void Dispose()
         {
+            if (this.ShaderView != null) { this.ShaderView.Dispose(); }
             if (this.UnorderedView != null) { this.UnorderedView.Dispose(); }
             if (this.RenderView != null) { this.RenderView.Dispose(); }
             if (this.resource != null) { this.resource.Dispose(); }
