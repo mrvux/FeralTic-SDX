@@ -32,7 +32,7 @@ namespace FeralTic.DX11
             get { return this.statekeys.ToArray(); }
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             foreach (T state in this.states.Values)
             {

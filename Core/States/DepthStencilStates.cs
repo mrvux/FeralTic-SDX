@@ -203,7 +203,7 @@ namespace FeralTic.DX11
             };
 
             this.LessROStencilIncrement = new DepthStencilState(device.Device, ds);
-            this.AddState("LessROStencilIncrement", this.LessStencilIncrement);
+            this.AddState("LessROStencilIncrement", this.LessROStencilIncrement);
         }
 
         private void CreateLessStencilZero()
@@ -293,7 +293,7 @@ namespace FeralTic.DX11
             };
 
             this.StencilDepthLessEqual = new DepthStencilState(device.Device, ds);
-            this.AddState("StencilLessEqual", this.StencilLess);
+            this.AddState("StencilLessEqual", this.StencilDepthLessEqual);
         }
 
         private void CreateDepthStencilLess()
@@ -323,7 +323,7 @@ namespace FeralTic.DX11
             };
 
             this.StencilDepthLessRW = new DepthStencilState(device.Device, ds);
-            this.AddState("StencilDepthLessRW", this.StencilLess);
+            this.AddState("StencilDepthLessRW", this.StencilDepthLessRW);
         }
 
         private void CreateStencilGreater()
@@ -481,5 +481,11 @@ namespace FeralTic.DX11
             return new DepthStencilState(device.Device, ds);
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            this.StencilLessEqual.Dispose();
+        }
     }
 }
