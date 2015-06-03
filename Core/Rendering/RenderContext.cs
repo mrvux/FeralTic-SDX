@@ -43,7 +43,7 @@ namespace FeralTic.DX11
             this.Device = device;
 
             #if DIRECTX11_1
-            this.Context = device.Device.ImmediateContext.QueryInterface<DirectXContext>();
+            this.Context = device.Device.ImmediateContext2;
             #else
             this.Context = device.Device.ImmediateContext;
             #endif
@@ -109,7 +109,13 @@ namespace FeralTic.DX11
 
         public void Dispose()
         {
-            if (this.Context != null) { this.Context.Dispose(); this.Context = null; }
+            if (this.Context != null) 
+            {
+                this.Context.ClearState();
+                this.Context.Flush();
+                this.Context.Dispose();
+                this.Context = null; 
+            }
         }
     }
 }

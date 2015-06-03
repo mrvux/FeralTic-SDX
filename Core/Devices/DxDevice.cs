@@ -13,6 +13,7 @@ using WICFactory = SharpDX.WIC.ImagingFactory2;
 using DirectXDevice = SharpDX.Direct3D11.Device2;
 using D2DFactory = SharpDX.Direct2D1.Factory1;
 using DWriteFactory = SharpDX.DirectWrite.Factory1;
+using System.Runtime.InteropServices;
 #else
 #if DIRECTX11_1
 using DXGIDevice = SharpDX.DXGI.Device2;
@@ -189,14 +190,19 @@ namespace FeralTic.DX11
 
             #if DIRECTX11_1
             this.Device = dev.QueryInterface<DirectXDevice>();
+            Marshal.Release(this.Device.NativePointer);
             #else
             this.Device = dev;
             #endif
 
             DXGIDevice dxgidevice = this.Device.QueryInterface<DXGIDevice>();
+            Marshal.Release(this.Device.NativePointer);
             
             this.Adapter = dxgidevice.Adapter.QueryInterface<DXGIAdapter>();
+            Marshal.Release(dxgidevice.Adapter.NativePointer);
+
             this.Factory = this.Adapter.GetParent<DXGIFactory>();
+            Marshal.Release(this.Adapter.NativePointer);
 
             this.OnLoad();
         }
@@ -225,6 +231,11 @@ namespace FeralTic.DX11
 
             if (this.DeviceDisposing != null) { this.DeviceDisposing(this); }
 
+            this.WICFactory.Dispose();
+            this.D2DFactory.Dispose();
+            this.DWriteFactory.Dispose();
+            this.Adapter.Dispose();
+            this.Factory.Dispose();
             this.Device.Dispose();
 
             if (this.DeviceDisposed != null) { this.DeviceDisposed(this); }
