@@ -154,6 +154,29 @@ namespace FeralTic.DX11.Geometry
 
         public void Dispose()
         {
+            if (this.quad != null)
+            {
+                this.quad.Dispose();
+                this.quad = null;
+            }
+            if (this.quadlayout != null)
+            {
+                this.quadlayout.Dispose();
+                this.quadlayout = null;
+            }
+            if (this.cbLuma != null)
+            {
+                this.cbLuma.Dispose();
+                this.cbLuma = null;
+            }
+
+            this.VSTri.Dispose();
+            this.VSQuad.Dispose();
+            this.PSGray.Dispose();
+            this.PSLuma.Dispose();
+            this.PSPass.Dispose();
+
+           
         }
 
     }

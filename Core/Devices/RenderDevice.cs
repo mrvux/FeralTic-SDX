@@ -80,6 +80,7 @@ namespace FeralTic.DX11
 
             this.ResourcePool.Dispose();
             this.ResourceScheduler.Dispose();
+            this.Primitives.Dispose();
         }
 
     }
