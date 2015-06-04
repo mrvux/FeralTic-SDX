@@ -20,6 +20,12 @@ namespace FeralTic.DX11
             this.effect.GetVariableBySemantic(name).AsScalar().Set(value);
         }
 
+
+        public void SetBySemantic(string name, uint value)
+        {
+            this.effect.GetVariableBySemantic(name).AsScalar().Set(value);
+        }
+
         public void SetBySemantic(string name, float value)
         {
             this.effect.GetVariableBySemantic(name).AsScalar().Set(value);
@@ -31,6 +37,11 @@ namespace FeralTic.DX11
         }
 
         public void SetBySemantic(string name, int[] value)
+        {
+            this.effect.GetVariableBySemantic(name).AsScalar().Set(value);
+        }
+
+        public void SetBySemantic(string name, uint[] value)
         {
             this.effect.GetVariableBySemantic(name).AsScalar().Set(value);
         }
