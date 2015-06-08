@@ -96,6 +96,12 @@ namespace FeralTic.DX11
             Context.PixelShader.SetShaderResources(0, nullsrvs);
         }
 
+        public void CleanUpVS()
+        {
+            Context.VertexShader.SetShaderResources(0, nullsrvs);
+        }
+
+
         public void CleanUpPS()
         {
             Context.PixelShader.SetShaderResources(0, nullsrvs);
