@@ -23,10 +23,10 @@ namespace FeralTic.DX11.Resources
         public int ElementCount { get; protected set; }
         public int Stride { get; protected set; }
 
-        public DX11StructuredBufferRegion(DxDevice device, DX11StructuredBuffer parentBuffer, int StartOffset, int EndOffset)
+        public DX11StructuredBufferRegion(DxDevice device, DX11StructuredBuffer parentBuffer, int StartOffset, int ElementCount)
         {
             this.Buffer = parentBuffer.Buffer;
-            this.ElementCount = EndOffset - StartOffset;
+            this.ElementCount = ElementCount;
             this.Stride = parentBuffer.Stride;
 
             UnorderedAccessViewDescription uavd = new UnorderedAccessViewDescription()
@@ -45,10 +45,9 @@ namespace FeralTic.DX11.Resources
             {
                 Format = SharpDX.DXGI.Format.Unknown,
                 Dimension = ShaderResourceViewDimension.Buffer,
-                Buffer = new ShaderResourceViewDescription.BufferResource()
+                BufferEx = new ShaderResourceViewDescription.ExtendedBufferResource()
                 {
                     ElementCount = this.ElementCount,
-                    ElementWidth = this.Stride,
                     FirstElement = StartOffset
                 }
             };
