@@ -36,7 +36,7 @@ namespace FeralTic.DX11.Resources
                 Buffer = new UnorderedAccessViewDescription.BufferResource()
                 {
                     ElementCount = this.ElementCount,
-                    Flags = UnorderedAccessViewBufferFlags.None,
+                    Flags = parentBuffer.UnorderedView.Description.Buffer.Flags,
                     FirstElement = StartOffset
                 }
             };
