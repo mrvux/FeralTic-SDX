@@ -28,6 +28,8 @@ namespace FeralTic.DX11
 
         public ResourceScheduler ResourceScheduler { get; private set; }
 
+        public TiledResourcePool SharedTiledPool { get; private set; }
+
         public bool HasBufferSupport { get; private set; }
 
         public RenderDevice(DeviceCreationFlags flags = DeviceCreationFlags.BgraSupport, int adapterindex = 0)
@@ -67,6 +69,9 @@ namespace FeralTic.DX11
             this.Primitives = new PrimitivesManager(this);
             this.ResourceScheduler = new ResourceScheduler(this, 3);
             this.ResourceScheduler.Initialize();
+
+            this.SharedTiledPool = new TiledResourcePool(this);
+                 
         }
 
         protected override void OnDispose()
@@ -81,6 +86,8 @@ namespace FeralTic.DX11
             this.ResourcePool.Dispose();
             this.ResourceScheduler.Dispose();
             this.Primitives.Dispose();
+
+            this.SharedTiledPool.Dispose();
         }
 
     }

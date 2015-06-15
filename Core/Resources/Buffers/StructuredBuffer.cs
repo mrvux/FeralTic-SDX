@@ -81,6 +81,31 @@ namespace FeralTic.DX11.Resources
             return result;
         }
 
+        public static DX11StructuredBuffer CreateTiled(DxDevice device, int elementCount, int stride, eDxBufferMode buffermode = eDxBufferMode.Default)
+        {
+            BufferDescription desc = new BufferDescription()
+            {
+                BindFlags = BindFlags.ShaderResource | BindFlags.UnorderedAccess,
+                CpuAccessFlags = CpuAccessFlags.None,
+                OptionFlags = ResourceOptionFlags.BufferStructured | ResourceOptionFlags.Tiled,
+                SizeInBytes = elementCount * stride,
+                StructureByteStride = stride,
+                Usage = ResourceUsage.Default
+            };
+            return new DX11StructuredBuffer(device, elementCount, stride, desc, buffermode);
+        }
+
+        public static DX11StructuredBuffer CreateTiled<T>(DxDevice device, int elementCount, eDxBufferMode buffermode = eDxBufferMode.Default) where T : struct
+        {
+            int stride = Marshal.SizeOf(typeof(T));
+            return CreateTiled(device, elementCount, stride, buffermode);
+        }
+
+        private DX11StructuredBuffer()
+        {
+
+        }
+
         protected DX11StructuredBuffer(DxDevice device, int elementcount, int stride, BufferDescription desc, DataStream initial = null)
         {
             this.device = device;
