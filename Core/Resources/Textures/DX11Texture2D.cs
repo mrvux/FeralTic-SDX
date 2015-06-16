@@ -94,6 +94,13 @@ namespace FeralTic.DX11.Resources
             return db;
         }
 
+        public DataBox MapForWrite(RenderContext context)
+        {
+            DataStream ds;
+            DataBox db = context.Context.MapSubresource(this.Texture, 0, 0, MapMode.WriteDiscard, SharpDX.Direct3D11.MapFlags.None, out ds);
+            return db;
+        }
+
         public void ReadData(RenderContext context, IntPtr ptr, int len)
         {
             DataStream ds;

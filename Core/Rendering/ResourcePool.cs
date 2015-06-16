@@ -48,6 +48,11 @@ namespace FeralTic.DX11
             this.device = device;
         }
 
+        internal IEnumerable<ResourcePoolEntry<T>> AllResources
+        {
+            get { return this.pool; }
+        }
+
         public int Count
         {
             get { return this.pool.Count; }

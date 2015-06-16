@@ -45,12 +45,12 @@ namespace FeralTic.DX11.Resources
             get { return this.resourceDesc.Format; }
         }
 
-        public static DX11RenderTarget2D CreateTiled(DxDevice device, int w, int h, Format format)
+        public static DX11RenderTarget2D CreateTiled(DxDevice device, int w, int h, Format format, int mipLevels = 1)
         {
             var texBufferDesc = new Texture2DDescription
             {
                 ArraySize = 1,
-                BindFlags = BindFlags.RenderTarget | BindFlags.ShaderResource,
+                BindFlags = BindFlags.RenderTarget | BindFlags.ShaderResource | BindFlags.UnorderedAccess,
                 CpuAccessFlags = CpuAccessFlags.None,
                 Format = format,
                 Height = h,
@@ -58,7 +58,7 @@ namespace FeralTic.DX11.Resources
                 OptionFlags = ResourceOptionFlags.Tiled,
                 SampleDescription = new SampleDescription(1,0),
                 Usage = ResourceUsage.Default,
-                MipLevels = 1,
+                MipLevels = mipLevels
             };
             return new DX11RenderTarget2D(device, texBufferDesc);
         }

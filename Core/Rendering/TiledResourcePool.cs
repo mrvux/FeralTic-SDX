@@ -1,4 +1,5 @@
 ﻿using FeralTic.DX11.Resources;
+using SharpDX;
 using SharpDX.Direct3D11;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,10 @@ namespace FeralTic.DX11
 
         private const int PageSize = 65536;
 
-        public TiledResourcePool(DxDevice device, int initialPageCount = 8)
+        private int currentRangeOffset = 0;
+        private int aggregatedPageCount = 0;
+
+        public TiledResourcePool(DxDevice device, int initialPageCount = 16)
         {
             this.device = device;
             this.pageCount = initialPageCount;
@@ -41,8 +45,10 @@ namespace FeralTic.DX11
             var buffer = DX11StructuredBuffer.CreateTiled(this.device, elementCount, stride, mode);
             int size = buffer.Buffer.Description.SizeInBytes;
 
-            ResizeIfNecessary(context, size);
+            this.AggregateMemory(context, size);
             MapEntireResource(context, buffer.Buffer);
+            this.currentRangeOffset = this.aggregatedPageCount;
+
             return buffer;
         }
 
@@ -51,11 +57,33 @@ namespace FeralTic.DX11
             var rt = DX11RenderTarget2D.CreateTiled(this.device, width, height, format);
 
             int fs = SharpDX.DXGI.FormatHelper.SizeOfInBytes(format);
-            int rtSize = rt.Width * rt.Height * fs;
+            var tiledSize = this.AlignImage(rt.Width, rt.Height,format);
 
-            ResizeIfNecessary(context, rtSize);
+            int rtSize = tiledSize.Width * tiledSize.Height * fs;
+
+            this.AggregateMemory(context, rtSize);
             MapEntireResource(context, rt.Texture);
+            this.currentRangeOffset = this.aggregatedPageCount;
+
             return rt;
+        }
+
+        private void AggregateMemory(RenderContext context, int size)
+        {
+            this.aggregatedPageCount += this.GetPageCount(size); ;
+            ResizeIfNecessary(context, this.aggregatedPageCount * PageSize);
+        }
+
+        public void BeginCollect()
+        {
+            this.currentRangeOffset = 0;
+            this.aggregatedPageCount = 0;
+        }
+
+        public void EndCollect()
+        {
+            this.currentRangeOffset = 0;
+            this.aggregatedPageCount = 0;
         }
 
         private void MapEntireResource(RenderContext context, Resource resource)
@@ -67,6 +95,11 @@ namespace FeralTic.DX11
         private int GetPageCount(int memorySize)
         {
             return (memorySize + PageSize - 1) / PageSize;
+        }
+
+        private int GetPagedMemoryRequirment(int memorySize)
+        {
+            return GetPageCount(memorySize) * PageSize;
         }
 
         public int TotalMemorySize
@@ -94,6 +127,54 @@ namespace FeralTic.DX11
         public void Dispose()
         {
             this.tilePoolBuffer.Dispose();
+        }
+
+        private Size2 AlignImage(int w, int h, SharpDX.DXGI.Format format)
+        {
+            int fs = SharpDX.DXGI.FormatHelper.SizeOfInBits(format);
+
+            /*        BC1_Typeless = 70,
+        BC1_UNorm = 71,
+        BC1_UNorm_SRgb = 72,
+        BC2_Typeless = 73,
+        BC2_UNorm = 74,
+        BC2_UNorm_SRgb = 75,
+        BC3_Typeless = 76,
+        BC3_UNorm = 77,
+        BC3_UNorm_SRgb = 78,
+        BC4_Typeless = 79,
+        BC4_UNorm = 80,
+        BC4_SNorm = 81,*/
+
+            //Those formats are : 512*256
+            //other bc formats are 256*256
+
+            Size2 tileSizeForFormat;
+
+            switch (fs)
+            {
+                case 8:
+                    tileSizeForFormat = new Size2(256, 256);
+                    break;
+                case 16:
+                    tileSizeForFormat = new Size2(256, 128);
+                    break;
+                case 32:
+                    tileSizeForFormat = new Size2(128, 128);
+                    break;
+                case 64:
+                    tileSizeForFormat = new Size2(128, 64);
+                    break;
+                case 128:
+                    tileSizeForFormat = new Size2(64, 64);
+                    break;
+                default:
+                    throw new Exception("Unknown tile size for this format");
+            }
+
+            int alignedTileWidth = ((w + tileSizeForFormat.Width - 1) / tileSizeForFormat.Width) * tileSizeForFormat.Width;
+            int alignedTileHeight = ((h + tileSizeForFormat.Height - 1) / tileSizeForFormat.Height) * tileSizeForFormat.Height;
+            return new Size2(alignedTileWidth, alignedTileHeight);
         }
     }
 }
