@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class Sphere : AbstractPrimitiveDescriptor
+    public class Sphere : AbstractPrimitiveDescriptor, IEquatable<Sphere>
     {
         private float radius;
         private float cyclesx;
@@ -112,13 +112,8 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.Sphere(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(Sphere o)
         {
-            if (!(obj is Sphere))
-            {
-                return false;
-            }
-            Sphere o = (Sphere)obj;
             return this.CyclesX == o.CyclesX
                 && this.CyclesY == o.CyclesY
                 && this.Radius == o.Radius

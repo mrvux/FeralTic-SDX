@@ -17,7 +17,7 @@ namespace FeralTic.DX11.Resources
         [DllImport("msvcrt.dll", SetLastError = false)]
         static extern IntPtr memcpy(IntPtr dest, IntPtr src, int count);
 
-        [DllImport("msvcrt.dll", SetLastError = false)]
+        [DllImport("msvcrt.dll", EntryPoint ="memcpy", SetLastError = false)]
         static extern IntPtr memcpybyte(byte* dest, byte* src, int count);
 
         public Texture2D Texture { get; protected set; }
@@ -129,7 +129,7 @@ namespace FeralTic.DX11.Resources
                 if (stride != db.RowPitch)
                 {
                     byte* bsource = (byte*)ptr.ToPointer();
-                    byte* bdest = (byte*)ptr.ToPointer();
+                    byte* bdest = (byte*)db.DataPointer.ToPointer();
                     try
                     {
                         for (int i = 0; i < this.Height; i++)

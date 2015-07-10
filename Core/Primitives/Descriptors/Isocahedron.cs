@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class Isocahedron : AbstractPrimitiveDescriptor
+    public class Isocahedron : AbstractPrimitiveDescriptor, IEquatable<Isocahedron>
     {
         private Vector3 size;
 
@@ -40,13 +40,8 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.Isocahedron(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(Isocahedron o)
         {
-            if (!(obj is Isocahedron))
-            {
-                return false;
-            }
-            Isocahedron o = (Isocahedron)obj;
             return this.Size == o.Size;
         }
     }

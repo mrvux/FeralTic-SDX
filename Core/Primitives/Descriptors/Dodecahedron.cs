@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class Dodecahedron : AbstractPrimitiveDescriptor
+    public class Dodecahedron : AbstractPrimitiveDescriptor, IEquatable<Dodecahedron>
     {
         private Vector3 size;
 
@@ -40,14 +40,9 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.Dodecahedron(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(Dodecahedron other)
         {
-            if (!(obj is Dodecahedron))
-            {
-                return false;
-            }
-            Dodecahedron o = (Dodecahedron)obj;
-            return this.Size == o.Size;
+            return this.Size == other.Size;
         }
     }
 }

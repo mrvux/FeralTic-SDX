@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class Dispatcher : AbstractPrimitiveDescriptor
+    public class Dispatcher : AbstractPrimitiveDescriptor, IEquatable<Dispatcher>
     {
         private int tx;
         private int ty;
@@ -81,13 +81,8 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.Dispatcher(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(Dispatcher o)
         {
-            if (!(obj is Dispatcher))
-            {
-                return false;
-            }
-            Dispatcher o = (Dispatcher)obj;
             return this.ThreadCountX == o.ThreadCountX
                 && this.ThreadCountY == o.ThreadCountY
                 && this.ThreadCountZ == o.ThreadCountZ;

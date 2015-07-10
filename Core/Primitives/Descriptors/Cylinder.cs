@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class Cylinder : AbstractPrimitiveDescriptor
+    public class Cylinder : AbstractPrimitiveDescriptor , IEquatable<Cylinder>
     {
         private float radius1;
         private float radius2;
@@ -162,13 +162,8 @@ namespace FeralTic.DX11.Geometry
         }
 
 
-        public override bool Equals(object obj)
+        public bool Equals(Cylinder o)
         {
-            if (!(obj is Cylinder))
-            {
-                return false;
-            }
-            Cylinder o = (Cylinder)obj;
             return this.Caps == o.Caps
                 && this.Cycles == o.Cycles
                 && this.Length == o.Length

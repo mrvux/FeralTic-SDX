@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class IcoGrid : AbstractPrimitiveDescriptor
+    public class IcoGrid : AbstractPrimitiveDescriptor, IEquatable<IcoGrid>
     {
         private Vector2 size;
         private int resX;
@@ -80,13 +80,8 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.IcoGrid(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(IcoGrid o)
         {
-            if (!(obj is IcoGrid))
-            {
-                return false;
-            }
-            IcoGrid o = (IcoGrid)obj;
             return this.Size == o.Size
                 && this.ResolutionX == o.ResolutionX
                 && this.ResolutionY == o.ResolutionY;
