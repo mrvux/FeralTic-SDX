@@ -24,6 +24,8 @@ namespace FeralTic.DX11
 
         private static ShaderResourceView[] nullsrvs = new ShaderResourceView[128];
         private static UnorderedAccessView[] nulluavs = new UnorderedAccessView[8];
+        private static RenderTargetView[] nullrtvs = new RenderTargetView[] { null, null, null, null, null, null, null, null };
+        
 
         public RenderTargetStack RenderTargetStack { get; protected set; }
         public RenderStateStack RenderStateStack { get; protected set; }
@@ -101,6 +103,11 @@ namespace FeralTic.DX11
             Context.DomainShader.SetShaderResources(0, nullsrvs);
             Context.HullShader.SetShaderResources(0, nullsrvs);
             Context.PixelShader.SetShaderResources(0, nullsrvs);
+        }
+
+        public void ResetTargets()
+        {
+            Context.OutputMerger.SetTargets(null, nullrtvs);
         }
 
         public void CleanUpVS()
