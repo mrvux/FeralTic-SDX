@@ -9,15 +9,32 @@ using SharpDX.Direct3D11;
 
 namespace FeralTic.DX11.Resources
 {
-    public class ConstantBuffer
+    /// <summary>
+    /// Generic implementation for constant buffer
+    /// </summary>
+    /// <typeparam name="T">Buffer structure type</typeparam>
+    public class ConstantBuffer<T> where T :struct
     {
         private DxDevice device;
 
-        public ConstantBuffer(DxDevice device, int size)
+        public ConstantBuffer(DxDevice device)
+            : this(device, false)
+        {
+        }
+
+        public ConstantBuffer(DxDevice device, bool align)
         {
             this.device = device;
-            size = ((size + 15) / 16) * 16;
-            
+            int size;
+            if (align)
+            {
+                size = ((Marshal.SizeOf(typeof(T)) + 15) / 16) * 16;
+            }
+            else
+            {
+                size = Marshal.SizeOf(typeof(T));
+            }
+
             BufferDescription bd = new BufferDescription()
             {
                 BindFlags = BindFlags.ConstantBuffer,
@@ -30,14 +47,10 @@ namespace FeralTic.DX11.Resources
             this.Buffer = new SharpDX.Direct3D11.Buffer(device.Device, bd);
         }
 
-        public IntPtr Map(DeviceContext ctx)
+        public void Update(DeviceContext ctx,ref T value)
         {      
             DataBox db = ctx.MapSubresource(this.Buffer,0, MapMode.WriteDiscard, MapFlags.None);
-            return db.DataPointer;
-        }
-
-        public void Unmap(DeviceContext ctx)
-        {
+            Utilities.Write(db.DataPointer, ref value);
             ctx.UnmapSubresource(this.Buffer, 0);
         }
 
