@@ -68,6 +68,13 @@ namespace FeralTic.DX11
             this.Context.Dispatch((ElementCount + tm1) / ThreadCount, 1, 1);
         }
 
+        public void DispatchXY(int x, int groupX, int y, int groupY)
+        {
+            int tx1 = groupX - 1;
+            int ty1 = groupY - 1;
+            this.Context.Dispatch((x + tx1) / groupX, (y + ty1) / groupY, 1);
+        }
+
         public void ClearShaderStages()
         {
             Context.VertexShader.Set(null);

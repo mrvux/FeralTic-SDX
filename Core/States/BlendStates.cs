@@ -16,6 +16,8 @@ namespace FeralTic.DX11
         public BlendState AlphaBlend { get; private set; }
         public BlendState Multiply { get; private set; }
         public BlendState AlphaAdd { get; private set; }
+        public BlendState DisabledAlphaWrite { get; private set; }
+        public BlendState DisabledColorWrite { get; private set; }
 
         public BlendStates(DxDevice device)
         {
@@ -67,6 +69,13 @@ namespace FeralTic.DX11
 
             this.Disabled = new BlendState(this.device.Device, bs);
             this.AddState("Disabled",this.Disabled);
+
+            bs.RenderTarget[0].RenderTargetWriteMask = ColorWriteMaskFlags.Alpha;
+            this.DisabledAlphaWrite = new BlendState(this.device, bs);
+
+            bs.RenderTarget[0].RenderTargetWriteMask = ColorWriteMaskFlags.Red | ColorWriteMaskFlags.Blue | ColorWriteMaskFlags.Green;
+            this.DisabledColorWrite = new BlendState(this.device, bs);
+
         }
 
         private void CreateAddivite()
@@ -174,6 +183,13 @@ namespace FeralTic.DX11
 
             this.AlphaAdd = new BlendState(this.device.Device, bs);
             this.AddState("AlphaAdd", this.AlphaAdd);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            this.DisabledColorWrite.Dispose();
+            this.DisabledAlphaWrite.Dispose();
         }
 
     }
