@@ -110,6 +110,12 @@ namespace FeralTic.DX11
             return GetShaderInstance<VertexShader>(device, sb);
         }
 
+        public static T CompileFromString<T>(DxDevice device,string code, string entrypoint) where T : class
+        {
+            ShaderBytecode sb = CompileFromString(code, GetShaderProfile<T>(device), entrypoint);
+            return GetShaderInstance<T>(device, sb);
+        }
+
         public static T CompileFromFile<T>(DxDevice device, string path, string entrypoint) where T : class
         {
             ShaderBytecode sb = CompileFromFile(path, GetShaderProfile<T>(device), entrypoint, null);
