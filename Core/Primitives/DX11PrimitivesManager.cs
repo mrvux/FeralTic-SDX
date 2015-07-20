@@ -98,6 +98,16 @@ namespace FeralTic.DX11.Geometry
             context.Context.VertexShader.Set(this.VSTri);
         }
 
+        public void ApplyPixelPasstrough(RenderContext context)
+        {
+            context.Context.PixelShader.Set(this.PSPass);
+        }
+
+        public void ApplyPixelGray(RenderContext context)
+        {
+            context.Context.PixelShader.Set(this.PSPass);
+        }
+
         public void ApplyFullTri(RenderContext context, IDxTexture2D texture)
         {
             this.FullScreenTriangle.Bind(context,null);
