@@ -12,10 +12,12 @@ namespace FeralTic.DX11
 
         public SamplerState LinearWrap { get; private set; }
         public SamplerState LinearClamp { get; private set; }
+        public SamplerState LinearMirror { get; private set; }
         public SamplerState PointWrap { get; private set; }
         public SamplerState PointClamp { get; private set; }
         public SamplerState LinearBorder { get; private set; }
         public SamplerState PointBorder { get; private set; }
+        public SamplerState PointMirror { get; private set; }
 
         public SamplerStates(DxDevice device)
         {
@@ -36,10 +38,12 @@ namespace FeralTic.DX11
             this.CreateLinearWrap();
             this.CreateLinearBorder();
             this.CreateLinearClamp();
+            this.CreateLinearMirror();
 
             this.CreatePointBorder();
             this.CreatePointClamp();
             this.CreatePointWrap();
+            this.CreatePointMirror();
         }
 
         private void CreateLinearWrap()
@@ -127,6 +131,36 @@ namespace FeralTic.DX11
             };
             this.PointBorder = new SamplerState(device.Device, sd);
             this.AddState("PointBorder", PointBorder);
+        }
+
+        private void CreatePointMirror()
+        {
+            SamplerStateDescription sd = new SamplerStateDescription()
+            {
+                AddressU = TextureAddressMode.Mirror,
+                AddressV = TextureAddressMode.Mirror,
+                AddressW = TextureAddressMode.Mirror,
+                ComparisonFunction = Comparison.Always,
+                Filter = SharpDX.Direct3D11.Filter.MinMagMipPoint,
+                BorderColor = new SharpDX.Color4(0, 0, 0, 1)
+            };
+            this.PointMirror = new SamplerState(device.Device, sd);
+            this.AddState("PointMirror", PointMirror);
+        }
+
+        private void CreateLinearMirror()
+        {
+            SamplerStateDescription sd = new SamplerStateDescription()
+            {
+                AddressU = TextureAddressMode.Mirror,
+                AddressV = TextureAddressMode.Mirror,
+                AddressW = TextureAddressMode.Mirror,
+                ComparisonFunction = Comparison.Always,
+                Filter = SharpDX.Direct3D11.Filter.MinMagMipLinear,
+                BorderColor = new SharpDX.Color4(0, 0, 0, 1)
+            };
+            this.LinearMirror = new SamplerState(device.Device, sd);
+            this.AddState("LinearMirror", LinearMirror);
         }
     }
 }
