@@ -26,6 +26,7 @@ namespace FeralTic.DX11
         public DepthStencilState StencilIncrement { get; private set; }
         public DepthStencilState StencilInvert { get; private set; }
         public DepthStencilState StencilZero { get; private set; }
+        public DepthStencilState StencilNotEqual { get; private set; }
 
 
         public DepthStencilStates(DxDevice device)
@@ -360,6 +361,10 @@ namespace FeralTic.DX11
             this.StencilLessEqual = new DepthStencilState(device.Device, ds);
 
             this.AddState("StencilGreater", this.StencilGreater);
+
+            ds.FrontFace.Comparison = Comparison.NotEqual;
+            ds.BackFace.Comparison = Comparison.NotEqual;
+            this.StencilNotEqual = new DepthStencilState(device.Device, ds);
         }
 
 
