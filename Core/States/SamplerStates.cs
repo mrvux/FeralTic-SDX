@@ -84,7 +84,7 @@ namespace FeralTic.DX11
                 AddressW = TextureAddressMode.Border,
                 ComparisonFunction = Comparison.Always,
                 Filter = SharpDX.Direct3D11.Filter.MinMagMipLinear,
-                BorderColor = new SharpDX.Color4(0, 0, 0, 1)
+                BorderColor = new SharpDX.Color4(0, 0, 0, 0)
             };
             this.LinearBorder = new SamplerState(device.Device, sd);
             this.AddState("LinearBorder", LinearBorder);
@@ -127,7 +127,7 @@ namespace FeralTic.DX11
                 AddressW = TextureAddressMode.Border,
                 ComparisonFunction = Comparison.Always,
                 Filter = SharpDX.Direct3D11.Filter.MinMagMipPoint,
-                BorderColor = new SharpDX.Color4(0, 0, 0, 1)
+                BorderColor = new SharpDX.Color4(0, 0, 0, 0)
             };
             this.PointBorder = new SamplerState(device.Device, sd);
             this.AddState("PointBorder", PointBorder);
@@ -142,7 +142,7 @@ namespace FeralTic.DX11
                 AddressW = TextureAddressMode.Mirror,
                 ComparisonFunction = Comparison.Always,
                 Filter = SharpDX.Direct3D11.Filter.MinMagMipPoint,
-                BorderColor = new SharpDX.Color4(0, 0, 0, 1)
+                BorderColor = new SharpDX.Color4(0, 0, 0, 0)
             };
             this.PointMirror = new SamplerState(device.Device, sd);
             this.AddState("PointMirror", PointMirror);
@@ -157,7 +157,7 @@ namespace FeralTic.DX11
                 AddressW = TextureAddressMode.Mirror,
                 ComparisonFunction = Comparison.Always,
                 Filter = SharpDX.Direct3D11.Filter.MinMagMipLinear,
-                BorderColor = new SharpDX.Color4(0, 0, 0, 1)
+                BorderColor = new SharpDX.Color4(0, 0, 0, 0)
             };
             this.LinearMirror = new SamplerState(device.Device, sd);
             this.AddState("LinearMirror", LinearMirror);
