@@ -50,6 +50,19 @@ namespace FeralTic.DX11
             for (int i = 0; i < rts.Length; i++) { rtvs[i] = rts[i].RenderView; }
         }
 
+        public RenderTargetStackElement(RenderTargetView renderView, Size2 renderSize)
+        {
+            this.DepthStencil = null;
+            this.rtvs = new RenderTargetView[] { renderView };
+
+            this.vp.X = 0;
+            this.vp.Y = 0;
+            this.vp.MinDepth = 0.0f;
+            this.vp.MaxDepth = 1.0f;
+            this.vp.Width = renderSize.Width;
+            this.vp.Height = renderSize.Height;
+        }
+
         public RenderTargetStackElement(IDxDepthStencil dsv, bool rodsv = false, params IDxRenderTarget[] rts)
         {
             this.DepthStencil = dsv;
