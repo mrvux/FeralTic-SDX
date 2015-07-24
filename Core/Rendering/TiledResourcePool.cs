@@ -89,7 +89,7 @@ namespace FeralTic.DX11
         private void MapEntireResource(RenderContext context, Resource resource)
         {
             var rangeFlags = new TileRangeFlags[] { TileRangeFlags.None };
-            context.Context.UpdateTileMappings(resource, 1, new TiledResourceCoordinate[] { }, new TileRegionSize[] { }, this.tilePoolBuffer, 1, rangeFlags, new int[] { 0 }, new int[] { }, TileMappingFlags.None);
+            context.Context.UpdateTileMappings(resource, 1, new TiledResourceCoordinate[] { }, new TileRegionSize[] { }, this.tilePoolBuffer, 1, rangeFlags, new int[] { this.currentRangeOffset }, new int[] { }, TileMappingFlags.None);
         }
 
         private int GetPageCount(int memorySize)
