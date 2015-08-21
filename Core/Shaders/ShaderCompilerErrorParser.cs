@@ -97,14 +97,19 @@ namespace FeralTic.DX11
             }
             else
             {
-                if (elements.Length == 3)
+                try
                 {
-                    var errCode = elements[1].Split(" ".ToCharArray());
-                    ce.IsWarning = errCode[0] == "warning";
-                    ce.ErrorNumber = errCode[1];
+                    if (elements.Length == 3)
+                    {
+                        var errCode = elements[1].Split(" ".ToCharArray());
+                        ce.IsWarning = errCode[0] == "warning";
+                        ce.ErrorNumber = errCode[1];
 
-                    ce.ErrorText = elements[2];
+                        ce.ErrorText = elements[2];
+                    }
                 }
+                catch { }
+
 
             }
             
