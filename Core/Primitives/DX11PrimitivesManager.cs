@@ -116,7 +116,7 @@ namespace FeralTic.DX11.Geometry
 
             context.Context.VertexShader.Set(this.VSTri);
             context.Context.PixelShader.Set(this.PSPass);
-            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetShaderResource(0, texture == null ? null : texture.ShaderView);
             context.Context.PixelShader.SetSampler(0, this.LinearSampler);
         }
 
@@ -135,7 +135,7 @@ namespace FeralTic.DX11.Geometry
             this.FullScreenTriangle.Bind(context, null);
             context.Context.VertexShader.Set(this.VSTri);
             context.Context.PixelShader.Set(this.PSGray);
-            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetShaderResource(0, texture == null ? null : texture.ShaderView);
             context.Context.PixelShader.SetSampler(0, this.LinearSampler);
         }
 
@@ -146,7 +146,7 @@ namespace FeralTic.DX11.Geometry
             this.FullScreenTriangle.Bind(context, null);
             context.Context.VertexShader.Set(this.VSTri);
             context.Context.PixelShader.Set(this.PSAlpha);
-            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetShaderResource(0,texture == null ? null : texture.ShaderView);
             context.Context.PixelShader.SetSampler(0, this.LinearSampler);
         }
 
@@ -156,7 +156,7 @@ namespace FeralTic.DX11.Geometry
             this.FullScreenTriangle.Bind(context, null);
             context.Context.VertexShader.Set(this.VSTri);
             context.Context.PixelShader.Set(this.PSLuma);
-            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetShaderResource(0, texture == null ? null : texture.ShaderView);
             context.Context.PixelShader.SetSampler(0, this.LinearSampler);
             context.Context.PixelShader.SetConstantBuffer(0, this.cbLuma.Buffer);
         }
