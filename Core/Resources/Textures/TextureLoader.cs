@@ -553,7 +553,7 @@ namespace FeralTic.DX11.Resources
             }
         }
 
-        public static void SaveToMemoryCompressedNoHeader(RenderDevice device, RenderContext context, DX11Texture2D texture, DdsBlockType blockType, out IntPtr data, out int size, out IntPtr blob)
+        public static void SaveToMemoryCompressedNoHeader(RenderDevice device, RenderContext context, IDxTexture2D texture, DdsBlockType blockType, out IntPtr data, out int size, out IntPtr blob)
         {
             long retcode = NativeMethods.SaveCompressedTextureToMemoryNoHeader(device.Device.NativePointer, context.Context.NativePointer,
                 texture.Texture.NativePointer, (int)blockType, out data, out size, out blob);
