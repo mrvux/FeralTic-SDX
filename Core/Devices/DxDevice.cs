@@ -148,6 +148,15 @@ namespace FeralTic.DX11
             return device.Device;
         }
 
+        public DxDevice(IntPtr devicePointer)
+        {
+            this.WICFactory = new WICFactory();
+            this.D2DFactory = new D2DFactory();
+            this.DWriteFactory = new DWriteFactory(SharpDX.DirectWrite.FactoryType.Shared);
+            this.adapterindex = 0;
+            this.Initialize(devicePointer);
+        }
+
         public DxDevice(DeviceCreationFlags flags = DeviceCreationFlags.BgraSupport, int adapterindex = 0)
         {
             this.WICFactory = new WICFactory();
@@ -155,11 +164,12 @@ namespace FeralTic.DX11
             this.DWriteFactory = new DWriteFactory(SharpDX.DirectWrite.FactoryType.Shared);
             this.creationflags = flags;
             this.adapterindex = adapterindex;
-            this.Initialize();
+            this.Initialize(IntPtr.Zero);
         }
 
+
         #region Initialize
-        private void Initialize()
+        private void Initialize(IntPtr devicePointer)
         {
             FeatureLevel[] levels = new FeatureLevel[]
             {
@@ -173,7 +183,11 @@ namespace FeralTic.DX11
             };
 
             Device dev;
-            if (adapterindex > 0)
+            if (devicePointer != IntPtr.Zero)
+            {
+                dev = new SharpDX.Direct3D11.Device(devicePointer);
+            }
+            else if (adapterindex > 0)
             {
                 SharpDX.DXGI.Factory f = new SharpDX.DXGI.Factory1();
                 SharpDX.DXGI.Adapter a = f.GetAdapter(adapterindex);
@@ -220,7 +234,7 @@ namespace FeralTic.DX11
 
             if (this.AutoReset)
             {
-                this.Initialize();
+                this.Initialize(IntPtr.Zero);
                 if (this.DeviceReset != null) { this.DeviceReset(this); }
             }
         }

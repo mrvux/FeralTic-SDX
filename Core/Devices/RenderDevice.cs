@@ -48,6 +48,11 @@ namespace FeralTic.DX11
             }       
         }
 
+        public RenderDevice(IntPtr devicePointer) : base(devicePointer)
+        {
+
+        }
+
 
         public bool IsSupported(FormatSupport usage, Format format)
         {
