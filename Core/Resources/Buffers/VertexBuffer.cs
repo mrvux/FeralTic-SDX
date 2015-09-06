@@ -144,6 +144,19 @@ namespace FeralTic.DX11.Resources
             return new DX11VertexBuffer(device, verticesCount, vertexSize, bd, initial);
         }
 
+        public static DX11VertexBuffer CreateImmutable<T>(DxDevice device,int elementCount, int stride, T[] initial) where T : struct
+        {
+            int vertexSize = stride;
+            int verticesCount = elementCount;
+
+            DataStream ds = new DataStream(vertexSize * verticesCount, true, true);
+            ds.WriteRange<T>(initial);
+            ds.Position = 0;
+            DX11VertexBuffer result = CreateImmutable(device, verticesCount, vertexSize, ds);
+            ds.Dispose();
+            return result;
+        }
+
         public static DX11VertexBuffer CreateImmutable<T>(DxDevice device, T[] initial) where T : struct
         {
             int vertexSize = Marshal.SizeOf(typeof(T));
