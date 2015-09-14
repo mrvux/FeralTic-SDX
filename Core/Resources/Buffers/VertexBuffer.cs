@@ -130,7 +130,7 @@ namespace FeralTic.DX11.Resources
             return new DX11VertexBuffer(device, verticesCount, vertexSize, bd, null);
         }
 
-        public static DX11VertexBuffer CreateImmutable(DxDevice device, int verticesCount, int vertexSize, DataStream initial)
+        public static DX11VertexBuffer CreateImmutable(DxDevice device, int verticesCount, int vertexSize, DataStream initial, bool allowRawView = false)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -140,6 +140,12 @@ namespace FeralTic.DX11.Resources
                 SizeInBytes = vertexSize * verticesCount,
                 Usage = ResourceUsage.Immutable
             };
+
+            if (allowRawView)
+            {
+                bd.BindFlags |= BindFlags.ShaderResource;
+                bd.OptionFlags = ResourceOptionFlags.BufferAllowRawViews;
+            }
 
             return new DX11VertexBuffer(device, verticesCount, vertexSize, bd, initial);
         }

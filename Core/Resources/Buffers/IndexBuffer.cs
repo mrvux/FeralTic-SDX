@@ -93,6 +93,7 @@ namespace FeralTic.DX11.Resources
                 SizeInBytes = initial.Length * 2,
                 Usage = ResourceUsage.Immutable
             };
+
             DX11IndexBuffer result;
             fixed (short* ptr = &initial[0])
             {
@@ -102,7 +103,7 @@ namespace FeralTic.DX11.Resources
         }
 
 
-        public static DX11IndexBuffer CreateImmutable(DxDevice device, int[] initial)
+        public static DX11IndexBuffer CreateImmutable(DxDevice device, int[] initial, bool allowRawView = false)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -112,6 +113,13 @@ namespace FeralTic.DX11.Resources
                 SizeInBytes = initial.Length * 4,
                 Usage = ResourceUsage.Immutable
             };
+
+            if (allowRawView)
+            {
+                bd.BindFlags |= BindFlags.ShaderResource;
+                bd.OptionFlags = ResourceOptionFlags.BufferAllowRawViews;
+            }
+
             DX11IndexBuffer result;
             fixed (int* ptr = &initial[0])
             {
@@ -120,7 +128,7 @@ namespace FeralTic.DX11.Resources
             return result;
         }
 
-        public static DX11IndexBuffer CreateImmutable(DxDevice device, uint[] initial)
+        public static DX11IndexBuffer CreateImmutable(DxDevice device, uint[] initial, bool allowRawView = false)
         {
             BufferDescription bd = new BufferDescription()
             {
@@ -130,6 +138,13 @@ namespace FeralTic.DX11.Resources
                 SizeInBytes = initial.Length * 4,
                 Usage = ResourceUsage.Immutable
             };
+
+            if (allowRawView)
+            {
+                bd.BindFlags |= BindFlags.ShaderResource;
+                bd.OptionFlags = ResourceOptionFlags.BufferAllowRawViews;
+            }
+
             DX11IndexBuffer result;
             fixed (uint* ptr = &initial[0])
             {
