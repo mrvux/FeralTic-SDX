@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class SegmentZ : AbstractPrimitiveDescriptor
+    public class SegmentZ : AbstractPrimitiveDescriptor, IEquatable<SegmentZ>
     {
         private float phase;
         private float cycles;
@@ -108,13 +108,8 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.SegmentZ(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(SegmentZ o)
         {
-            if (!(obj is SegmentZ))
-            {
-                return false;
-            }
-            SegmentZ o = (SegmentZ)obj;
             return this.Cycles == o.Cycles
                 && this.InnerRadius == o.InnerRadius
                 && this.Phase == o.Phase

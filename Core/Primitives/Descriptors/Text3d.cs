@@ -54,7 +54,7 @@ namespace FeralTic.DX11.Geometry
             get { return this.fontsize; }
             set
             {
-                if (this.fontsize != null)
+                if (this.fontsize != value)
                 {
                     this.fontsize = value;
                 }

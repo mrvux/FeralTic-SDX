@@ -43,6 +43,11 @@ float4 PSLuma(vs2ps input) : SV_Target
 	return tex.Sample(linSamp, input.uv) * luma;
 }
 
+float4 PSAlpha(vs2ps input) : SV_Target
+{
+	return tex.Sample(linSamp, input.uv) * float4(1,1,1,luma);
+}
+
 technique10 FullScreenTriangleVSOnly
 {
 	pass P0

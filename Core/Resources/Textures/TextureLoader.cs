@@ -138,6 +138,19 @@ namespace FeralTic.DX11.Resources
                 }
             }
 
+
+            public static long SaveCompressedTextureToMemoryNoHeader(IntPtr device, IntPtr context, IntPtr resource, int blocktype, out IntPtr data, out int size, out IntPtr blobPtr)
+            {
+                if (IntPtr.Size == 8)
+                {
+                    return NativeMethods64.SaveCompressedTextureToMemoryNoHeader(device, context, resource, blocktype, out data, out size, out blobPtr);
+                }
+                else
+                {
+                    return NativeMethods32.SaveCompressedTextureToMemoryNoHeader(device, context, resource, blocktype, out data, out size, out blobPtr);
+                }
+            }
+
             public static long SaveTextureToMemory(IntPtr device, IntPtr context, IntPtr resource, int format, out IntPtr data, out int size, out IntPtr blobPtr)
             {
                 if (IntPtr.Size == 8)
@@ -159,6 +172,18 @@ namespace FeralTic.DX11.Resources
                 else
                 {
                     NativeMethods32.DeleteBlob(blob);
+                }
+            }
+
+            public static void DeleteImage(IntPtr blob)
+            {
+                if (IntPtr.Size == 8)
+                {
+                    NativeMethods64.DeleteImage(blob);
+                }
+                else
+                {
+                    NativeMethods32.DeleteImage(blob);
                 }
             }
         }
@@ -190,7 +215,13 @@ namespace FeralTic.DX11.Resources
             public static extern long SaveCompressedTextureToMemory(IntPtr device, IntPtr context, IntPtr resource, int blocktype, out IntPtr data, out int size, out IntPtr blobPtr);
 
             [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
+            public static extern long SaveCompressedTextureToMemoryNoHeader(IntPtr device, IntPtr context, IntPtr resource, int blocktype, out IntPtr data, out int size, out IntPtr blobPtr);
+
+            [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
             public static extern void DeleteBlob(IntPtr blob);
+
+            [DllImport("DirectXTexLib_x64", CharSet = CharSet.Unicode)]
+            public static extern void DeleteImage(IntPtr image);
         }
 
 
@@ -221,7 +252,13 @@ namespace FeralTic.DX11.Resources
             public static extern long SaveCompressedTextureToMemory(IntPtr device, IntPtr context, IntPtr resource, int blocktype, out IntPtr data, out int size, out IntPtr blobPtr);
 
             [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
+            public static extern long SaveCompressedTextureToMemoryNoHeader(IntPtr device, IntPtr context, IntPtr resource, int blocktype, out IntPtr data, out int size, out IntPtr blobPtr);
+
+            [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
             public static extern void DeleteBlob(IntPtr blob);
+
+            [DllImport("DirectXTexLib_x86", CharSet = CharSet.Unicode)]
+            public static extern void DeleteImage(IntPtr image);
         }
 
         public static DX11Texture2D LoadFromFile(DxDevice device, string path, bool mips = true)
@@ -515,6 +552,17 @@ namespace FeralTic.DX11.Resources
                 throw new Exception("Failed to Save Texture");
             }
         }
-       
+
+        public static void SaveToMemoryCompressedNoHeader(RenderDevice device, RenderContext context, IDxTexture2D texture, DdsBlockType blockType, out IntPtr data, out int size, out IntPtr blob)
+        {
+            long retcode = NativeMethods.SaveCompressedTextureToMemoryNoHeader(device.Device.NativePointer, context.Context.NativePointer,
+                texture.Texture.NativePointer, (int)blockType, out data, out size, out blob);
+
+            if (retcode < 0)
+            {
+                throw new Exception("Failed to Save Texture");
+            }
+        }
+
     }
 }

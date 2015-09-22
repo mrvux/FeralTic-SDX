@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class Grid : AbstractPrimitiveDescriptor
+    public class Grid : AbstractPrimitiveDescriptor, IEquatable<Grid>
     {
         private Vector2 size;
         private int resX;
@@ -82,13 +82,8 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.Grid(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(Grid o)
         {
-            if (!(obj is Grid))
-            {
-                return false;
-            }
-            Grid o = (Grid)obj;
             return this.Size == o.Size
                 && this.ResolutionX == o.ResolutionX
                 && this.ResolutionY == o.ResolutionY;

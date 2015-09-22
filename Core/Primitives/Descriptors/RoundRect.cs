@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class RoundRect : AbstractPrimitiveDescriptor
+    public class RoundRect : AbstractPrimitiveDescriptor, IEquatable<RoundRect>
     {
         private Vector2 innerRadius;
         private float outerRadius;
@@ -88,13 +88,8 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.RoundRect(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(RoundRect o)
         {
-            if (!(obj is RoundRect))
-            {
-                return false;
-            }
-            RoundRect o = (RoundRect)obj;
             return this.CornerResolution == o.CornerResolution
                 && this.EnableCenter == o.EnableCenter
                 && this.InnerRadius == o.InnerRadius

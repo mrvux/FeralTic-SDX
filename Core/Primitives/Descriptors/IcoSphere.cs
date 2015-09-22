@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class IcoSphere : AbstractPrimitiveDescriptor
+    public class IcoSphere : AbstractPrimitiveDescriptor, IEquatable<IcoSphere>
     {
         private float radius;
         private int subdiv;
@@ -56,13 +56,8 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.IcoSphere(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(IcoSphere o)
         {
-            if (!(obj is IcoSphere))
-            {
-                return false;
-            }
-            IcoSphere o = (IcoSphere)obj;
             return this.Radius == o.Radius
                 && this.SubDivisions == o.SubDivisions;
         }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class Box : AbstractPrimitiveDescriptor
+    public class Box : AbstractPrimitiveDescriptor , IEquatable<Box>
     {
         private Vector3 size;
 
@@ -40,18 +40,13 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.Box(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(Box obj)
         {
-            if (!(obj is Box))
-            {
-                return false;
-            }
-            Box box = (Box)obj;
-            return this.Size == box.Size;
+            return this.Size == obj.Size;
         }
     }
 
-    public class BoxLine : Box
+    public class BoxLine : Box,  IEquatable<BoxLine>
     {
         public override string PrimitiveType { get { return "BoxLine"; } }
 
@@ -60,14 +55,9 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.BoxLine(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(BoxLine o)
         {
-            if (!(obj is BoxLine))
-            {
-                return false;
-            }
-            BoxLine box = (BoxLine)obj;
-            return this.Size == box.Size;
+            return this.Size == o.Size;
         }
     }
 }

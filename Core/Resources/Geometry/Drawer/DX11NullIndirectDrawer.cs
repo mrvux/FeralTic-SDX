@@ -13,6 +13,11 @@ namespace FeralTic.DX11.Resources
 
         public InstancedIndirectBuffer IndirectArgs { get { return this.indbuffer; } }
 
+        public DX11NullIndirectDrawer(DxDevice device)
+        {
+            this.indbuffer = new InstancedIndirectBuffer(device);
+        }
+
         public void Update(DxDevice device,int defaultvertexcount, int defaultinstancecount)
         {
             if (this.indbuffer != null) { this.indbuffer.Dispose(); }
@@ -24,7 +29,6 @@ namespace FeralTic.DX11.Resources
             args.VertexCount = defaultvertexcount;
 
             this.indbuffer = new InstancedIndirectBuffer(device, args);
-
         }
 
         public override void Draw(RenderContext ctx)

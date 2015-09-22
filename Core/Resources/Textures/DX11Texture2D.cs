@@ -17,7 +17,7 @@ namespace FeralTic.DX11.Resources
         [DllImport("msvcrt.dll", SetLastError = false)]
         static extern IntPtr memcpy(IntPtr dest, IntPtr src, int count);
 
-        [DllImport("msvcrt.dll", SetLastError = false)]
+        [DllImport("msvcrt.dll", EntryPoint ="memcpy", SetLastError = false)]
         static extern IntPtr memcpybyte(byte* dest, byte* src, int count);
 
         public Texture2D Texture { get; protected set; }
@@ -94,6 +94,13 @@ namespace FeralTic.DX11.Resources
             return db;
         }
 
+        public DataBox MapForWrite(RenderContext context)
+        {
+            DataStream ds;
+            DataBox db = context.Context.MapSubresource(this.Texture, 0, 0, MapMode.WriteDiscard, SharpDX.Direct3D11.MapFlags.None, out ds);
+            return db;
+        }
+
         public void ReadData(RenderContext context, IntPtr ptr, int len)
         {
             DataStream ds;
@@ -122,7 +129,7 @@ namespace FeralTic.DX11.Resources
                 if (stride != db.RowPitch)
                 {
                     byte* bsource = (byte*)ptr.ToPointer();
-                    byte* bdest = (byte*)ptr.ToPointer();
+                    byte* bdest = (byte*)db.DataPointer.ToPointer();
                     try
                     {
                         for (int i = 0; i < this.Height; i++)

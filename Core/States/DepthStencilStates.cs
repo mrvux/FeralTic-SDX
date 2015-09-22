@@ -26,6 +26,7 @@ namespace FeralTic.DX11
         public DepthStencilState StencilIncrement { get; private set; }
         public DepthStencilState StencilInvert { get; private set; }
         public DepthStencilState StencilZero { get; private set; }
+        public DepthStencilState StencilNotEqual { get; private set; }
 
 
         public DepthStencilStates(DxDevice device)
@@ -203,7 +204,7 @@ namespace FeralTic.DX11
             };
 
             this.LessROStencilIncrement = new DepthStencilState(device.Device, ds);
-            this.AddState("LessROStencilIncrement", this.LessStencilIncrement);
+            this.AddState("LessROStencilIncrement", this.LessROStencilIncrement);
         }
 
         private void CreateLessStencilZero()
@@ -293,7 +294,7 @@ namespace FeralTic.DX11
             };
 
             this.StencilDepthLessEqual = new DepthStencilState(device.Device, ds);
-            this.AddState("StencilLessEqual", this.StencilLess);
+            this.AddState("StencilLessEqual", this.StencilDepthLessEqual);
         }
 
         private void CreateDepthStencilLess()
@@ -323,7 +324,7 @@ namespace FeralTic.DX11
             };
 
             this.StencilDepthLessRW = new DepthStencilState(device.Device, ds);
-            this.AddState("StencilDepthLessRW", this.StencilLess);
+            this.AddState("StencilDepthLessRW", this.StencilDepthLessRW);
         }
 
         private void CreateStencilGreater()
@@ -360,6 +361,10 @@ namespace FeralTic.DX11
             this.StencilLessEqual = new DepthStencilState(device.Device, ds);
 
             this.AddState("StencilGreater", this.StencilGreater);
+
+            ds.FrontFace.Comparison = Comparison.NotEqual;
+            ds.BackFace.Comparison = Comparison.NotEqual;
+            this.StencilNotEqual = new DepthStencilState(device.Device, ds);
         }
 
 
@@ -481,5 +486,11 @@ namespace FeralTic.DX11
             return new DepthStencilState(device.Device, ds);
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            this.StencilLessEqual.Dispose();
+        }
     }
 }

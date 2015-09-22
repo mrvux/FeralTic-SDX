@@ -32,8 +32,6 @@ namespace FeralTic.Primitives.Builders.Text
         private List<Vertex2D> m_figureVertices = new List<Vertex2D>();
 
         private float m_height;
-        private Vector2 m_lastPoint;
-        private Vector2 m_startPoint;
 
         private Vector2 GetNormal(int i)
         {

@@ -63,6 +63,13 @@ namespace FeralTic.DX11
             this.Apply();
         }
 
+        public void Push(RenderTargetView renderView, Size2 size)
+        {
+            RenderTargetStackElement elem = new RenderTargetStackElement(renderView, size);
+            stack.Push(elem);
+            this.Apply();
+        }
+
         public void PushViewport(Viewport vp)
         {
             this.viewportstack.Push(vp);

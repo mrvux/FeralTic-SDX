@@ -28,6 +28,7 @@ namespace FeralTic.DX11.Geometry
         private PixelShader PSPass;
         private PixelShader PSGray;
         private PixelShader PSLuma;
+        private PixelShader PSAlpha;
         private ConstantBuffer<float> cbLuma;
 
         private SamplerState LinearSampler;
@@ -86,6 +87,7 @@ namespace FeralTic.DX11.Geometry
             this.PSPass = ShaderCompiler.CompileFromResource<PixelShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "PS");
             this.PSGray = ShaderCompiler.CompileFromResource<PixelShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "PSGray");
             this.PSLuma = ShaderCompiler.CompileFromResource<PixelShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "PSLuma");
+            this.PSAlpha = ShaderCompiler.CompileFromResource<PixelShader>(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.VSFullTri.fx", "PSAlpha");
 
             ShaderSignature quadsignature;
             this.VSQuad = ShaderCompiler.CompileFromResource(this.device, Assembly.GetExecutingAssembly(), "FeralTic.Effects.DefaultVS.fx", "VS", out quadsignature);
@@ -98,13 +100,23 @@ namespace FeralTic.DX11.Geometry
             context.Context.VertexShader.Set(this.VSTri);
         }
 
+        public void ApplyPixelPasstrough(RenderContext context)
+        {
+            context.Context.PixelShader.Set(this.PSPass);
+        }
+
+        public void ApplyPixelGray(RenderContext context)
+        {
+            context.Context.PixelShader.Set(this.PSPass);
+        }
+
         public void ApplyFullTri(RenderContext context, IDxTexture2D texture)
         {
             this.FullScreenTriangle.Bind(context,null);
 
             context.Context.VertexShader.Set(this.VSTri);
             context.Context.PixelShader.Set(this.PSPass);
-            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetShaderResource(0, texture == null ? null : texture.ShaderView);
             context.Context.PixelShader.SetSampler(0, this.LinearSampler);
         }
 
@@ -123,7 +135,18 @@ namespace FeralTic.DX11.Geometry
             this.FullScreenTriangle.Bind(context, null);
             context.Context.VertexShader.Set(this.VSTri);
             context.Context.PixelShader.Set(this.PSGray);
-            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetShaderResource(0, texture == null ? null : texture.ShaderView);
+            context.Context.PixelShader.SetSampler(0, this.LinearSampler);
+        }
+
+
+        public void ApplyFullTriAlpha(RenderContext context, IDxTexture2D texture, float alpha)
+        {
+            this.cbLuma.Update(context, ref alpha);
+            this.FullScreenTriangle.Bind(context, null);
+            context.Context.VertexShader.Set(this.VSTri);
+            context.Context.PixelShader.Set(this.PSAlpha);
+            context.Context.PixelShader.SetShaderResource(0,texture == null ? null : texture.ShaderView);
             context.Context.PixelShader.SetSampler(0, this.LinearSampler);
         }
 
@@ -133,7 +156,7 @@ namespace FeralTic.DX11.Geometry
             this.FullScreenTriangle.Bind(context, null);
             context.Context.VertexShader.Set(this.VSTri);
             context.Context.PixelShader.Set(this.PSLuma);
-            context.Context.PixelShader.SetShaderResource(0, texture.ShaderView);
+            context.Context.PixelShader.SetShaderResource(0, texture == null ? null : texture.ShaderView);
             context.Context.PixelShader.SetSampler(0, this.LinearSampler);
             context.Context.PixelShader.SetConstantBuffer(0, this.cbLuma.Buffer);
         }
@@ -154,6 +177,30 @@ namespace FeralTic.DX11.Geometry
 
         public void Dispose()
         {
+            if (this.quad != null)
+            {
+                this.quad.Dispose();
+                this.quad = null;
+            }
+            if (this.quadlayout != null)
+            {
+                this.quadlayout.Dispose();
+                this.quadlayout = null;
+            }
+            if (this.cbLuma != null)
+            {
+                this.cbLuma.Dispose();
+                this.cbLuma = null;
+            }
+
+            this.VSTri.Dispose();
+            this.VSQuad.Dispose();
+            this.PSGray.Dispose();
+            this.PSLuma.Dispose();
+            this.PSPass.Dispose();
+            this.PSAlpha.Dispose();
+
+           
         }
 
     }

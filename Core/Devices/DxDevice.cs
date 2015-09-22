@@ -13,6 +13,7 @@ using WICFactory = SharpDX.WIC.ImagingFactory2;
 using DirectXDevice = SharpDX.Direct3D11.Device2;
 using D2DFactory = SharpDX.Direct2D1.Factory1;
 using DWriteFactory = SharpDX.DirectWrite.Factory1;
+using System.Runtime.InteropServices;
 #else
 #if DIRECTX11_1
 using DXGIDevice = SharpDX.DXGI.Device2;
@@ -147,6 +148,15 @@ namespace FeralTic.DX11
             return device.Device;
         }
 
+        public DxDevice(IntPtr devicePointer)
+        {
+            this.WICFactory = new WICFactory();
+            this.D2DFactory = new D2DFactory();
+            this.DWriteFactory = new DWriteFactory(SharpDX.DirectWrite.FactoryType.Shared);
+            this.adapterindex = 0;
+            this.Initialize(devicePointer);
+        }
+
         public DxDevice(DeviceCreationFlags flags = DeviceCreationFlags.BgraSupport, int adapterindex = 0)
         {
             this.WICFactory = new WICFactory();
@@ -154,11 +164,12 @@ namespace FeralTic.DX11
             this.DWriteFactory = new DWriteFactory(SharpDX.DirectWrite.FactoryType.Shared);
             this.creationflags = flags;
             this.adapterindex = adapterindex;
-            this.Initialize();
+            this.Initialize(IntPtr.Zero);
         }
 
+
         #region Initialize
-        private void Initialize()
+        private void Initialize(IntPtr devicePointer)
         {
             FeatureLevel[] levels = new FeatureLevel[]
             {
@@ -172,7 +183,11 @@ namespace FeralTic.DX11
             };
 
             Device dev;
-            if (adapterindex > 0)
+            if (devicePointer != IntPtr.Zero)
+            {
+                dev = new SharpDX.Direct3D11.Device(devicePointer);
+            }
+            else if (adapterindex > 0)
             {
                 SharpDX.DXGI.Factory f = new SharpDX.DXGI.Factory1();
                 SharpDX.DXGI.Adapter a = f.GetAdapter(adapterindex);
@@ -189,14 +204,19 @@ namespace FeralTic.DX11
 
             #if DIRECTX11_1
             this.Device = dev.QueryInterface<DirectXDevice>();
+            Marshal.Release(this.Device.NativePointer);
             #else
             this.Device = dev;
             #endif
 
             DXGIDevice dxgidevice = this.Device.QueryInterface<DXGIDevice>();
+            Marshal.Release(this.Device.NativePointer);
             
             this.Adapter = dxgidevice.Adapter.QueryInterface<DXGIAdapter>();
+            Marshal.Release(dxgidevice.Adapter.NativePointer);
+
             this.Factory = this.Adapter.GetParent<DXGIFactory>();
+            Marshal.Release(this.Adapter.NativePointer);
 
             this.OnLoad();
         }
@@ -214,7 +234,7 @@ namespace FeralTic.DX11
 
             if (this.AutoReset)
             {
-                this.Initialize();
+                this.Initialize(IntPtr.Zero);
                 if (this.DeviceReset != null) { this.DeviceReset(this); }
             }
         }
@@ -225,6 +245,11 @@ namespace FeralTic.DX11
 
             if (this.DeviceDisposing != null) { this.DeviceDisposing(this); }
 
+            this.WICFactory.Dispose();
+            this.D2DFactory.Dispose();
+            this.DWriteFactory.Dispose();
+            this.Adapter.Dispose();
+            this.Factory.Dispose();
             this.Device.Dispose();
 
             if (this.DeviceDisposed != null) { this.DeviceDisposed(this); }

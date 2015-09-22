@@ -40,6 +40,7 @@ namespace FeralTic.DX11
         private static CompilerError ParseLine(string line, string shaderName = "")
         {
             CompilerError ce = new CompilerError();
+            ce.ErrorText = "";
 
             var elements = line.Split(new string[1] { ": " }, StringSplitOptions.None);
 
@@ -96,11 +97,20 @@ namespace FeralTic.DX11
             }
             else
             {
-                var errCode = elements[1].Split(" ".ToCharArray());
-                ce.IsWarning = errCode[0] == "warning";
-                ce.ErrorNumber = errCode[1];
+                try
+                {
+                    if (elements.Length == 3)
+                    {
+                        var errCode = elements[1].Split(" ".ToCharArray());
+                        ce.IsWarning = errCode[0] == "warning";
+                        ce.ErrorNumber = errCode[1];
 
-                ce.ErrorText = elements[2];
+                        ce.ErrorText = elements[2];
+                    }
+                }
+                catch { }
+
+
             }
             
 

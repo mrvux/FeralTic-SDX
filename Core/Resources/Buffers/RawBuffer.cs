@@ -19,6 +19,13 @@ namespace FeralTic.DX11.Resources
         public bool AllowVertexBuffer;
         public bool AllowIndexBuffer;
         public eRawBufferWriteMode WriteMode;
+
+        public RawBufferBindings(bool allowVbo, bool allowIbo, eRawBufferWriteMode writeMode)
+        {
+            this.AllowVertexBuffer = allowVbo;
+            this.AllowIndexBuffer = allowIbo;
+            this.WriteMode = writeMode;
+        }
     }
 
     public unsafe class DX11RawBuffer : IDxBuffer, IDxShaderResource,IDxUnorderedResource, IDisposable

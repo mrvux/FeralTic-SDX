@@ -105,6 +105,36 @@ namespace FeralTic.DX11
             this.vbopool.UnLock(target);
         }
 
+        public int MemoryFootPrint
+        {
+            get
+            {
+                int mem = 0;
+                foreach (var item in this.sbufferpool.AllResources)
+                {
+                    mem += item.Element.Buffer.Description.SizeInBytes;
+                }
+                foreach (var item in this.depthpool.AllResources)
+                {
+                    mem += (item.Element.Width * item.Element.Height * 4);
+                }
+                foreach (var item in this.targetpool.AllResources)
+                {
+                    mem += (item.Element.Width * item.Element.Height * SharpDX.DXGI.FormatHelper.SizeOfInBytes(item.Element.Format));
+                }
+                foreach (var item in this.vbopool.AllResources)
+                {
+                    mem += item.Element.Buffer.Description.SizeInBytes;
+                }
+                foreach (var item in this.volumepool.AllResources)
+                {
+                    mem += (item.Element.Width * item.Element.Height * item.Element.Depth * SharpDX.DXGI.FormatHelper.SizeOfInBytes(item.Element.Format));
+                }
+
+                return mem;
+            }
+        }
+
         public void ClearUnlocked()
         {
             this.sbufferpool.ClearUnlocked();

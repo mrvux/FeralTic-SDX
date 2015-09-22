@@ -33,7 +33,7 @@ namespace FeralTic.DX11
 
         public bool IsCompiled
         {
-            get { return this.CompilationResult.HasErrors == false; }
+            get { return this.ByteCode != null; }
         }
 
         public Effect DefaultEffect { get; private set; }

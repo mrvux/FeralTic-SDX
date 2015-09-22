@@ -24,6 +24,8 @@ namespace FeralTic.DX11
 
         private static ShaderResourceView[] nullsrvs = new ShaderResourceView[128];
         private static UnorderedAccessView[] nulluavs = new UnorderedAccessView[8];
+        private static RenderTargetView[] nullrtvs = new RenderTargetView[] { null, null, null, null, null, null, null, null };
+        
 
         public RenderTargetStack RenderTargetStack { get; protected set; }
         public RenderStateStack RenderStateStack { get; protected set; }
@@ -43,7 +45,7 @@ namespace FeralTic.DX11
             this.Device = device;
 
             #if DIRECTX11_1
-            this.Context = device.Device.ImmediateContext.QueryInterface<DirectXContext>();
+            this.Context = device.Device.ImmediateContext2;
             #else
             this.Context = device.Device.ImmediateContext;
             #endif
@@ -66,6 +68,13 @@ namespace FeralTic.DX11
         {
             int tm1 = ThreadCount - 1;
             this.Context.Dispatch((ElementCount + tm1) / ThreadCount, 1, 1);
+        }
+
+        public void DispatchXY(int x, int groupX, int y, int groupY)
+        {
+            int tx1 = groupX - 1;
+            int ty1 = groupY - 1;
+            this.Context.Dispatch((x + tx1) / groupX, (y + ty1) / groupY, 1);
         }
 
         public void ClearShaderStages()
@@ -96,6 +105,17 @@ namespace FeralTic.DX11
             Context.PixelShader.SetShaderResources(0, nullsrvs);
         }
 
+        public void ResetTargets()
+        {
+            Context.OutputMerger.SetTargets(null, nullrtvs);
+        }
+
+        public void CleanUpVS()
+        {
+            Context.VertexShader.SetShaderResources(0, nullsrvs);
+        }
+
+
         public void CleanUpPS()
         {
             Context.PixelShader.SetShaderResources(0, nullsrvs);
@@ -109,7 +129,13 @@ namespace FeralTic.DX11
 
         public void Dispose()
         {
-            if (this.Context != null) { this.Context.Dispose(); this.Context = null; }
+            if (this.Context != null) 
+            {
+                this.Context.ClearState();
+                this.Context.Flush();
+                this.Context.Dispose();
+                this.Context = null; 
+            }
         }
     }
 }

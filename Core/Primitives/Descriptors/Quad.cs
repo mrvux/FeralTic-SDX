@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FeralTic.DX11.Geometry
 {
-    public class Quad : AbstractPrimitiveDescriptor
+    public class Quad : AbstractPrimitiveDescriptor, IEquatable<Quad>
     {
         private Vector2 size;
 
@@ -38,13 +38,8 @@ namespace FeralTic.DX11.Geometry
             return device.Primitives.QuadNormals(this);
         }
 
-        public override bool Equals(object obj)
+        public bool Equals(Quad o)
         {
-            if (!(obj is Quad))
-            {
-                return false;
-            }
-            Quad o = (Quad)obj;
             return this.Size == o.Size;
         }
     }

@@ -45,6 +45,24 @@ namespace FeralTic.DX11.Resources
             get { return this.resourceDesc.Format; }
         }
 
+        public static DX11RenderTarget2D CreateTiled(DxDevice device, int w, int h, Format format, int mipLevels = 1)
+        {
+            var texBufferDesc = new Texture2DDescription
+            {
+                ArraySize = 1,
+                BindFlags = BindFlags.RenderTarget | BindFlags.ShaderResource | BindFlags.UnorderedAccess,
+                CpuAccessFlags = CpuAccessFlags.None,
+                Format = format,
+                Height = h,
+                Width = w,
+                OptionFlags = ResourceOptionFlags.Tiled,
+                SampleDescription = new SampleDescription(1,0),
+                Usage = ResourceUsage.Default,
+                MipLevels = mipLevels
+            };
+            return new DX11RenderTarget2D(device, texBufferDesc);
+        }
+
         public static DX11RenderTarget2D CreateMsaa(DxDevice device, MsaaRenderTargetProperties properties)
         {
             return new DX11RenderTarget2D(device, properties.Width, properties.Height, new SampleDescription(properties.SampleCount, 0), properties.Format, false, 1,false);
@@ -64,6 +82,22 @@ namespace FeralTic.DX11.Resources
         public DX11RenderTarget2D(DxDevice device, DX11RenderTarget2D renderTarget) :
             this(device, renderTarget.Width,renderTarget.Height,renderTarget.resourceDesc.SampleDescription, renderTarget.Format)
         { }
+
+        protected DX11RenderTarget2D(DxDevice device, Texture2DDescription desc)
+        {
+            bool allowUav = desc.BindFlags.HasFlag(BindFlags.UnorderedAccess);
+
+            this.Texture = new Texture2D(device.Device, desc);
+            this.resourceDesc = this.Texture.Description;
+
+            this.RenderView = new RenderTargetView(device.Device, this.Texture);
+            this.ShaderView = new ShaderResourceView(device.Device, this.Texture);
+
+            if (desc.SampleDescription.Count == 1 && allowUav)
+            {
+                this.UnorderedView = new UnorderedAccessView(device.Device, this.Texture);
+            }
+        }
 
         public DX11RenderTarget2D(DxDevice device, int w, int h, SampleDescription sd, Format format, bool genMipMaps, int mmLevels, bool allowUAV)
         {

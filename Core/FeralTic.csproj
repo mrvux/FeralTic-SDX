@@ -106,8 +106,10 @@
     <Compile Include="Rendering\ResourcePool.cs" />
     <Compile Include="Rendering\ResourcePoolManager.cs" />
     <Compile Include="Rendering\ResourcePools.cs" />
+    <Compile Include="Rendering\TiledResourcePool.cs" />
     <Compile Include="Rendering\ViewportStack.cs" />
     <Compile Include="Resources\Buffers\ConstantBuffer.cs" />
+    <Compile Include="Resources\Buffers\ConstantBufferGeneric.cs" />
     <Compile Include="Resources\Buffers\IndexBuffer.cs" />
     <Compile Include="Resources\Buffers\Indirect\BaseIndirectBuffer.cs" />
     <Compile Include="Resources\Buffers\Indirect\DispatchIndirectBuffer.cs" />

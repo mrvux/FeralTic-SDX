@@ -19,7 +19,6 @@ namespace FeralTic.DX11.Resources
 
         public DX11Geometry()
         {
-            this.device = device;
             this.binding = new VertexBufferBinding[0];
             this.vertexBuffers = new List<DX11VertexBuffer>();
         }
