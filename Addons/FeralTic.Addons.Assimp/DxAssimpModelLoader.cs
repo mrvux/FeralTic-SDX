@@ -20,7 +20,7 @@ namespace FeralTic.Addons.AssetImport
             this.device = device;
         }
 
-        public DX11IndexedGeometry LoadFromMesh(Assimp.Mesh mesh, AssimpLoadInformation loadInfo)
+        public DX11IndexedGeometry LoadFromMesh(Assimp.Mesh mesh, AssimpLoadInformation loadInfo, bool allowRawView = false)
         {
             uint[] inds = mesh.GetIndices();
 
@@ -36,12 +36,12 @@ namespace FeralTic.Addons.AssetImport
                 {
                     HasBoundingBox = true,
                     BoundingBox = bb,
-                    IndexBuffer = DX11IndexBuffer.CreateImmutable(device, inds),
+                    IndexBuffer = DX11IndexBuffer.CreateImmutable(device, inds, allowRawView),
                     InputLayout = layout,
                     PrimitiveType = "AssimpModel",
                     Tag = null,
                     Topology = SharpDX.Direct3D.PrimitiveTopology.TriangleList,
-                    VertexBuffer = DX11VertexBuffer.CreateImmutable(device, mesh.VertexCount, vertexsize, ds)
+                    VertexBuffer = DX11VertexBuffer.CreateImmutable(device, mesh.VertexCount, vertexsize, ds, allowRawView)
                 };
 
                 ds.Dispose();
