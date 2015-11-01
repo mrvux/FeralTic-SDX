@@ -63,6 +63,8 @@ namespace FeralTic.DX11.Geometry
 
             int vcount = 0;
 
+            float fy = resY;
+
             #region Add Vertices tube
             for (int i = 0; i < resY + 1; i++)
             {
@@ -76,7 +78,9 @@ namespace FeralTic.DX11.Geometry
                     float x = Convert.ToSingle(radius1 * Math.Cos(phi)) * radius;
                     float z = Convert.ToSingle(radius1 * Math.Sin(phi)) * radius;
 
-                    appendVertex(new Vector3(x,y,z), Vector3.Normalize(new Vector3(x, 0.0f, z)), Vector2.Zero);
+                    Vector2 uv = new Vector2((float)j / (float)resX, 1.0f - (float)i / fy);
+
+                    appendVertex(new Vector3(x, y, z), Vector3.Normalize(new Vector3(x, 0.0f, z)), uv);
                     vcount++;
                     phi += inc;
                 }
