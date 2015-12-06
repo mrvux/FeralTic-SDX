@@ -24,7 +24,7 @@ namespace FeralTic.DX11
 
         public TiledResourcePool(DxDevice device, int initialPageCount = 16)
         {
-            this.device = device;
+            /*this.device = device;
             this.pageCount = initialPageCount;
             var memSize = initialPageCount * 65536;
 
@@ -37,7 +37,7 @@ namespace FeralTic.DX11
                 Usage = ResourceUsage.Default
             };
 
-            this.tilePoolBuffer = new SharpDX.Direct3D11.Buffer(device, bdPool);
+            this.tilePoolBuffer = new SharpDX.Direct3D11.Buffer(device, bdPool);*/
         }
 
         public DX11StructuredBuffer PlaceStructuredBuffer(RenderContext context, int elementCount, int stride, eDxBufferMode mode)

@@ -457,6 +457,35 @@ namespace FeralTic.DX11
             return new DepthStencilState(device.Device, ds);
         }
 
+        public DepthStencilState StencilReplace(byte mask)
+        {
+            DepthStencilStateDescription ds = new DepthStencilStateDescription()
+            {
+                IsDepthEnabled = false,
+                IsStencilEnabled = true,
+                DepthWriteMask = DepthWriteMask.Zero,
+                DepthComparison = Comparison.Always,
+                StencilReadMask = 0,
+                StencilWriteMask = mask,
+                FrontFace = new DepthStencilOperationDescription()
+                {
+                    Comparison = Comparison.Always,
+                    DepthFailOperation = StencilOperation.Keep,
+                    FailOperation = StencilOperation.Keep,
+                    PassOperation = StencilOperation.Replace
+                },
+                BackFace = new DepthStencilOperationDescription()
+                {
+                    Comparison = Comparison.Always,
+                    DepthFailOperation = StencilOperation.Keep,
+                    FailOperation = StencilOperation.Keep,
+                    PassOperation = StencilOperation.Replace
+                }
+            };
+            return new DepthStencilState(device.Device, ds);
+        }
+
+
         public DepthStencilState ReadMask(byte mask)
         {
             DepthStencilStateDescription ds = new DepthStencilStateDescription()
@@ -477,6 +506,35 @@ namespace FeralTic.DX11
                 BackFace = new DepthStencilOperationDescription()
                 {
                     Comparison = Comparison.Equal,
+                    DepthFailOperation = StencilOperation.Keep,
+                    FailOperation = StencilOperation.Keep,
+                    PassOperation = StencilOperation.Keep
+                }
+            };
+
+            return new DepthStencilState(device.Device, ds);
+        }
+
+        public DepthStencilState ReadMaskNotEqual(byte mask)
+        {
+            DepthStencilStateDescription ds = new DepthStencilStateDescription()
+            {
+                IsDepthEnabled = false,
+                IsStencilEnabled = true,
+                DepthWriteMask = DepthWriteMask.Zero,
+                DepthComparison = Comparison.Always,
+                StencilReadMask = mask,
+                StencilWriteMask = 0,
+                FrontFace = new DepthStencilOperationDescription()
+                {
+                    Comparison = Comparison.NotEqual,
+                    DepthFailOperation = StencilOperation.Keep,
+                    FailOperation = StencilOperation.Keep,
+                    PassOperation = StencilOperation.Keep
+                },
+                BackFace = new DepthStencilOperationDescription()
+                {
+                    Comparison = Comparison.NotEqual,
                     DepthFailOperation = StencilOperation.Keep,
                     FailOperation = StencilOperation.Keep,
                     PassOperation = StencilOperation.Keep

@@ -167,6 +167,38 @@ namespace FeralTic.DX11
             this.Initialize(IntPtr.Zero);
         }
 
+        public DxDevice(DXGIFactory factory, DXGIAdapter adapter, DeviceCreationFlags flags = DeviceCreationFlags.BgraSupport)
+        {
+            this.WICFactory = new WICFactory();
+            this.D2DFactory = new D2DFactory();
+            this.DWriteFactory = new DWriteFactory(SharpDX.DirectWrite.FactoryType.Shared);
+            this.adapterindex = 0;
+
+            FeatureLevel[] levels = new FeatureLevel[]
+            {
+                #if DIRECTX11_1
+                 FeatureLevel.Level_11_1,
+                #endif
+                FeatureLevel.Level_11_0,
+                FeatureLevel.Level_10_1,
+                FeatureLevel.Level_10_0,
+                FeatureLevel.Level_9_3
+            };
+
+            var dev = new Device(adapter, flags, levels);
+
+#if DIRECTX11_1
+            this.Device = dev.QueryInterface<DirectXDevice>();
+            Marshal.Release(this.Device.NativePointer);
+#else
+            this.Device = dev;
+#endif
+
+            this.Adapter = adapter;
+            this.Factory = factory;
+            this.OnLoad();
+        }
+
 
         #region Initialize
         private void Initialize(IntPtr devicePointer)

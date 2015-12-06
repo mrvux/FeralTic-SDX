@@ -19,6 +19,11 @@ namespace FeralTic.DX11
     {
         private static FolderIncludeHandler folderhandler = new FolderIncludeHandler();
 
+        public static Include DefaultIncludeHandler
+        {
+            get { return folderhandler; }
+        }
+
         public CompilationResult CompilationResult { get; private set; }
 
         public ShaderBytecode ByteCode

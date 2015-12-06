@@ -70,6 +70,29 @@ namespace FeralTic.DX11.Resources
         {
             return FromHandle(device, handle, Format.R8G8B8A8_UNorm, new SampleDescription(SampleCount, 0));
         }
+
+
+        public static DX11SwapChain FlipSequential(DxDevice device, IntPtr handle, Format format, Rational refreshRate)
+        {
+            DX11SwapChain swapShain = new DX11SwapChain();
+            swapShain.device = device;
+
+            SwapChainDescription sd = new SwapChainDescription()
+            {
+                BufferCount = 2,
+                ModeDescription = new ModeDescription(0, 0, refreshRate, format),
+                IsWindowed = true,
+                OutputHandle = handle,
+                SampleDescription = new SampleDescription(1,0),
+                SwapEffect = SwapEffect.FlipSequential,
+                Usage = Usage.RenderTargetOutput,
+                Flags = SwapChainFlags.None
+            };
+
+            swapShain.swapchain = new SwapChain(device.Factory, device.Device, sd);
+            swapShain.Initialize();
+            return swapShain;
+        }
         
         public static DX11SwapChain FromHandle(DxDevice device, IntPtr handle, Format format, SampleDescription sampledesc)
         {
@@ -93,7 +116,28 @@ namespace FeralTic.DX11.Resources
                 sd.Usage |= Usage.UnorderedAccess;
             }
             swapShain.swapchain = new SwapChain(device.Factory, device.Device, sd);
+            swapShain.Initialize();
+            return swapShain;
+        }
 
+        public static DX11SwapChain FromHandleRenderOnly(DxDevice device, IntPtr handle, Format format)
+        {
+            DX11SwapChain swapShain = new DX11SwapChain();
+            swapShain.device = device;
+
+            SwapChainDescription sd = new SwapChainDescription()
+            {
+                BufferCount = 2,
+                ModeDescription = new ModeDescription(0, 0, new Rational(60, 1), format),
+                IsWindowed = true,
+                OutputHandle = handle,
+                SampleDescription = new SampleDescription(1,0),
+                SwapEffect = SwapEffect.Discard,
+                Usage = Usage.RenderTargetOutput,
+                Flags = SwapChainFlags.None
+            };
+
+            swapShain.swapchain = new SwapChain(device.Factory, device.Device, sd);
             swapShain.Initialize();
             return swapShain;
         }
@@ -129,9 +173,11 @@ namespace FeralTic.DX11.Resources
             this.RenderView = new RenderTargetView(device.Device, this.resource);
             this.RenderViewDesc = this.RenderView.Description;
 
-            this.ShaderView = new ShaderResourceView(device, this.resource);
-
-            if (device.IsFeatureLevel11 && this.TextureDesc.SampleDescription.Count == 1)
+            if (this.swapchain.Description.Usage.HasFlag(Usage.ShaderInput))
+            {
+                this.ShaderView = new ShaderResourceView(device, this.resource);
+            }
+            if (this.swapchain.Description.Usage.HasFlag(Usage.UnorderedAccess))
             {
                 this.UnorderedView = new UnorderedAccessView(device, this.resource);
             }
@@ -149,13 +195,17 @@ namespace FeralTic.DX11.Resources
             if (this.ShaderView != null) { this.ShaderView.Dispose(); }
             this.resource.Dispose();
 
-            this.swapchain.ResizeBuffers(1,w, h, SharpDX.DXGI.Format.Unknown, SwapChainFlags.AllowModeSwitch);
+            this.swapchain.ResizeBuffers(2,w, h, SharpDX.DXGI.Format.R8G8B8A8_UNorm, SwapChainFlags.None);
             this.resource = Texture2D.FromSwapChain<Texture2D>(this.swapchain, 0);
 
             this.TextureDesc = this.resource.Description;
             this.RenderView = new RenderTargetView(device.Device, this.resource);
 
-            if (device.IsFeatureLevel11 && this.TextureDesc.SampleDescription.Count == 1)
+            if (this.swapchain.Description.Usage.HasFlag(Usage.ShaderInput))
+            {
+                this.ShaderView = new ShaderResourceView(device, this.resource);
+            }
+            if (this.swapchain.Description.Usage.HasFlag(Usage.UnorderedAccess))
             {
                 this.UnorderedView = new UnorderedAccessView(device, this.resource);
             }

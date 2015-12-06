@@ -28,7 +28,7 @@ namespace FeralTic.DX11
 
         public ResourceScheduler ResourceScheduler { get; private set; }
 
-        public TiledResourcePool SharedTiledPool { get; private set; }
+        //public TiledResourcePool SharedTiledPool { get; private set; }
 
         public bool HasBufferSupport { get; private set; }
 
@@ -75,7 +75,7 @@ namespace FeralTic.DX11
             this.ResourceScheduler = new ResourceScheduler(this, 3);
             this.ResourceScheduler.Initialize();
 
-            this.SharedTiledPool = new TiledResourcePool(this);
+            //this.SharedTiledPool = new TiledResourcePool(this);
                  
         }
 
@@ -92,7 +92,7 @@ namespace FeralTic.DX11
             this.ResourceScheduler.Dispose();
             this.Primitives.Dispose();
 
-            this.SharedTiledPool.Dispose();
+            //this.SharedTiledPool.Dispose();
         }
 
     }
